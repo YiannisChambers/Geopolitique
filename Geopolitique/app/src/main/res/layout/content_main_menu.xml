@@ -35,13 +35,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/main_menu_activity_continue"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:id="@+id/main_menu_activity_continue_button"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/main_menu_activity_start_new" />
+            android:text="@string/main_menu_activity_start_new"
+            android:id="@+id/main_menu_activity_start_new_button"/>
 
     </LinearLayout>
 </RelativeLayout>

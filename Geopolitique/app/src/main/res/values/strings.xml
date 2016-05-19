@@ -4,5 +4,61 @@
 
     <string name="main_menu_activity_start_new">START NEW GAME</string>
     <string name="main_menu_activity_continue">CONTINUE</string>
+    <string name="title_activity_create_nation">CreateNationActivity</string>
 
+    <string name="create_nation_activity_name">Create A Nation</string>
+    <string name="create_nation_activity_choose_existing_text_prompt">Choose Existing Nation</string>
+
+    <string name="title_activity_create_new_nation">CreateNewNationActivity</string>
+    <string name="title_activity_create_existing_nation">CreateExistingNationActivity</string>
+
+    <string name="create_new_nation_button_label">CREATE NEW NATION</string>
+    <string name="create_existing_nation_button_label">CREATE EXISTING NATION</string>
+
+    <string-array name="nation_types">
+        <item>Monarchy</item>
+        <item>Republic</item>
+        <item>Commonwealth</item>
+        <item>Federation</item>
+    </string-array>
+
+    <string-array name="leader_types">
+        <item>Prime Minister</item>
+        <item>President</item>
+        <item>Chancellor</item>
+        <item>Supreme Leader</item>
+    </string-array>
+
+    <string-array name="world_nations">
+        <item>Australia</item>
+        <item>Britain</item>
+        <item>United States</item>
+        <item>Canada</item>
+        <item>Russia</item>
+        <item>France</item>
+        <item>New Zealand</item>
+        <item>Germany</item>
+        <item>Spain</item>
+        <item>Italy</item>
+        <item>Greece</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+    <string name="title_activity_cabinet">CabinetActivity</string>
 </resources>

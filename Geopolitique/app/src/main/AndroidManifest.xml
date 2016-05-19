@@ -18,6 +18,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreateNationActivity"
+            android:label="@string/title_activity_create_nation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateNewNationActivity"
+            android:label="@string/title_activity_create_new_nation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateExistingNationActivity"
+            android:label="@string/title_activity_create_existing_nation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomeScreenActivity"
+            android:label="@string/title_activity_home_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CabinetActivity"
+            android:label="@string/title_activity_cabinet"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
