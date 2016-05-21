@@ -3,6 +3,7 @@ package geopolitique.id11699156.com.geopolitique;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +23,9 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     private TextView mTimerText;
     private boolean mScreenIsRunning = true;
+    public int mDays, mWeeks, mMonths;
+
+    Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +38,12 @@ public class HomeScreenActivity extends AppCompatActivity {
         new UpdateTimerAsyncTask().execute();
 
 
-
         //THIS IS TEST DATA
-        //ADD MODEL AND LEADER HERE
-        //MIGHT ONLY BE ABLE TO AFTER YOU SEPERATE THEM
+        Leader leader = new Leader("Francis", "Urquhart", "Prime Minister");
+        Model.setUp(leader);
+
+        TextView welcomeText = (TextView)findViewById(R.id.home_screen_leader_text);
+        welcomeText.setText(leader.getShortNameWithTitle());
 
 
         Button cabinetButton = (Button)findViewById(R.id.home_screen_cabinet_button);
@@ -47,12 +55,30 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
         });
 
+        updateStats();
+
+    }
+
+    void updateStats(){
+
+        TextView updateText = (TextView)findViewById(R.id.TEMP_OUTPUT);
+        Country country = Model.getCountry();
+        Economy economy = country.getEconomy();
+        String nationStats = "POPUL: " + country.getPopulation()+ "\n";
+        String economyStats = "GDP: " + economy.getGDP() + ", UNEMP: " + economy.getUnemploymentRate() + "%, AVGINC: $" + economy.getAverageIncome()
+                + ", DEFICIT: " + economy.getDeficitSurplusFigure() + ", DEBT: $" + economy.getDebt() + "\n";
+        String popularity = "TOTAL SPENDING: " +  country.getGovernment().getGovernmentSpending() + ", POPULARITY: " + country.getGovernment().getPopularity() +  "%, INT. POP: " + country.getGovernment().getInternationalPopularity() + "%"+ "\n";
+        String days = "DAYS: " + mDays +", WEEKS: " + mWeeks + ", MONTHS: "+ mMonths;
+        updateText.setText(nationStats + economyStats + popularity + days);
     }
 
     private class UpdateTimerAsyncTask extends AsyncTask<Void, Void, Void>{
 
         private boolean mIsRunning = true;
         private Calendar mCalendar;
+
+        private int seconds, minutes, hours, days, weeks, months, years;
+
 
         @Override
         protected void onPreExecute() {
@@ -65,14 +91,24 @@ public class HomeScreenActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             while(mIsRunning) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
+
+                mCalendar.add(Calendar.HOUR, 1);
+                hours +=1;
+
+                //mCalendar.add(Calendar.MINUTE, 1);
+                //minutes += 1;
                 publishProgress();
 
-                mCalendar.add(Calendar.SECOND, 1);
+                //CHANGED TO MINUTE FOR TESTING PURPOSES
+
+                //mCalendar.add(Calendar.SECOND, 1);
+
+                //OTHER
                 //mCalendar.set(mCalendar.YEAR, mCalendar.MONTH, mCalendar.DAY_OF_MONTH, mCalendar.HOUR_OF_DAY, mCalendar.MINUTE, mCalendar.SECOND + 1);
             }
             return null;
@@ -81,10 +117,40 @@ public class HomeScreenActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
 
+            if(minutes >= 60){
+                hours += 1;
+                minutes = 0;
+            }
+            if (hours >= 24){
+                days += 1;
+                hours = 0;
+                minutes = 0;
+                Model.getCountry().updateDaily();
+            }
+            if(days == 7 || (days != 0 && days % 7 == 0)){
+                minutes = 0;
+                weeks +=1;
+                Model.getCountry().updateWeekly();
+            }
+            if(days >= mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
+                months += 1;
+                days = 0;
+                weeks = 0;
+                Model.getCountry().updateMonthly();
+            }
+
+
+            mDays = days;
+            mWeeks = weeks;
+            mMonths = months;
+
             mTimerText.setText(mCalendar.getTime().toString());//(mCalendar.HOUR_OF_DAY + ":" + mCalendar.MINUTE + ":" + mCalendar.SECOND + "\n" +
                     //mCalendar.DAY_OF_MONTH + " " + mCalendar.getDisplayName(mCalendar.MONTH, Calendar.LONG, Locale.getDefault()) + ", " + mCalendar.YEAR);
 
+
             mIsRunning = mScreenIsRunning;
+
+            updateStats();
 
             super.onProgressUpdate(values);
 
