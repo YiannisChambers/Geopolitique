@@ -55,6 +55,16 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
         });
 
+
+        Button pollsButton = (Button)findViewById(R.id.home_screen_polls_button);
+        final Intent pollsIntent = new Intent(this, PollsScreen.class);
+        pollsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(pollsIntent);
+            }
+        });
+
         updateStats();
 
     }
@@ -64,10 +74,10 @@ public class HomeScreenActivity extends AppCompatActivity {
         TextView updateText = (TextView)findViewById(R.id.TEMP_OUTPUT);
         Country country = Model.getCountry();
         Economy economy = country.getEconomy();
-        String nationStats = "POPUL: " + country.getPopulation()+ "\n";
-        String economyStats = "GDP: " + economy.getGDP() + ", UNEMP: " + economy.getUnemploymentRate() + "%, AVGINC: $" + economy.getAverageIncome()
-                + ", DEFICIT: " + economy.getDeficitSurplusFigure() + ", DEBT: $" + economy.getDebt() + "\n";
-        String popularity = "TOTAL SPENDING: " +  country.getGovernment().getGovernmentSpending() + ", POPULARITY: " + country.getGovernment().getPopularity() +  "%, INT. POP: " + country.getGovernment().getInternationalPopularity() + "%"+ "\n";
+        String nationStats = "POPUL: " + NumberHelper.getWordedVersion(country.getPopulation())+ "\n";
+        String economyStats = "GDP: " + NumberHelper.getWordedVersion(economy.getGDP()) + ", UNEMP: " + economy.getUnemploymentRate() + "%, \n AVGINC: $" + NumberHelper.getWordedVersion(economy.getAverageIncome())
+                + ", GOVT.  INCOME: " + NumberHelper.getWordedVersion(economy.getTaxIncome()) + "\n DEFICIT: " + NumberHelper.getWordedVersion(economy.getDeficitSurplusFigure()) + ", DEBT: $" + NumberHelper.getWordedVersion(economy.getDebt()) + "\n";
+        String popularity = "TOTAL SPENDING: " +  NumberHelper.getWordedVersion(country.getGovernment().getGovernmentSpending()) + "\n POPULARITY: " + NumberHelper.getWordedVersion(country.getGovernment().getPopularity()) +  "%, INT. POP: " + NumberHelper.getWordedVersion(country.getGovernment().getInternationalPopularity()) + "%"+ "\n";
         String days = "DAYS: " + mDays +", WEEKS: " + mWeeks + ", MONTHS: "+ mMonths;
         updateText.setText(nationStats + economyStats + popularity + days);
     }
@@ -78,13 +88,20 @@ public class HomeScreenActivity extends AppCompatActivity {
         private Calendar mCalendar;
 
         private int seconds, minutes, hours, days, weeks, months, years;
-
+        private boolean checkedWeek = false;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
             mCalendar = Calendar.getInstance();
+            seconds = mCalendar.get(Calendar.SECOND);
+            minutes = mCalendar.get(Calendar.MINUTE);
+            hours = mCalendar.get(Calendar.HOUR);
+            days = mCalendar.get(Calendar.DAY_OF_MONTH);
+            weeks = mCalendar.get(Calendar.WEEK_OF_MONTH);
+            months = mCalendar.get(Calendar.MONTH);
+            years = mCalendar.get(Calendar.YEAR);
         }
 
         @Override
@@ -128,9 +145,16 @@ public class HomeScreenActivity extends AppCompatActivity {
                 Model.getCountry().updateDaily();
             }
             if(days == 7 || (days != 0 && days % 7 == 0)){
-                minutes = 0;
-                weeks +=1;
-                Model.getCountry().updateWeekly();
+                if(!checkedWeek) {
+                    checkedWeek = true;
+                    minutes = 0;
+                    weeks += 1;
+                    Model.getCountry().updateWeekly();
+                }
+            }
+            else
+            {
+                checkedWeek = false;
             }
             if(days >= mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)){
                 months += 1;

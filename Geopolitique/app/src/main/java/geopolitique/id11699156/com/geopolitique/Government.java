@@ -1,5 +1,7 @@
 package geopolitique.id11699156.com.geopolitique;
 
+import java.util.LinkedList;
+
 /**
  * Created by yiannischambers on 20/05/2016.
  */
@@ -12,11 +14,10 @@ public class Government {
 
     double mScandalCount;
 
+    LinkedList<Issue> mIssues;
+
     public Government(){
-        mLeader = new Leader();
-        mCabinet = new Cabinet();
-        mPopularity = 51.00f;
-        mInternationalPopularity = 51.00f;
+        this(new Leader());
     }
 
     public Government(Leader leader) {
@@ -24,6 +25,7 @@ public class Government {
         mCabinet = new Cabinet();
         mPopularity = 51.00f;
         mInternationalPopularity = 51.00f;
+        mIssues = new LinkedList<Issue>();
     }
 
     public Cabinet getCabinet() {
@@ -91,5 +93,21 @@ public class Government {
         else if(department == Constants.HEALTH){
             mCabinet.getHealthMinister().addPolicy(policy);
         }
+    }
+
+    public void addIssue(Issue issue){
+        mIssues.add(issue);
+    }
+
+    public LinkedList<Issue> getIssues() {
+        return mIssues;
+    }
+
+    public Issue getIssue(int position){
+        return mIssues.get(position);
+    }
+
+    public void resolveIssue(int position, int optionPosition){
+        mIssues.get(position).selectOption(optionPosition);
     }
 }

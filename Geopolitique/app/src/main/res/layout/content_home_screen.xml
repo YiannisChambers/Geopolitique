@@ -97,13 +97,6 @@
             android:text="STATS"
             android:id="@+id/home_screen_statistics_button"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="WORLD"
-            android:id="@+id/home_screen_world_button"/>
-
     </LinearLayout>
 
 </RelativeLayout>

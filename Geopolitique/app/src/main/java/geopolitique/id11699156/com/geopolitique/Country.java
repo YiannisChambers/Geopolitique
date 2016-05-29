@@ -1,5 +1,7 @@
 package geopolitique.id11699156.com.geopolitique;
 
+import android.view.MotionEvent;
+
 import java.util.LinkedList;
 
 /**
@@ -52,17 +54,46 @@ public class Country {
 
     public void updateDaily(){
         increasePopulationInDay();
+        updateIssueEffects();
     }
+
+
+
+
+    void updateIssueEffects(){
+        LinkedList<Issue> issues = mGovernment.getIssues();
+
+        for(int i = 0; i < issues.size(); i++){
+            if(issues.get(i).isResolved()){
+                if(!issues.get(i).isFinished()) {
+                    LinkedList<Effect> effects = issues.get(i).getSelectedOption().getEffects();
+                    for (int j = 0; j < effects.size(); j++) {
+                        enactEffect(effects.get(i));
+                    }
+                }
+            }
+            else
+            {
+                updateProperty(Constants.POPULARITY, -0.05f * issues.get(i).getStaleFactor());
+                issues.get(i).incrementStaleFactor();
+            }
+        }
+
+    }
+
 
     void updatePolicyEffects(){
         LinkedList<Policy> policies = mGovernment.getCabinet().getTotalPolicies();
 
         for(int i = 0; i < policies.size(); i++){
-            if(policies.get(i).getTimeRemaining() != 0){
+            if(policies.get(i).getTimeRemaining() == 0){
                 LinkedList<Effect> effects = policies.get(i).getEffect();
                 for(int j = 0; j < effects.size(); j++){
                     enactEffect(effects.get(i), policies.get(i));
                 }
+            }
+            else
+            {
                 policies.get(i).decrementTimeRemaining();
             }
         }
@@ -72,6 +103,16 @@ public class Country {
     void enactEffect(Effect effect, Policy policy){
         String property = effect.mProperty;
         double effectValue = effect.getEffect() / policy.getTimeToComplete();
+        updateProperty(property, effectValue);
+    }
+
+    void enactEffect(Effect effect){
+        String property = effect.mProperty;
+        double effectValue = effect.getEffect();
+        updateProperty(property, effectValue);
+    }
+
+    private void updateProperty(String property, double effectValue){
         if(property == Constants.AVERAGE_INCOME)
         {
             mEconomy.changeAverageIncome(effectValue);
@@ -95,18 +136,20 @@ public class Country {
         {
             mEconomy.changeUnemploymentRate(effectValue);
         }
-
     }
 
     public void updateWeekly(){
+
         updatePopularity();
+        updatePolicyEffects();
     }
 
     public void updateMonthly(){
         mEconomy.calculateEconomy(this);
+        Backups.addEconomyBackup(mEconomy);
         updatePopularity();
         updateInternationalPopularity();
-        updatePolicyEffects();
+
     }
 
     private void updatePopularity(){
@@ -120,6 +163,8 @@ public class Country {
 
         value = deficitValue + incomeValue;
         mGovernment.changePopularity(value);
+
+        Backups.addPollBackup(mGovernment.getPopularity());
     }
 
     private void updateInternationalPopularity(){
@@ -128,7 +173,7 @@ public class Country {
         //SCANDALS: Each Minister has (if randomOutOf100 > minister.Experience) chance of causing a scandal
         //This would update at the time; don't put here.
 
-        double deficitValue = (mEconomy.mDebt / 2) / 100000000;
+        double deficitValue = (mEconomy.mDebt / 2) / 100000000000f;
 
         value = deficitValue;
         mGovernment.changeInternationalPopularity(value);

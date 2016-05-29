@@ -50,7 +50,7 @@ public class Model {
         country.getGovernment().getCabinet().setHealthMinister(minister2);
         country.getGovernment().getCabinet().setEducationMinister(minister3);
         country.getGovernment().getCabinet().setForeignAffairsMinister(minister4);
-        country.getGovernment().getCabinet().setTreasurer(minister5);
+        //country.getGovernment().getCabinet().setTreasurer(minister5);
 
     }
 

@@ -20,6 +20,8 @@ public class Economy {
     double mIncomeTaxRate;
     double mCompanyTaxRate;
 
+    double mTaxIncome;
+
     double mAverageIncome;
 
     public Economy() {
@@ -35,7 +37,8 @@ public class Economy {
         mExports = totalPersonalIncome * (country.getGovernment().getInternationalPopularity() / 100);
         double totalIncome = totalPersonalIncome + mExports;
 
-        double taxes = calculateTaxes(totalIncome);    //calculateIncomeTax(country.getPopulation()));
+        double taxes = calculateTaxes(totalIncome);
+        mTaxIncome = taxes; //calculateIncomeTax(country.getPopulation()));
         mConsumption = (totalIncome - taxes) + ((totalIncome - taxes) * (mCompanyTaxRate / 100));
         //mExports =  totalIncome * (country.getGovernment().getInternationalPopularity() / 100);
 
@@ -78,6 +81,10 @@ public class Economy {
 
     public double getAverageIncome() {
         return mAverageIncome;
+    }
+
+    public double getTaxIncome() {
+        return mTaxIncome;
     }
 
     public void changeUnemploymentRate(double value) {

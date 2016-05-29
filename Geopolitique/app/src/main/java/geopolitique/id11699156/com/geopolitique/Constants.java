@@ -5,11 +5,11 @@ package geopolitique.id11699156.com.geopolitique;
  */
 public class Constants {
 
-    public static final String FOREIGN_AFFAIRS = "FA";
-    public static final String TREASURY = "TY";
-    public static final String DEFENCE = "DF";
-    public static final String EDUCATION = "ED";
-    public static final String HEALTH = "HE";
+    public static final String FOREIGN_AFFAIRS = "Foreign Affairs";
+    public static final String TREASURY = "Treasurer";
+    public static final String DEFENCE = "Defence";
+    public static final String EDUCATION = "Education";
+    public static final String HEALTH = "Health";
 
     public static final String AVERAGE_INCOME = "AI";
     public static final String UNEMPLOYMENT = "UE";
@@ -19,4 +19,5 @@ public class Constants {
     public static final String INTERNATIONAL_POPULARITY = "IY";
 
 
+    public static final String INTENT_MINISTER_NUMBER = "IMF";
 }

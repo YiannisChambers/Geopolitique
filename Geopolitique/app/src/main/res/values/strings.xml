@@ -61,4 +61,7 @@
 
     <string name="title_activity_home_screen">HomeScreenActivity</string>
     <string name="title_activity_cabinet">CabinetActivity</string>
+    <string name="title_activity_ministers">MinistersActivity</string>
+    <string name="title_activity_polls_screen">PollsScreen</string>
+    <string name="title_activity_policies_screen">PoliciesScreen</string>
 </resources>
