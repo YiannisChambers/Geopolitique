@@ -11,13 +11,13 @@ public class Constants {
     public static final String EDUCATION = "Education";
     public static final String HEALTH = "Health";
 
-    public static final String AVERAGE_INCOME = "AI";
-    public static final String UNEMPLOYMENT = "UE";
-    public static final String INCOME_TAX_RATE = "IT";
-    public static final String COMPANY_TAX_RATE = "CT";
-    public static final String POPULARITY = "PY";
-    public static final String INTERNATIONAL_POPULARITY = "IY";
-
+    public static final String AVERAGE_INCOME = "Avg. Income";
+    public static final String UNEMPLOYMENT = "Unemployment";
+    public static final String INCOME_TAX_RATE = "Income Tax Rate";
+    public static final String COMPANY_TAX_RATE = "Company Tax Rate";
+    public static final String POPULARITY = "Popularity";
+    public static final String INTERNATIONAL_POPULARITY = "Interntl. Popularity";
 
     public static final String INTENT_MINISTER_NUMBER = "IMF";
+    public static final String INTENT_POLICY_NUMBER = "IPF";
 }

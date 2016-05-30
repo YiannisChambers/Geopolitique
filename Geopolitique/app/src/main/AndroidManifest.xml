@@ -50,6 +50,10 @@
         <activity
             android:name=".PoliciesScreen"
             android:label="@string/title_activity_policies_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PolicyActivity"
+            android:label="@string/title_activity_policy"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

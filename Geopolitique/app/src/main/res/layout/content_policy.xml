@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="geopolitique.id11699156.com.geopolitique.PolicyActivity"
+    tools:showIn="@layout/activity_policy">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:id="@+id/relativeLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/policy_screen_names"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/policy_screen_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="POLICY NAME"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/policy_screen_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/policy_screen_name"
+                android:text="Department"
+                android:maxLines="10"
+                android:textSize="12dp"
+                android:textStyle="italic" />
+
+
+            <TextView
+                android:id="@+id/policy_screen_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/policy_screen_name"
+                android:text="Description of Policy"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:maxLines="10"
+                android:textSize="12dp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/policy_screen_names"
+            android:orientation="vertical"
+            android:id="@+id/policy_screen_stats"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true">
+
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="SIZE: "
+                    android:textSize="12dp"
+                    android:textStyle="italic"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/policy_screen_size"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="XX"
+                    android:textSize="12dp"
+                    android:textStyle="italic"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="TIME: "
+                    android:textSize="12dp"
+                    android:textStyle="italic"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/policy_screen_time"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="XX"
+                    android:textSize="12dp"
+                    android:textStyle="italic"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="COST: $"
+                    android:textSize="12dp"
+                    android:textStyle="italic"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/policy_screen_cost"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="XX"
+                    android:textSize="12dp"
+                    android:textStyle="italic"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:id="@+id/policy_screen_bar_chart">
+            </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+
+    <Button
+        android:id="@+id/policy_screen_adopt_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADOPT"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"></Button>
+
+
+</RelativeLayout>

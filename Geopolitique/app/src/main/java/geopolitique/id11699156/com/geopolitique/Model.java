@@ -80,8 +80,11 @@ public class Model {
         effects.add(new Effect(Constants.AVERAGE_INCOME, -1000));
         effects.add(new Effect(Constants.POPULARITY, 5));
         effects.add(new Effect(Constants.INTERNATIONAL_POPULARITY, -1));
-        Policy p2 = new Policy("Defence spending", "Money put towards the nation's defence forces", effects, 2, 2500000000f, Constants.DEFENCE);
+        Policy p2 = new Policy("Defence Spending", "Money put towards the nation's defence forces", effects, 2, 2500000000f, Constants.DEFENCE);
         country.getGovernment().getCabinet().getDefenceMinister().addPolicy(p2);
+
+        policies.add(p);
+        policies.add(p2);
     }
     public static LinkedList<Policy> getPolicies() {
         return policies;

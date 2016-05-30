@@ -75,6 +75,26 @@ public class Government {
 
     }
 
+    public boolean checkIfMinister(String department){
+        if(department == Constants.FOREIGN_AFFAIRS){
+            return mCabinet.getForeignAffairsMinister() == null;
+        }
+        else if(department == Constants.TREASURY){
+            return mCabinet.getTreasurer() == null;
+        }
+        else if(department == Constants.DEFENCE)
+        {
+           return mCabinet.getDefenceMinister() == null;
+        }
+        else if(department == Constants.EDUCATION){
+            return mCabinet.getEducationMinister() == null;
+        }
+        else if(department == Constants.HEALTH){
+            return mCabinet.getHealthMinister() == null;
+        }
+        return false;
+    }
+
     public void addPolicy(Policy policy){
        String department = policy.getMinistry();
         if(department == Constants.FOREIGN_AFFAIRS){

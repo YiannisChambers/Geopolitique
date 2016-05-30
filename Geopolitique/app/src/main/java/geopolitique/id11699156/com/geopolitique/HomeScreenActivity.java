@@ -65,6 +65,17 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
         });
 
+
+
+        Button policiesButton = (Button)findViewById(R.id.home_screen_policies_button);
+        final Intent policiesIntent = new Intent(this, PoliciesScreen.class);
+        policiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(policiesIntent);
+            }
+        });
+
         updateStats();
 
     }
