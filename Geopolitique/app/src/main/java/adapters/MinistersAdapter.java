@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
+
+import geopolitique.id11699156.com.geopolitique.CabinetActivity;
+import geopolitique.id11699156.com.geopolitique.MinistersActivity;
+import geopolitique.id11699156.com.geopolitique.R;
+import model.Cabinet;
+import model.Minister;
 
 /**
  * Created by yiannischambers on 29/05/2016.
@@ -57,7 +62,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         }
         else
         {
-            holder.mName.setText(minister.mLastName + ", " + minister.mFirstName.charAt(0));
+            holder.mName.setText(minister.getLastName() + ", " + minister.getFirstName().charAt(0));
             holder.mKnowledge.setText("" + minister.getKnowledge());
             holder.mExperience.setText("" + minister.getExperience());
             holder.mWorkload.setText("" + minister.getWorkload());

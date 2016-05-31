@@ -1,8 +1,9 @@
-package geopolitique.id11699156.com.geopolitique;
-
-import android.view.MotionEvent;
+package model;
 
 import java.util.LinkedList;
+
+import geopolitique.id11699156.com.geopolitique.Backups;
+import geopolitique.id11699156.com.geopolitique.Constants;
 
 /**
  * Created by yiannischambers on 20/05/2016.
@@ -58,8 +59,6 @@ public class Country {
     }
 
 
-
-
     void updateIssueEffects(){
         LinkedList<Issue> issues = mGovernment.getIssues();
 
@@ -70,6 +69,7 @@ public class Country {
                     for (int j = 0; j < effects.size(); j++) {
                         enactEffect(effects.get(i));
                     }
+                    issues.get(i).finishIssue();
                 }
             }
             else

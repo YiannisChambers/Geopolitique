@@ -19,5 +19,6 @@ public class Constants {
     public static final String INTERNATIONAL_POPULARITY = "Interntl. Popularity";
 
     public static final String INTENT_MINISTER_NUMBER = "IMF";
+    public static final String INTENT_ISSUE_NUMBER = "IIF";
     public static final String INTENT_POLICY_NUMBER = "IPF";
 }

@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package model;
 
 import java.util.LinkedList;
 
@@ -9,6 +9,11 @@ public class Option {
     String mDescription;
     LinkedList<Effect> mEffects;
 
+    /**
+     *
+     * @param description
+     * @param effects
+     */
     public Option(String description, LinkedList<Effect> effects){
         mDescription = description;
         mEffects = effects;

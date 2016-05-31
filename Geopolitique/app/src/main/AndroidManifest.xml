@@ -54,6 +54,18 @@
         <activity
             android:name=".PolicyActivity"
             android:label="@string/title_activity_policy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IssuesActivity"
+            android:label="@string/title_activity_issues"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".IssueResolveActivity"
+            android:label="@string/title_activity_issue_resolve"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="@string/title_activity_statistics"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -16,43 +16,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="The time is"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="The time is" />
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/home_screen_time_text"
-            android:textSize="30dp"
-            android:layout_centerHorizontal="true"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="30dp" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome,"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="Welcome," />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Prime Minister Chambers"
-            android:textSize="20dp"
             android:id="@+id/home_screen_leader_text"
-            android:layout_centerHorizontal="true"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Prime Minister Chambers"
+            android:textSize="20dp" />
 
         <TextView
+            android:id="@+id/TEMP_OUTPUT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TEMP_OUTPUT"
-            android:layout_below="@id/home_screen_leader_text"/>
+            android:layout_below="@id/home_screen_leader_text" />
 
     </LinearLayout>
 
@@ -63,39 +64,40 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/home_screen_cabinet_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="CABINET"
-            android:id="@+id/home_screen_cabinet_button"/>
+            android:onClick="onFixMeSomeDay"
+            android:text="CABINET" />
 
         <Button
+            android:id="@+id/home_screen_policies_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="POLICIES"
-            android:id="@+id/home_screen_policies_button"/>
+            android:text="POLICIES" />
 
         <Button
+            android:id="@+id/home_screen_issues_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ISSUES"
-            android:id="@+id/home_screen_issues_button"/>
+            android:text="ISSUES" />
 
         <Button
+            android:id="@+id/home_screen_polls_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="POLLS"
-            android:id="@+id/home_screen_polls_button"/>
+            android:text="POLLS" />
 
         <Button
+            android:id="@+id/home_screen_statistics_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="STATS"
-            android:id="@+id/home_screen_statistics_button"/>
+            android:text="STATS" />
 
     </LinearLayout>
 

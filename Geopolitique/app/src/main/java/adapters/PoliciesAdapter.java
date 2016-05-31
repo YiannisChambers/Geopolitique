@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
+
+import geopolitique.id11699156.com.geopolitique.Constants;
+import geopolitique.id11699156.com.geopolitique.NumberHelper;
+import geopolitique.id11699156.com.geopolitique.PolicyActivity;
+import geopolitique.id11699156.com.geopolitique.R;
+import model.Cabinet;
+import model.Model;
+import model.Policy;
 
 /**
  * Created by yiannischambers on 29/05/2016.
@@ -41,7 +47,7 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
 
         final Policy policy  = mPolicies.get(position);
 
-        final int pos = position;
+        final int pos = Model.getPolicies().indexOf(policy);
 
 
             holder.mName.setText(policy.getName());

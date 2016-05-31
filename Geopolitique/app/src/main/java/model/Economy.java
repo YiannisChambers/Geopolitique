@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package model;
 
 /**
  * Created by yiannischambers on 20/05/2016.
@@ -38,11 +38,12 @@ public class Economy {
         double totalIncome = totalPersonalIncome + mExports;
 
         double taxes = calculateTaxes(totalIncome);
-        mTaxIncome = taxes; //calculateIncomeTax(country.getPopulation()));
+        mTaxIncome = taxes;
         mConsumption = (totalIncome - taxes) + ((totalIncome - taxes) * (mCompanyTaxRate / 100));
-        //mExports =  totalIncome * (country.getGovernment().getInternationalPopularity() / 100);
+        mIncome = totalIncome;
 
-        mGDP = totalIncome + taxes + mConsumption;
+        //GDP Calculation
+        mGDP = mIncome + mTaxIncome + mConsumption;
 
         double governmentSpending = country.getGovernment().getGovernmentSpending();
         mDeficitSurplusFigure = taxes - governmentSpending;
@@ -54,8 +55,8 @@ public class Economy {
 
         int workingPopulation = (int) (population - (population * (mUnemploymentRate / 100)));
 
-        return workingPopulation * mAverageIncome;
         //Assume that average income is 50K
+        return workingPopulation * mAverageIncome;
     }
 
 
@@ -85,6 +86,14 @@ public class Economy {
 
     public double getTaxIncome() {
         return mTaxIncome;
+    }
+
+    public double getConsumption() {
+        return mConsumption;
+    }
+
+    public double getIncome() {
+        return mIncome;
     }
 
     public void changeUnemploymentRate(double value) {

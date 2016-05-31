@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package model;
 
 import java.util.LinkedList;
 
@@ -43,7 +43,7 @@ public class Issue {
     }
 
     public boolean isResolved(){
-        mIsResolved = mSelectedOption == null;
+        mIsResolved = !(mSelectedOption == null);
         return mIsResolved;
     }
 

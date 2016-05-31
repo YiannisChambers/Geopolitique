@@ -3,6 +3,8 @@ package geopolitique.id11699156.com.geopolitique;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import model.Economy;
+
 /**
  * Created by yiannischambers on 29/05/2016.
  */

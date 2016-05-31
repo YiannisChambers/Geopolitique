@@ -1,8 +1,8 @@
-package geopolitique.id11699156.com.geopolitique;
+package model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Random;
+
+import geopolitique.id11699156.com.geopolitique.Constants;
 
 /**
  * Created by yiannischambers on 19/05/2016.
@@ -12,14 +12,17 @@ public class Model {
     static Country country;
     public static LinkedList<Policy> policies;
     public static LinkedList<Minister> ministers;
+    public static LinkedList<Issue> issues;
 
 
     public static void setUp(Leader leader){
         country = new Country(leader, "Australia", "Monarchy", 23000000, 1.4f);
         policies = new LinkedList<>();
         ministers = new LinkedList<>();
+        issues = new LinkedList<>();
         setUpMinisters();
         setUpPolicy();
+        setUpIssues();
     }
 
     public static Country getCountry() {
@@ -48,7 +51,7 @@ public class Model {
 
         country.getGovernment().getCabinet().setDefenceMinister(minister);
         country.getGovernment().getCabinet().setHealthMinister(minister2);
-        country.getGovernment().getCabinet().setEducationMinister(minister3);
+        //country.getGovernment().getCabinet().setEducationMinister(minister3);
         country.getGovernment().getCabinet().setForeignAffairsMinister(minister4);
         //country.getGovernment().getCabinet().setTreasurer(minister5);
 
@@ -86,8 +89,51 @@ public class Model {
         policies.add(p);
         policies.add(p2);
     }
+
     public static LinkedList<Policy> getPolicies() {
         return policies;
     }
 
+    public static LinkedList<Policy> getUnadoptedPolicies() {
+        LinkedList<Policy> unAdoptedPolicies = new LinkedList<>();
+        for(int i= 0; i < policies.size(); i++){
+            if(!Model.getCountry().getGovernment().getCabinet().getTotalPolicies().contains(policies.get(i))){
+                unAdoptedPolicies.add(policies.get(i));
+            }
+        }
+        return unAdoptedPolicies;
+    }
+
+
+
+    public static void setUpIssues(){
+        LinkedList<Option> options = new LinkedList<>();
+
+
+        LinkedList<Effect> negativeEffect = new LinkedList<Effect>();
+        negativeEffect.add(new Effect(Constants.POPULARITY, -5));
+
+        LinkedList<Effect> positiveEffect = new LinkedList<Effect>();
+        positiveEffect.add(new Effect(Constants.POPULARITY, 5));
+
+        LinkedList<Effect> neutralEffect = new LinkedList<Effect>();
+        negativeEffect.add(new Effect(Constants.POPULARITY, 0));
+
+        options.add(new Option("Defend your minister completely as a victim of unfounded and biased media abuse.", negativeEffect));
+        options.add(new Option("Distance yourself from the comments. Brush off the issue.", neutralEffect));
+        options.add(new Option("Demand the resignation of your minister immediately.", positiveEffect));
+        Issue issue = new Issue("Scandal!", "An affair involving a junior minister and his secretary has been outed by the tabloids. The press seeks your comment.", options);
+
+        issues.add(issue);
+    }
+
+    public static LinkedList<Issue> getIssues() {
+        LinkedList<Issue> unresolvedIssues = new LinkedList<>();
+        for(int i = 0; i < issues.size(); i++){
+            if(!(issues.get(i).isResolved())) {
+                unresolvedIssues.add(issues.get(i));
+            }
+        }
+        return unresolvedIssues;
+    }
 }

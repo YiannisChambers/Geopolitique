@@ -1,13 +1,13 @@
 package geopolitique.id11699156.com.geopolitique;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+
+import adapters.PoliciesAdapter;
+import model.Model;
 
 public class PoliciesScreen extends AppCompatActivity {
 
@@ -26,13 +26,13 @@ public class PoliciesScreen extends AppCompatActivity {
 
     }
 
-    private void setUpList(){
+    private void setUpList() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.policies_screen_recycler_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new PoliciesAdapter(this, Model.getPolicies());
+        mAdapter = new PoliciesAdapter(this, Model.getUnadoptedPolicies());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 

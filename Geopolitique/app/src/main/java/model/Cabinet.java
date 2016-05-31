@@ -1,9 +1,9 @@
-package geopolitique.id11699156.com.geopolitique;
-
-import android.app.usage.ConfigurationStats;
+package model;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+
+import geopolitique.id11699156.com.geopolitique.Constants;
 
 /**
  * Created by yiannischambers on 20/05/2016.

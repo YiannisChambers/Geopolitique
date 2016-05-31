@@ -65,4 +65,7 @@
     <string name="title_activity_polls_screen">PollsScreen</string>
     <string name="title_activity_policies_screen">PoliciesScreen</string>
     <string name="title_activity_policy">PolicyActivity</string>
+    <string name="title_activity_issues">IssuesActivity</string>
+    <string name="title_activity_issue_resolve">IssueResolveActivity</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
 </resources>

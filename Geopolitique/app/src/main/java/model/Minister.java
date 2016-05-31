@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package model;
 
 import java.util.LinkedList;
 import java.util.Random;

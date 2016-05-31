@@ -17,18 +17,15 @@ public class CreateExistingNationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_existing_nation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        Button startButton = (Button)findViewById(R.id.create_existing_nation_activity_create_nation_button);
-        final Intent startIntent = new Intent(this, HomeScreenActivity.class);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(startIntent);
-
-            }
-        });
     }
 
+    /**
+     * Comment me what i am doing here!!!! verdammnochmal
+     *
+     * @param view
+     */
+    public void onCreateNationClick(View view) {
+        Intent startIntent = new Intent(this, HomeScreenActivity.class);
+        startActivity(startIntent);
+    }
 }
