@@ -19,12 +19,18 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import data.PlayerRepo;
+import data.PolicyRepo;
+import data.RealmHelper;
 import model.Model;
+import model.Player;
 import model.Policy;
+import util.Constants;
+import util.NumberHelper;
 
 public class PolicyActivity extends AppCompatActivity {
 
-    int mPolicyPosition;
+    long mPolicyID;
     Policy mPolicy;
 
     @Override
@@ -35,9 +41,9 @@ public class PolicyActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        mPolicyPosition = intent.getIntExtra(Constants.INTENT_POLICY_NUMBER, 0);
+        mPolicyID = intent.getLongExtra(Constants.INTENT_POLICY_ID, (long) 0.0);
 
-        mPolicy = Model.getPolicies().get(mPolicyPosition);
+        mPolicy = PolicyRepo.getPolicyByID(mPolicyID);
 
         setViews();
         setBarChart();
@@ -61,7 +67,8 @@ public class PolicyActivity extends AppCompatActivity {
 
         final Context mContext = this;
 
-        if(Model.getCountry().getGovernment().checkIfMinister(mPolicy.getMinistry())){
+        Player player = PlayerRepo.getCurrentPlayer();
+        if(player.getCountry().getGovernment().checkIfMinister(mPolicy.getMinistry())){
             button.setEnabled(false);
             button.setText("Minister Not Selected");
         }
@@ -69,7 +76,9 @@ public class PolicyActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Model.getCountry().getGovernment().addPolicy(mPolicy);
+                RealmHelper.beginTransaction();
+                PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addPolicy(mPolicy);
+                RealmHelper.endTransaction();
 
                 Intent intent = new Intent(mContext, PoliciesScreen.class);
                 mContext.startActivity(intent);
@@ -82,24 +91,24 @@ public class PolicyActivity extends AppCompatActivity {
 
         ArrayList<String> XValues = new ArrayList<String>();
 
-        for(int i = 0; i < mPolicy.getEffect().size(); i++){
-            XValues.add(mPolicy.getEffect().get(i).getProperty());
+        for(int i = 0; i < mPolicy.getEffects().size(); i++){
+            XValues.add(mPolicy.getEffects().get(i).getProperty());
         }
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
         ArrayList<IBarDataSet> sets = new ArrayList<IBarDataSet>();
         //ArrayList<IBarDataSet> datasets = new ArrayList<IBarDataSet>();
 
-        for(int i = 0; i < mPolicy.getEffect().size(); i++){
+        for(int i = 0; i < mPolicy.getEffects().size(); i++){
             float effect = 0;
-            if(mPolicy.getEffect().get(i).getProperty() == Constants.AVERAGE_INCOME){
-                double avgIncome = (Model.getCountry().getEconomy().getAverageIncome());
-                int effectNumber = mPolicy.getEffect().get(i).getEffect();
+            if(mPolicy.getEffects().get(i).getProperty() == Constants.AVERAGE_INCOME){
+                double avgIncome = (PlayerRepo.getCurrentPlayer().getCountry().getEconomy().getAverageIncome());
+                int effectNumber = mPolicy.getEffects().get(i).getEffect();
                 effect = (float)(((avgIncome - (effectNumber + avgIncome)) / avgIncome) * 100);
             }
             else
             {
-                effect = (float)(mPolicy.getEffect().get(i).getEffect());
+                effect = (float)(mPolicy.getEffects().get(i).getEffect());
             }
             BarEntry entry = new BarEntry((float)effect, i);
             entries.add(entry);
@@ -108,7 +117,7 @@ public class PolicyActivity extends AppCompatActivity {
         for(int i = 0; i < entries.size(); i++) {
             LinkedList<BarEntry> entry = new LinkedList<BarEntry>();
             entry.add(entries.get(i));
-            BarDataSet set = new BarDataSet(entry, (mPolicy.getEffect().get(i).getProperty()));
+            BarDataSet set = new BarDataSet(entry, (mPolicy.getEffects().get(i).getProperty()));
             sets.add(set);
         }
 

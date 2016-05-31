@@ -2,22 +2,20 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 
 import java.util.LinkedList;
 
+import data.PlayerRepo;
 import model.Economy;
 import model.Model;
+import util.NumberHelper;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -32,7 +30,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     void setUpPieChart(){
-        Economy economy = Model.getCountry().getEconomy();
+        Economy economy = PlayerRepo.getCurrentPlayer().getCountry().getEconomy();
         PieChart chart = (PieChart)findViewById(R.id.statistics_screen_piechart);
 
         Entry incomeEntry = new Entry((float)economy.getIncome(), 0);
@@ -52,7 +50,7 @@ public class StatisticsActivity extends AppCompatActivity {
         PieData data = new PieData(xValues, set);
 
         chart.setData(data);
-        chart.setCenterText("$" + NumberHelper.getWordedVersion(Model.getCountry().getEconomy().getGDP()));
+        chart.setCenterText("$" + NumberHelper.getWordedVersion(economy.getGDP()));
     }
 
 }

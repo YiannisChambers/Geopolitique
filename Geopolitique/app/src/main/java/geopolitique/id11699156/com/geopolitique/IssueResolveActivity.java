@@ -3,16 +3,18 @@ package geopolitique.id11699156.com.geopolitique;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import data.IssueRepo;
+import data.PlayerRepo;
+import data.RealmHelper;
 import model.Issue;
 import model.Model;
+import util.Constants;
 
 public class IssueResolveActivity extends AppCompatActivity {
 
@@ -26,9 +28,9 @@ public class IssueResolveActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
-        int issuePosition = intent.getIntExtra(Constants.INTENT_ISSUE_NUMBER, 0);
+        long issueID = intent.getLongExtra(Constants.INTENT_ISSUE_ID, (long)0.0f);
 
-        mIssue = Model.getIssues().get(issuePosition);
+        mIssue = IssueRepo.getIssueByID(issueID);
 
         setViews();
     }
@@ -52,10 +54,10 @@ public class IssueResolveActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RealmHelper.beginTransaction();
                 mIssue.selectOption(0);
-                Model.getCountry().getGovernment().addIssue(mIssue);
-
-
+                PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(mIssue);
+                RealmHelper.endTransaction();
                 Intent intent = new Intent(mContext, IssuesActivity.class);
                 mContext.startActivity(intent);
             }
@@ -65,9 +67,10 @@ public class IssueResolveActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RealmHelper.beginTransaction();
                 mIssue.selectOption(1);
-                Model.getCountry().getGovernment().addIssue(mIssue);
-
+                PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(mIssue);
+                RealmHelper.endTransaction();
                 Intent intent = new Intent(mContext, IssuesActivity.class);
                 mContext.startActivity(intent);
             }
@@ -77,9 +80,10 @@ public class IssueResolveActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RealmHelper.beginTransaction();
                 mIssue.selectOption(2);
-                Model.getCountry().getGovernment().addIssue(mIssue);
-
+                PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(mIssue);
+                RealmHelper.endTransaction();
                 Intent intent = new Intent(mContext, IssuesActivity.class);
                 mContext.startActivity(intent);
             }

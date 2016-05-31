@@ -11,6 +11,7 @@ import android.view.View;
 
 import adapters.IssuesAdapter;
 import adapters.PoliciesAdapter;
+import data.IssueRepo;
 import model.Model;
 
 public class IssuesActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class IssuesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new IssuesAdapter(this, Model.getIssues());
+        mAdapter = new IssuesAdapter(this, IssueRepo.getAllUnresolvedIssues());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

@@ -12,14 +12,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import geopolitique.id11699156.com.geopolitique.Constants;
+import util.Constants;
 import geopolitique.id11699156.com.geopolitique.IssueResolveActivity;
-import geopolitique.id11699156.com.geopolitique.NumberHelper;
-import geopolitique.id11699156.com.geopolitique.PolicyActivity;
 import geopolitique.id11699156.com.geopolitique.R;
 
 import model.Cabinet;
-import model.Policy;
 import model.Issue;
 
 /**
@@ -48,7 +45,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
 
         final Issue issue  = mIssues.get(position);
 
-        final int pos = position;
+        final long ID = issue.getID();
 
 
         holder.mName.setText(issue.getName());
@@ -57,7 +54,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, IssueResolveActivity.class);
-                intent.putExtra(Constants.INTENT_ISSUE_NUMBER, pos);
+                intent.putExtra(Constants.INTENT_ISSUE_ID, ID);
                 mContext.startActivity(intent);
             }
         });

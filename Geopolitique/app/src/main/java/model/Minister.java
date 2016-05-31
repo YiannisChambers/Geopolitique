@@ -3,18 +3,26 @@ package model;
 import java.util.LinkedList;
 import java.util.Random;
 
+import data.MinisterRepo;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by yiannischambers on 20/05/2016.
  */
-public class Minister {
+public class Minister extends RealmObject{
+    @PrimaryKey
+    long mID;
+
     String mFirstName;
     String mLastName;
     int mKnowledge;
     int mExperience;
     int mWorkload;
     int mCurrentWorkload;
-    LinkedList<Policy> mPolicies;
 
+    RealmList<Policy> mPolicies;
 
     public Minister() {
         mFirstName = "John";
@@ -23,7 +31,7 @@ public class Minister {
         mExperience = new Random().nextInt(10) + 1;
         mWorkload = mKnowledge * mExperience;
         mCurrentWorkload = 0;
-        mPolicies = new LinkedList<Policy>();
+        mPolicies = new RealmList<Policy>();
     }
 
     public Minister(String first, String last, int knowledge, int experience) {
@@ -33,7 +41,12 @@ public class Minister {
         mExperience = experience;
         mWorkload = mKnowledge * mExperience;
         mCurrentWorkload = 0;
-        mPolicies = new LinkedList<Policy>();
+        mPolicies = new RealmList<Policy>();
+    }
+
+
+    public long getID() {
+        return mID;
     }
 
     public int getExperience() {
@@ -61,7 +74,7 @@ public class Minister {
         return mCurrentWorkload;
     }
 
-    public LinkedList<Policy> getPolicies() {
+    public RealmList<Policy> getPolicies() {
         return mPolicies;
     }
 
@@ -76,11 +89,13 @@ public class Minister {
         }
         mPolicies.add(policy);
         recalculateCurrentWorkload();
+        update();
     }
 
     public void removePolicy(Policy policy) {
         mPolicies.remove(policy);
         recalculateCurrentWorkload();
+        update();
     }
 
     private void recalculateCurrentWorkload() {
@@ -99,6 +114,15 @@ public class Minister {
         return cost;
     }
 
+    public void update(){
+        //MinisterRepo.updateMinister(this);
+    }
+
+    public void setID(long mID) {
+        this.mID = mID;
+    }
+
+    /*
     public boolean createdScandal(){
         int i = new Random().nextInt(100);
         if(i > mExperience){
@@ -106,4 +130,5 @@ public class Minister {
         }
         return false;
     }
+    */
 }

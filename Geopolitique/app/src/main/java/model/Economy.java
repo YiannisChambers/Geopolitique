@@ -1,21 +1,25 @@
 package model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by yiannischambers on 20/05/2016.
  */
-public class Economy {
+public class Economy extends RealmObject{
+
+    @PrimaryKey
+    long mID;
 
     double mGDP;
     double mUnemploymentRate;
 
     double mConsumption;
-    //double mInvestment;
     double mExports;
     double mIncome;
 
     double mDeficitSurplusFigure;
     double mDebt;
-    //double[] mIncomeTaxBrackets;  //This holds the cents paid on the dollar.
 
     double mIncomeTaxRate;
     double mCompanyTaxRate;
@@ -24,11 +28,16 @@ public class Economy {
 
     double mAverageIncome;
 
+
     public Economy() {
         mIncomeTaxRate = 40;
         mCompanyTaxRate = 30;
         mUnemploymentRate = 10;
         mAverageIncome = 50000;
+    }
+
+    public long getID() {
+        return mID;
     }
 
     public void calculateEconomy(Country country) {

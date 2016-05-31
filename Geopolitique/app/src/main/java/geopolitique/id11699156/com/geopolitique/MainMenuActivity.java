@@ -1,6 +1,8 @@
 package geopolitique.id11699156.com.geopolitique;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import data.PlayerRepo;
+import data.RealmHelper;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import model.Issue;
+import model.Minister;
+import model.Policy;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override
@@ -18,19 +28,10 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-
-        Button startButton = (Button)findViewById(R.id.main_menu_activity_start_new_button);
-        final Intent intent = new Intent(this, CreateNationActivity.class);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(intent);
-
-            }
-        });
+        new StartUpAsyncTask(this).execute();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,4 +54,51 @@ public class MainMenuActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public class StartUpAsyncTask extends AsyncTask<Void, Void, Void> {
+        Context mContext;
+
+        public StartUpAsyncTask(Context context) {
+            mContext = context;
+        }
+
+        protected Void doInBackground(Void... params) {
+            RealmConfiguration config = new RealmConfiguration
+                    .Builder(mContext)
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+            Realm.setDefaultConfiguration(config);
+
+            //Realm realm = Realm.getDefaultInstance();
+
+            //FOR TESTING - THIS WILL STOP PERSISTENCE
+            /*RealmHelper.beginTransaction();
+            realm.deleteAll();
+            realm.delete(Issue.class);
+            realm.delete(Policy.class);
+            realm.delete(Minister.class);
+            RealmHelper.endTransaction();*/
+
+            if (PlayerRepo.checkIfPlayerExists()) {
+                Intent intent = new Intent(mContext, HomeScreenActivity.class);
+                mContext.startActivity(intent);
+            } else {
+                setUpData();
+                Intent intent = new Intent(mContext, CreateExistingNationActivity.class);
+                mContext.startActivity(intent);
+            }
+            return null;
+        }
+
+        private void setUpData() {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
+
+

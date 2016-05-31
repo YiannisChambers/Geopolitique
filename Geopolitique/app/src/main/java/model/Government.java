@@ -1,22 +1,26 @@
 package model;
 
-import java.util.LinkedList;
-
-import geopolitique.id11699156.com.geopolitique.Constants;
+import data.GovernmentRepo;
+import util.Constants;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by yiannischambers on 20/05/2016.
  */
-public class Government {
+public class Government extends RealmObject {
+    @PrimaryKey
+    long mID;
+
     Leader mLeader;
+
     Cabinet mCabinet;
 
     double mPopularity;
     double mInternationalPopularity;
 
-    double mScandalCount;
-
-    LinkedList<Issue> mIssues;
+    RealmList<Issue> mIssues;
 
     public Government(){
         this(new Leader());
@@ -27,7 +31,11 @@ public class Government {
         mCabinet = new Cabinet();
         mPopularity = 51.00f;
         mInternationalPopularity = 51.00f;
-        mIssues = new LinkedList<Issue>();
+        mIssues = new RealmList<Issue>();
+    }
+
+    public long getID() {
+        return mID;
     }
 
     public Cabinet getCabinet() {
@@ -61,6 +69,7 @@ public class Government {
         else{
             mPopularity += value;
         }
+        //update();
 
     }
 
@@ -74,24 +83,26 @@ public class Government {
         else{
             mInternationalPopularity += value;
         }
+        //update();
 
     }
 
     public boolean checkIfMinister(String department){
-        if(department == Constants.FOREIGN_AFFAIRS){
+        if(department.equals(Constants.FOREIGN_AFFAIRS)){
             return mCabinet.getForeignAffairsMinister() == null;
         }
-        else if(department == Constants.TREASURY){
+        else if(department.equals(Constants.TREASURY)){
+            Minister treasurer = mCabinet.getTreasurer();
             return mCabinet.getTreasurer() == null;
         }
-        else if(department == Constants.DEFENCE)
+        else if(department.equals(Constants.DEFENCE))
         {
            return mCabinet.getDefenceMinister() == null;
         }
-        else if(department == Constants.EDUCATION){
+        else if(department.equals(Constants.EDUCATION)){
             return mCabinet.getEducationMinister() == null;
         }
-        else if(department == Constants.HEALTH){
+        else if(department.equals(Constants.HEALTH)){
             return mCabinet.getHealthMinister() == null;
         }
         return false;
@@ -99,29 +110,30 @@ public class Government {
 
     public void addPolicy(Policy policy){
        String department = policy.getMinistry();
-        if(department == Constants.FOREIGN_AFFAIRS){
+        if(department.equals(Constants.FOREIGN_AFFAIRS)){
             mCabinet.getForeignAffairsMinister().addPolicy(policy);
         }
-        else if(department == Constants.TREASURY){
+        else if(department.equals(Constants.TREASURY)){
             mCabinet.getTreasurer().addPolicy(policy);
         }
-        else if(department == Constants.DEFENCE)
+        else if(department.equals(Constants.DEFENCE))
         {
             mCabinet.getDefenceMinister().addPolicy(policy);
         }
-        else if(department == Constants.EDUCATION){
+        else if(department.equals(Constants.EDUCATION)){
             mCabinet.getEducationMinister().addPolicy(policy);
         }
-        else if(department == Constants.HEALTH){
+        else if(department.equals(Constants.HEALTH)){
             mCabinet.getHealthMinister().addPolicy(policy);
         }
     }
 
     public void addIssue(Issue issue){
         mIssues.add(issue);
+        //update();
     }
 
-    public LinkedList<Issue> getIssues() {
+    public RealmList<Issue> getIssues() {
         return mIssues;
     }
 
@@ -131,5 +143,9 @@ public class Government {
 
     public void resolveIssue(int position, int optionPosition){
         mIssues.get(position).selectOption(optionPosition);
+    }
+
+    public void update(){
+        //GovernmentRepo.updateGovernment(this);
     }
 }

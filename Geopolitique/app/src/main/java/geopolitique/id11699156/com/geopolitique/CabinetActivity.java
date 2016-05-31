@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import adapters.MinistersAdapter;
+import data.PlayerRepo;
 import model.Cabinet;
 import model.Model;
+import util.Constants;
 
 public class CabinetActivity extends AppCompatActivity{
 
@@ -30,7 +32,7 @@ public class CabinetActivity extends AppCompatActivity{
 
         mContext = this;
 
-        mCabinet = Model.getCountry().getGovernment().getCabinet();
+        mCabinet = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet();
         setUpList();
 
         TextView totalWorkload = (TextView)findViewById(R.id.cabinet_screen_total_workload_text);

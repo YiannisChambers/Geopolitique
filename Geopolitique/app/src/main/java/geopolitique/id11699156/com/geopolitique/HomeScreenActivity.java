@@ -11,10 +11,15 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import data.PlayerRepo;
+import data.RealmHelper;
+import io.realm.Realm;
 import model.Country;
 import model.Economy;
 import model.Leader;
 import model.Model;
+import model.Player;
+import util.NumberHelper;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
@@ -36,11 +41,11 @@ public class HomeScreenActivity extends AppCompatActivity {
 
 
         //THIS IS TEST DATA
-        Leader leader = new Leader("Francis", "Urquhart", "Prime Minister");
-        Model.setUp(leader);
+        //Leader leader = new Leader("Francis", "Urquhart", "Prime Minister");
+        //Model.setUp(leader);
 
         TextView welcomeText = (TextView) findViewById(R.id.home_screen_leader_text);
-        welcomeText.setText(leader.getShortNameWithTitle());
+        welcomeText.setText(PlayerRepo.getCurrentPlayer().getCountry().getLeader().getShortNameWithTitle());
 
 
         Button cabinetButton = (Button) findViewById(R.id.home_screen_cabinet_button);
@@ -94,10 +99,11 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     }
 
+
     void updateStats() {
 
         TextView updateText = (TextView) findViewById(R.id.TEMP_OUTPUT);
-        Country country = Model.getCountry();
+        Country country = PlayerRepo.getCurrentPlayer().getCountry();   //Model.getCountry();
         Economy economy = country.getEconomy();
         String nationStats = "POPUL: " + NumberHelper.getWordedVersion(country.getPopulation()) + "\n";
         String economyStats = "GDP: " + NumberHelper.getWordedVersion(economy.getGDP()) + ", UNEMP: " + economy.getUnemploymentRate() + "%, \n AVGINC: $" + NumberHelper.getWordedVersion(economy.getAverageIncome())
@@ -169,14 +175,15 @@ public class HomeScreenActivity extends AppCompatActivity {
                 days += 1;
                 hours = 0;
                 minutes = 0;
-                Model.getCountry().updateDaily();
+                updateDaily();
+
             }
             if (days == 7 || (days != 0 && days % 7 == 0)) {
                 if (!checkedWeek) {
                     checkedWeek = true;
                     minutes = 0;
                     weeks += 1;
-                    Model.getCountry().updateWeekly();
+                    updateWeekly();
                 }
             } else {
                 checkedWeek = false;
@@ -185,7 +192,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                 months += 1;
                 days = 0;
                 weeks = 0;
-                Model.getCountry().updateMonthly();
+                updateMonthly();
             }
 
 
@@ -208,6 +215,40 @@ public class HomeScreenActivity extends AppCompatActivity {
         String GetMonthText(int i) {
             return getResources().getStringArray(R.array.months)[i];
         }
+    }
+
+    private void updateDaily() {
+        //RealmHelper.beginTransaction();
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                Player player = PlayerRepo.getCurrentPlayer();
+                player.getCountry().updateDaily();
+            }
+        });
+    }
+
+    private void updateWeekly() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                Player player = PlayerRepo.getCurrentPlayer();
+                player.getCountry().updateWeekly();
+            }
+        });
+    }
+
+    private void updateMonthly() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                Player player = PlayerRepo.getCurrentPlayer();
+                player.getCountry().updateMonthly();
+            }
+        });
     }
 
 }

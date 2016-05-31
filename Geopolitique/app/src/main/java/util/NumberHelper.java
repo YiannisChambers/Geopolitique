@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package util;
 
 /**
  * Created by yiannischambers on 23/05/2016.

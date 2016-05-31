@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import geopolitique.id11699156.com.geopolitique.Constants;
-import geopolitique.id11699156.com.geopolitique.NumberHelper;
+import util.Constants;
+import util.NumberHelper;
 import geopolitique.id11699156.com.geopolitique.PolicyActivity;
 import geopolitique.id11699156.com.geopolitique.R;
 import model.Cabinet;
@@ -47,7 +47,7 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
 
         final Policy policy  = mPolicies.get(position);
 
-        final int pos = Model.getPolicies().indexOf(policy);
+        final long pos = policy.getID();
 
 
             holder.mName.setText(policy.getName());
@@ -60,7 +60,7 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PolicyActivity.class);
-                    intent.putExtra(Constants.INTENT_POLICY_NUMBER, pos);
+                    intent.putExtra(Constants.INTENT_POLICY_ID, pos);
                     mContext.startActivity(intent);
                 }
             });

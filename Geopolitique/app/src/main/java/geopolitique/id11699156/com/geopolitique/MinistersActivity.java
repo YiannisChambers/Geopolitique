@@ -10,8 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import adapters.MinistersAdapter;
+import data.MinisterRepo;
+import data.PlayerRepo;
+import data.RealmHelper;
 import model.Minister;
 import model.Model;
+import util.Constants;
 
 public class MinistersActivity extends AppCompatActivity {
 
@@ -40,14 +44,20 @@ public class MinistersActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new MinistersAdapter(this, Model.getMinisters(), true);
+        mAdapter = new MinistersAdapter(this, MinisterRepo.getAllMinistersNotInCabinet(), true);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-    public static void OnSetClick(View v, int position){
-        Minister minister = Model.getMinisters().get(position);
-        Model.getCountry().getGovernment().getCabinet().setMinister(ministerPosition, minister);
+    public static void OnSetClick(View v, long ID){
+        Minister minister = MinisterRepo.getMinisterByID(ID);
+
+        RealmHelper.beginTransaction();
+        PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().setMinister(ministerPosition, minister);
+        RealmHelper.endTransaction();
+
+        Minister treasurer = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTreasurer();
+
         Intent intent = new Intent(mContext, CabinetActivity.class);
         mContext.startActivity(intent);
     }

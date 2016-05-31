@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import adapters.PoliciesAdapter;
+import data.PlayerRepo;
+import data.PolicyRepo;
 import model.Model;
 
 public class PoliciesScreen extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class PoliciesScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new PoliciesAdapter(this, Model.getUnadoptedPolicies());
+        mAdapter = new PoliciesAdapter(this, PolicyRepo.getUnadoptedPolicies());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
@@ -43,9 +45,10 @@ public class PoliciesScreen extends AppCompatActivity {
         recyclerView2.setLayoutManager(layoutManager2);
 
         //Create and populate adapter
-        mAdapter2 = new PoliciesAdapter(this, Model.getCountry().getGovernment().getCabinet().getTotalPolicies());
+        mAdapter2 = new PoliciesAdapter(this, PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTotalPolicies());
         recyclerView2.setAdapter(mAdapter2);
         mAdapter2.notifyDataSetChanged();
     }
+
 
 }

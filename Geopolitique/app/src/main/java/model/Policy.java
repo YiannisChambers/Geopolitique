@@ -2,24 +2,39 @@ package model;
 
 import java.util.LinkedList;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by yiannischambers on 20/05/2016.
  */
-public class Policy {
-    String mName;
-    String mDescription;
-    LinkedList<Effect> mEffects;
-    int mSize;
-    double mCost;
-    int mTimeToComplete;
-    int mTimeRemaining;
-    String mMinistry;
-    double mPopularity;
+public class Policy extends RealmObject{
+    @PrimaryKey
+    long mID;
 
-    public Policy(String name, String description, LinkedList<Effect> effects, int size, double cost, String ministryCode) {
+    String mName;
+
+    String mDescription;
+
+    RealmList<Effect> mEffects;
+
+    int mSize;
+
+    double mCost;
+
+    int mTimeToComplete;
+
+    int mTimeRemaining;
+
+    String mMinistry;
+
+    public Policy(){}
+
+    public Policy(String name, String description, RealmList<Effect> effects, int size, double cost, String ministryCode) {
         mName = name;
         mDescription = description;
-        mEffects = new LinkedList<Effect>(effects);
+        mEffects = effects;
         mSize = size;
         mCost = cost;
         mMinistry = ministryCode;
@@ -30,7 +45,11 @@ public class Policy {
         mTimeRemaining = mTimeToComplete;
     }
 
-    public LinkedList<Effect> getEffect() {
+    public long getID() {
+        return mID;
+    }
+
+    public RealmList<Effect> getEffects() {
         return mEffects;
     }
 
@@ -62,7 +81,7 @@ public class Policy {
         mTimeRemaining -= 1;
     }
 
-    public void changeCost(double value){
+    /*public void changeCost(double value){
         int ratio = (int)mCost / mTimeToComplete;
 
         if(mCost - value < 0){
@@ -77,8 +96,13 @@ public class Policy {
         mTimeToComplete *= expandBy;
         setTimeToComplete(mTimeToComplete);
     }
+    */
 
     public String getMinistry() {
         return mMinistry;
+    }
+
+    public void setID(long mID) {
+        this.mID = mID;
     }
 }

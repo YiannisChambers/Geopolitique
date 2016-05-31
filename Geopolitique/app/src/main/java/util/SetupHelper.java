@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package util;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;

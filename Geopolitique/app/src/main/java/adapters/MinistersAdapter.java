@@ -54,7 +54,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
 
         final Minister minister = mMinisters.get(position);
 
-        final int pos = position;
+        long pos = 0;
 
         if(minister == null){
             holder.mStats.setVisibility(View.INVISIBLE);
@@ -62,6 +62,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         }
         else
         {
+            pos = minister.getID();
             holder.mName.setText(minister.getLastName() + ", " + minister.getFirstName().charAt(0));
             holder.mKnowledge.setText("" + minister.getKnowledge());
             holder.mExperience.setText("" + minister.getExperience());
@@ -70,20 +71,22 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
 
         holder.mTitle.setText(Cabinet.getTitle(position));
         if(isSettingMinister) {
+            final long p = pos;
             holder.mButton.setText("SET");
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MinistersActivity.OnSetClick(v, pos);
+                    MinistersActivity.OnSetClick(v, p);
                 }
             });
         }
         else
         {
+            final int q = position;
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CabinetActivity.OnChangeClick(v, pos);
+                    CabinetActivity.OnChangeClick(v, q);
                 }
             });
         }

@@ -1,4 +1,4 @@
-package geopolitique.id11699156.com.geopolitique;
+package util;
 
 /**
  * Created by yiannischambers on 19/05/2016.
@@ -19,6 +19,6 @@ public class Constants {
     public static final String INTERNATIONAL_POPULARITY = "Interntl. Popularity";
 
     public static final String INTENT_MINISTER_NUMBER = "IMF";
-    public static final String INTENT_ISSUE_NUMBER = "IIF";
-    public static final String INTENT_POLICY_NUMBER = "IPF";
+    public static final String INTENT_ISSUE_ID = "IIF";
+    public static final String INTENT_POLICY_ID = "IPF";
 }

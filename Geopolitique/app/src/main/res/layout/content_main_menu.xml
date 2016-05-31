@@ -23,27 +23,4 @@
         android:id="@+id/main_menu_activity_title"
         android:paddingBottom="50dp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/main_menu_activity_title">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/main_menu_activity_continue"
-            android:visibility="gone"
-            android:id="@+id/main_menu_activity_continue_button"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/main_menu_activity_start_new"
-            android:id="@+id/main_menu_activity_start_new_button"/>
-
-    </LinearLayout>
 </RelativeLayout>

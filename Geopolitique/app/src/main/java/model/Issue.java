@@ -2,27 +2,47 @@ package model;
 
 import java.util.LinkedList;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by yiannischambers on 29/05/2016.
  */
-public class Issue {
+public class Issue extends RealmObject{
+    @PrimaryKey
+    long mID;
+
     String mName;
     String mDescription;
-    LinkedList<Option> mOptions;
+    RealmList<Option> mOptions;
+
     Option mSelectedOption;
+
     boolean mIsResolved;
+
     boolean mIsFinished;
+
     int mStaleFactor;
 
-    public Issue(String name, String description, LinkedList<Option> options){
+    public Issue(){};
+
+
+    public Issue(String name, String description, RealmList<Option> options){
         mName = name;
         mDescription = description;
         mOptions = options;
         mIsFinished = false;
         mStaleFactor = 0;
+        isResolved();
     }
 
-    public LinkedList<Option> getOptions() {
+    public long getID() {
+        return mID;
+    }
+
+    public RealmList<Option> getOptions() {
         return mOptions;
     }
 
@@ -40,6 +60,7 @@ public class Issue {
 
     public void selectOption(int position){
         mSelectedOption = mOptions.get(position);
+        mIsResolved = true;
     }
 
     public boolean isResolved(){
@@ -55,6 +76,7 @@ public class Issue {
         mIsFinished = true;
     }
 
+
     public int getStaleFactor(){
         return mStaleFactor;
     }
@@ -62,4 +84,9 @@ public class Issue {
     public void incrementStaleFactor(){
         mStaleFactor += 1;
     }
+
+    public void setID(long mID) {
+        this.mID = mID;
+    }
 }
+

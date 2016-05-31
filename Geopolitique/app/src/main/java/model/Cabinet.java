@@ -3,12 +3,18 @@ package model;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import geopolitique.id11699156.com.geopolitique.Constants;
+import data.CabinetRepo;
+import util.Constants;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by yiannischambers on 20/05/2016.
  */
-public class Cabinet {
+public class Cabinet extends RealmObject{
+    @PrimaryKey
+    long mID;
+
     Minister mForeignAffairsMinister;
     Minister mTreasurer;
     Minister mEducationMinister;
@@ -16,6 +22,10 @@ public class Cabinet {
     Minister mHealthMinister;
 
     public Cabinet() {
+    }
+
+    public long getID() {
+        return mID;
     }
 
     public Minister getDefenceMinister() {
@@ -187,4 +197,7 @@ public class Cabinet {
         }
     }
 
+    public void setID(long mID) {
+        this.mID = mID;
+    }
 }

@@ -19,6 +19,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
+import data.PlayerRepo;
 import model.Model;
 
 public class PollsScreen extends AppCompatActivity {
@@ -43,11 +44,11 @@ public class PollsScreen extends AppCompatActivity {
         XValues.add("US");  XValues.add("THEM");
 
         ArrayList<BarEntry> ourEntries = new ArrayList<BarEntry>();
-        BarEntry ourEntry = new BarEntry((int) Model.getCountry().getGovernment().getPopularity(), 0);
+        BarEntry ourEntry = new BarEntry((int) PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getPopularity(), 0);
         ourEntries.add(ourEntry);
 
         ArrayList<BarEntry> theirEntries = new ArrayList<BarEntry>();
-        BarEntry theirEntry = new BarEntry((int) (100 - Model.getCountry().getGovernment().getPopularity()), 1);
+        BarEntry theirEntry = new BarEntry((int) (100 - PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getPopularity()), 1);
         theirEntries.add(theirEntry);
 
         BarDataSet ourSet = new BarDataSet(ourEntries, "US");
