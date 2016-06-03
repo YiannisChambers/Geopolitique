@@ -1,25 +1,44 @@
 package geopolitique.id11699156.com.geopolitique;
 
+import android.app.ActivityManager;
+import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+
 import java.util.Calendar;
 
 import data.PlayerRepo;
 import data.RealmHelper;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import model.Country;
 import model.Economy;
+import model.Issue;
 import model.Leader;
+import model.Minister;
 import model.Model;
 import model.Player;
+import model.Policy;
+
+import services.TimerIntentService;
+import util.Constants;
 import util.NumberHelper;
+import util.SetupHelper;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
@@ -29,6 +48,10 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     Model model;
 
+
+    private static boolean isRunning = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,18 +60,41 @@ public class HomeScreenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mTimerText = (TextView) findViewById(R.id.home_screen_time_text);
-        new UpdateTimerAsyncTask().execute();
 
 
-        //THIS IS TEST DATA
+        if(!isRunning) {
+            new UpdateTimerAsyncTask().execute();
+            isRunning = true;
+        }
+
+        /*THIS IS TEST DATA
         //Leader leader = new Leader("Francis", "Urquhart", "Prime Minister");
         //Model.setUp(leader);
+        RealmConfiguration config = new RealmConfiguration
+                .Builder(this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
+
+        //THIS IS FOR TESTING
+        Realm realm = Realm.getDefaultInstance();
+        RealmHelper.beginTransaction();
+        realm.deleteAll();
+        realm.delete(Issue.class);
+        realm.delete(Policy.class);
+        realm.delete(Minister.class);
+        RealmHelper.endTransaction();
+        */
 
         TextView welcomeText = (TextView) findViewById(R.id.home_screen_leader_text);
         welcomeText.setText(PlayerRepo.getCurrentPlayer().getCountry().getLeader().getShortNameWithTitle());
 
 
-        Button cabinetButton = (Button) findViewById(R.id.home_screen_cabinet_button);
+        setUpToolBar();
+
+
+
+        /*Button cabinetButton = (Button) findViewById(R.id.home_screen_cabinet_button);
         final Intent cabinetIntent = new Intent(this, CabinetActivity.class);
         cabinetButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +139,68 @@ public class HomeScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(statisticsIntent);
             }
-        });
+        });*/
 
         updateStats();
 
     }
 
+
+    private void setUpToolBar() {
+        /*
+        TOOL BAR
+         */
+        final AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.home_screen_bottom_navigation);
+
+        // Create items
+        SetupHelper.setUpToolBar(bottomNavigation, 2);
+
+        final Context context = this;
+        // Set listener
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, boolean wasSelected) {
+                switch (position) {
+                    case 0: {
+                        final Intent cabinetIntent = new Intent(context, CabinetActivity.class);
+                        startActivity(cabinetIntent);
+                        bottomNavigation.setCurrentItem(2);
+                        break;
+                    }
+                    case 1: {
+                        final Intent policiesIntent = new Intent(context, PoliciesScreen.class);
+                        startActivity(policiesIntent);
+                        bottomNavigation.setCurrentItem(2);
+                        break;
+                    }
+
+                    case 2: {
+                        break;
+                    }
+
+                    case 3: {
+                        final Intent issuesIntent = new Intent(context, IssuesActivity.class);
+                        startActivity(issuesIntent);
+                        bottomNavigation.setCurrentItem(2);
+                        break;
+                    }
+
+                    case 4: {
+                        final Intent pollsIntent = new Intent(context, PollsScreen.class);
+                        startActivity(pollsIntent);
+                        bottomNavigation.setCurrentItem(2);
+                        break;
+                    }
+
+                    default: {
+                        ;
+                        break;
+                    }
+                }
+
+            }
+        });
+    }
 
     void updateStats() {
 
@@ -116,12 +218,31 @@ public class HomeScreenActivity extends AppCompatActivity {
     public void onFixMeSomeDay(View view) {
     }
 
+    /*
+    private class ResponseReceiver extends BroadcastReceiver {
+        // Prevents instantiation
+        private ResponseReceiver() {
+        }
+        // Called when the BroadcastReceiver gets an Intent it's registered to receive
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateStats();
+        /*
+         * Handle Intents here.
+
+        }
+    }
+    */
+
+
     private class UpdateTimerAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private boolean mIsRunning = true;
         private Calendar mCalendar;
 
         private int seconds, minutes, hours, days, weeks, months, years;
+        private int issueNotes, statisticNotes;
         private boolean checkedWeek = false;
 
         @Override
@@ -167,6 +288,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
 
+            AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.home_screen_bottom_navigation);
+
             if (minutes >= 60) {
                 hours += 1;
                 minutes = 0;
@@ -184,6 +307,8 @@ public class HomeScreenActivity extends AppCompatActivity {
                     minutes = 0;
                     weeks += 1;
                     updateWeekly();
+                    statisticNotes += 1;
+                    bottomNavigation.setNotification(statisticNotes + "", 4);
                 }
             } else {
                 checkedWeek = false;
@@ -203,7 +328,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             mTimerText.setText(mCalendar.getTime().toString());//(mCalendar.HOUR_OF_DAY + ":" + mCalendar.MINUTE + ":" + mCalendar.SECOND + "\n" +
             //mCalendar.DAY_OF_MONTH + " " + mCalendar.getDisplayName(mCalendar.MONTH, Calendar.LONG, Locale.getDefault()) + ", " + mCalendar.YEAR);
 
-
             mIsRunning = true;
 
             updateStats();
@@ -215,40 +339,44 @@ public class HomeScreenActivity extends AppCompatActivity {
         String GetMonthText(int i) {
             return getResources().getStringArray(R.array.months)[i];
         }
-    }
 
-    private void updateDaily() {
-        //RealmHelper.beginTransaction();
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                Player player = PlayerRepo.getCurrentPlayer();
-                player.getCountry().updateDaily();
-            }
-        });
-    }
 
-    private void updateWeekly() {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                Player player = PlayerRepo.getCurrentPlayer();
-                player.getCountry().updateWeekly();
-            }
-        });
-    }
+        private void updateDaily() {
+            //RealmHelper.beginTransaction();
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm bgRealm) {
+                    Player player = PlayerRepo.getCurrentPlayer();
+                    player.getCountry().updateDaily();
+                }
+            });
+        }
 
-    private void updateMonthly() {
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                Player player = PlayerRepo.getCurrentPlayer();
-                player.getCountry().updateMonthly();
-            }
-        });
-    }
+        private void updateWeekly() {
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm bgRealm) {
+                    Player player = PlayerRepo.getCurrentPlayer();
+                    player.getCountry().updateWeekly();
+                }
+            });
 
+
+        }
+
+        private void updateMonthly() {
+            Realm realm = Realm.getDefaultInstance();
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm bgRealm) {
+                    Player player = PlayerRepo.getCurrentPlayer();
+                    player.getCountry().updateMonthly();
+                }
+            });
+        }
+
+
+    }
 }

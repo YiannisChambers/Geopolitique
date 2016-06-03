@@ -28,8 +28,22 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        new StartUpAsyncTask(this).execute();
+        RealmConfiguration config = new RealmConfiguration
+                .Builder(this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
 
+        //THIS IS FOR TESTING
+        Realm realm = Realm.getDefaultInstance();
+        RealmHelper.beginTransaction();
+        realm.deleteAll();
+        realm.delete(Issue.class);
+        realm.delete(Policy.class);
+        realm.delete(Minister.class);
+        RealmHelper.endTransaction();
+
+        new StartUpAsyncTask(this).execute();
     }
 
 
@@ -63,21 +77,6 @@ public class MainMenuActivity extends AppCompatActivity {
         }
 
         protected Void doInBackground(Void... params) {
-            RealmConfiguration config = new RealmConfiguration
-                    .Builder(mContext)
-                    .deleteRealmIfMigrationNeeded()
-                    .build();
-            Realm.setDefaultConfiguration(config);
-
-            //Realm realm = Realm.getDefaultInstance();
-
-            //FOR TESTING - THIS WILL STOP PERSISTENCE
-            /*RealmHelper.beginTransaction();
-            realm.deleteAll();
-            realm.delete(Issue.class);
-            realm.delete(Policy.class);
-            realm.delete(Minister.class);
-            RealmHelper.endTransaction();*/
 
             if (PlayerRepo.checkIfPlayerExists()) {
                 Intent intent = new Intent(mContext, HomeScreenActivity.class);

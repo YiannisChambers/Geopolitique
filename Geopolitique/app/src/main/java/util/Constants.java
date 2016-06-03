@@ -21,4 +21,6 @@ public class Constants {
     public static final String INTENT_MINISTER_NUMBER = "IMF";
     public static final String INTENT_ISSUE_ID = "IIF";
     public static final String INTENT_POLICY_ID = "IPF";
+
+    public static final String UPDATE_STATS = "US";
 }

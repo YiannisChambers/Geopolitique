@@ -2,12 +2,16 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import adapters.MinistersAdapter;
 import data.MinisterRepo;
@@ -36,7 +40,61 @@ public class MinistersActivity extends AppCompatActivity {
         mContext = this;
 
         setUpList();
+        setUpToolBar();
     }
+
+    private void setUpToolBar(){
+        /*
+        TOOL BAR
+         */
+        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.ministers_screen_bottom_navigation);
+
+
+        final Context context = this;
+        // Set listener
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, boolean wasSelected) {
+                switch(position){
+                    case 0:{
+                        break;
+                    }
+                    case 1:{
+                        final Intent policiesIntent = new Intent(context, PoliciesScreen.class);
+                        startActivity(policiesIntent);
+                        break;
+                    }
+
+                    case 2:{
+                        final Intent homeIntent = new Intent(context, HomeScreenActivity.class);
+                        startActivity(homeIntent);
+                        break;
+                    }
+
+                    case 3:{
+                        final Intent issuesIntent = new Intent(context, IssuesActivity.class);
+                        startActivity(issuesIntent);
+                        break;
+                    }
+
+                    case 4:{
+                        final Intent pollsIntent = new Intent(context, PollsScreen.class);
+                        startActivity(pollsIntent);
+                        break;
+                    }
+
+                    case 5:{
+                        final Intent statisticsIntent = new Intent(context, StatisticsActivity.class);
+                        startActivity(statisticsIntent);
+                        break;
+                    }
+
+                    default: {; break;}
+                }
+            }
+        });
+    }
+
 
     private void setUpList(){
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.ministers_screen_recycler_view);
