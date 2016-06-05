@@ -1,7 +1,13 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +24,17 @@ import util.NumberHelper;
 import geopolitique.id11699156.com.geopolitique.PolicyActivity;
 import geopolitique.id11699156.com.geopolitique.R;
 import model.Cabinet;
-import model.Model;
 import model.Policy;
 
 /**
- * Created by yiannischambers on 29/05/2016.
+ * Ministers Adapter Class:
+ * Defines an Minister adapter for use on the  CabinetScreen and the MinistersActivity
+ * to list all Ministers in the database for manipulation.
  */
 public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.PoliciesAdapterViewHolder> {
 
     private ArrayList<Policy> mPolicies;
     private Context mContext;
-    private Cabinet mCabinet;
     private PoliciesScreen mActivity;
 
     public PoliciesAdapter(Context context, LinkedList<Policy> policies, PoliciesScreen screen) {
@@ -47,27 +53,30 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
     @Override
     public void onBindViewHolder(PoliciesAdapterViewHolder holder, int position) {
 
-        final Policy policy  = mPolicies.get(position);
+        //Get current policy
+        final Policy policy = mPolicies.get(position);
 
         final long pos = policy.getID();
 
+        //Set the values of the views on the card.
+        holder.mName.setText(policy.getName());
+        holder.mDescription.setText(policy.getDescription());
+        holder.mSize.setText(policy.getSize() + "");
+        holder.mCost.setText("" + NumberHelper.getWordedVersion(policy.getCost()));
+        holder.mTimeToComplete.setText("" + policy.getTimeToComplete());
 
-            holder.mName.setText(policy.getName());
-            holder.mDescription.setText(policy.getDescription());
-            holder.mSize.setText(policy.getSize() + "");
-            holder.mCost.setText("" + NumberHelper.getWordedVersion(policy.getCost()));
-            holder.mTimeToComplete.setText("" + policy.getTimeToComplete());
+        //Set up a listener for the button to go to the detailed Policy screen
+        holder.mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PolicyActivity.class);
+                //Place the policy ID in the Intent for retrieval
+                intent.putExtra(Constants.INTENT_POLICY_ID, pos);
+                mContext.startActivity(intent);
+                mActivity.finish();
 
-            holder.mButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, PolicyActivity.class);
-                    intent.putExtra(Constants.INTENT_POLICY_ID, pos);
-                    mContext.startActivity(intent);
-                    mActivity.finish();
-
-                }
-            });
+            }
+        });
 
         holder.itemView.setTag(position);
     }
@@ -77,6 +86,10 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
         return mPolicies.toArray().length;
     }
 
+
+    /**
+     * Viewholder Class to hold the View variables for a Policy Item.
+     */
     public class PoliciesAdapterViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mName;
@@ -92,7 +105,7 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
             //Initialise fields from Views on row
             mName = (TextView) itemView.findViewById(R.id.policy_adapter_name);
             mDescription = (TextView) itemView.findViewById(R.id.policy_adapter_description);
-            mSize  = (TextView) itemView.findViewById(R.id.policy_adapter_size);
+            mSize = (TextView) itemView.findViewById(R.id.policy_adapter_size);
             mCost = (TextView) itemView.findViewById(R.id.policy_adapter_cost);
             mTimeToComplete = (TextView) itemView.findViewById(R.id.policy_adapter_time);
             mButton = (Button) itemView.findViewById(R.id.policy_adapter_change_button);

@@ -69,6 +69,7 @@
     <string name="title_activity_issue_resolve">IssueResolveActivity</string>
     <string name="title_activity_statistics">StatisticsActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Polls Fragment Strings-->
+    <string name="polls_fragment_us_text">US</string>
+    <string name="polls_fragment_them_text">THEM</string>
 </resources>

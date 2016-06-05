@@ -1,20 +1,29 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package data;
 
 import java.util.LinkedList;
-
 import io.realm.Realm;
-import io.realm.RealmResults;
 import model.Option;
 
 /**
  * Created by yiannischambers on 1/06/2016.
  */
 public class OptionRepo {
+    /**
+     * Creates and adds a new Option object to the Database.
+     *
+     * @param option The Option object to add to the database.
+     * @return
+     */
     public static Option createNewOption(Option option){
         Realm realm = Realm.getDefaultInstance();
 
-        //if(!realm.isInTransaction())
         realm.beginTransaction();
+        //Set new object to have the next ID in the database.
         option.setID(getNextKey());
         Option createdIssue = realm.copyToRealm(option);
 
@@ -23,16 +32,6 @@ public class OptionRepo {
         return createdIssue;
     }
 
-    public static void createNewOptions(LinkedList<Option> issues){
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-        for(int i = 0; i < issues.size(); i++){
-            issues.get(i).setID(getNextKey());
-            realm.copyToRealm(issues.get(i));
-        }
-        realm.commitTransaction();
-    }
 
     public static int getNextKey()
     {   Realm realm = Realm.getDefaultInstance();

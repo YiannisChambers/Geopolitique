@@ -2,7 +2,6 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import adapters.MinistersAdapter;
 import data.MinisterRepo;
 import data.PlayerRepo;
 import data.RealmHelper;
 import model.Minister;
-import model.Model;
 import util.Constants;
 
 public class MinistersActivity extends AppCompatActivity {

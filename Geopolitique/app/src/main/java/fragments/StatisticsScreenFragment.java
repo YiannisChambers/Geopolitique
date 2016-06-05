@@ -1,8 +1,6 @@
 package fragments;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,8 +29,6 @@ public class StatisticsScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //setUpPieChart();
 
     }
 
@@ -73,5 +69,6 @@ public class StatisticsScreenFragment extends Fragment {
 
         chart.setData(data);
         chart.setCenterText("$" + NumberHelper.getWordedVersion(economy.getGDP()));
+        chart.setDescription("");
     }
 }

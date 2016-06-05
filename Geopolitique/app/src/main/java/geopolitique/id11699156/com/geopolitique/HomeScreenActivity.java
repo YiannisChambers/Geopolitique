@@ -1,68 +1,41 @@
 package geopolitique.id11699156.com.geopolitique;
 
-import android.app.ActivityManager;
-import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.Random;
 
-import data.IssueRepo;
 import data.PlayerRepo;
-import data.RealmHelper;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import model.Country;
-import model.Economy;
-import model.Issue;
-import model.Leader;
-import model.Minister;
-import model.Model;
+import model.TestData;
 import model.Player;
-import model.Policy;
 
-import services.TimerIntentService;
 import util.Constants;
-import util.NumberHelper;
 import util.SetupHelper;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
-    private TextView mTimerText;
-    private TextView mDateText;
+    private static boolean isRunning = false;
     // private boolean mScreenIsRunning;
     public int mDays, mWeeks, mMonths;
-
-    Model model;
-
-
+    TestData testData;
     AHBottomNavigation bottomNavigation;
+    private TextView mTimerText;
+    private TextView mDateText;
     private int issueNotes, statisticNotes;
-    private static boolean isRunning = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +57,6 @@ public class HomeScreenActivity extends AppCompatActivity {
 
 
         setUpToolBar();
-
-
-        updateStats();
 
     }
 
@@ -173,19 +143,6 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     }
 
-    void updateStats() {
-
-        TextView updateText = (TextView) findViewById(R.id.TEMP_OUTPUT);
-        Country country = PlayerRepo.getCurrentPlayer().getCountry();   //Model.getCountry();
-        Economy economy = country.getEconomy();
-        String nationStats = "POPUL: " + NumberHelper.getWordedVersion(country.getPopulation()) + "\n";
-        String economyStats = "GDP: " + NumberHelper.getWordedVersion(economy.getGDP()) + ", UNEMP: " + economy.getUnemploymentRate() + "%, \n AVGINC: $" + NumberHelper.getWordedVersion(economy.getAverageIncome())
-                + ", GOVT.  INCOME: " + NumberHelper.getWordedVersion(economy.getTaxIncome()) + "\n DEFICIT: " + NumberHelper.getWordedVersion(economy.getDeficitSurplusFigure()) + ", DEBT: $" + NumberHelper.getWordedVersion(economy.getDebt()) + "\n";
-        String popularity = "TOTAL SPENDING: " + NumberHelper.getWordedVersion(country.getGovernment().getGovernmentSpending()) + "\n POPULARITY: " + NumberHelper.getWordedVersion(country.getGovernment().getPopularity()) + "%, INT. POP: " + NumberHelper.getWordedVersion(country.getGovernment().getInternationalPopularity()) + "%" + "\n";
-        String days = "DAYS: " + mDays + ", WEEKS: " + mWeeks + ", MONTHS: " + mMonths;
-        updateText.setText(nationStats + economyStats + popularity + days);
-
-    }
 
     public void onFixMeSomeDay(View view) {
     }
@@ -309,24 +266,14 @@ public class HomeScreenActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             while (mIsRunning) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-                //mCalendar.add(Calendar.HOUR, 1);
-                //hours += 1;
-
                 mCalendar.add(Calendar.HOUR, 1);
                 hours += 1;
                 publishProgress();
-
-                //CHANGED TO MINUTE FOR TESTING PURPOSES
-
-                //mCalendar.add(Calendar.SECOND, 1);
-
-                //OTHER
-                //mCalendar.set(mCalendar.YEAR, mCalendar.MONTH, mCalendar.DAY_OF_MONTH, mCalendar.HOUR_OF_DAY, mCalendar.MINUTE, mCalendar.SECOND + 1);
             }
             return null;
         }
@@ -370,15 +317,11 @@ public class HomeScreenActivity extends AppCompatActivity {
             mMonths = months;
 
             DateFormat format = DateFormat.getTimeInstance();
-            mTimerText.setText(format.format(mCalendar.getTime()));//(mCalendar.HOUR_OF_DAY + ":" + mCalendar.MINUTE + ":" + mCalendar.SECOND + "\n" +
+            mTimerText.setText(format.format(mCalendar.getTime()));
 
             mDateText.setText(DateFormat.getDateInstance().format(mCalendar.getTime()));
 
-            //mCalendar.DAY_OF_MONTH + " " + mCalendar.getDisplayName(mCalendar.MONTH, Calendar.LONG, Locale.getDefault()) + ", " + mCalendar.YEAR);
-
             mIsRunning = true;
-
-            updateStats();
 
             super.onProgressUpdate(values);
 
@@ -430,7 +373,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         }
 
         private void addRandomIssue(){
-            Model.addRandomIssue();
+            TestData.addRandomIssue();
             issueNotes += 1;
             bottomNavigation.setNotification(issueNotes + "", 3);
             sendIssueNotification();

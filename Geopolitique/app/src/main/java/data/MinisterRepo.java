@@ -1,20 +1,31 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
+
 package data;
 
 import java.util.LinkedList;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 import model.Minister;
-import model.Player;
 
 /**
  * Created by yiannischambers on 1/06/2016.
  */
 public class MinisterRepo {
+    /**
+     * Creates and adds a new Minister object to the Database.
+     *
+     * @param minister The Minister object to add to the database.
+     * @return
+     */
     public static Minister createNewMinister(Minister minister){
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
+        //Set new object to have the next ID in the database.
         minister.setID(getNextKey());
         Minister createdMinister = realm.copyToRealm(minister);
         realm.commitTransaction();
@@ -33,11 +44,6 @@ public class MinisterRepo {
         realm.commitTransaction();
     }
 
-    public static LinkedList<Minister> getAllMinisters(){
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Minister> results = realm.where(Minister.class).findAll();
-        return RealmHelper.getLinkedListFromRealmResults(results);
-    }
 
     public static LinkedList<Minister> getAllMinistersNotInCabinet(){
         Realm realm = Realm.getDefaultInstance();
@@ -59,20 +65,6 @@ public class MinisterRepo {
         Realm realm = Realm.getDefaultInstance();
         Minister minister = realm.where(Minister.class).equalTo("mID", ID).findFirst();
         return minister;
-    }
-
-    public static void updateMinister(Minister minister){
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(minister);
-        realm.commitTransaction();
-    }
-
-    public static void deleteAll(){
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Minister> results = realm.where(Minister.class).findAll();
-        results.deleteAllFromRealm();
     }
 
     public static int getNextKey()

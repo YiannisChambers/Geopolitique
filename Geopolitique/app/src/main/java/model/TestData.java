@@ -18,28 +18,45 @@ import util.Constants;
 import io.realm.RealmList;
 
 /**
- * Created by yiannischambers on 19/05/2016.
+ * Class to set up all the dummy data that will already be in the database
+ * when the program is launched for the first time.
+ *
+ * WARNING: HORRIBLE CODE AHEAD.
+ * There will be many public static methods, and hardcoded strings
+ * all in aid of facilitating easy database population.
  */
-public class Model {
+public class TestData {
 
-    static Country country;
     public static LinkedList<Policy> policies;
     public static LinkedList<Minister> ministers;
     public static LinkedList<Issue> issues;
     public static LinkedList<ExistingCountry> existingCountries;
     public static LinkedList<LinkedList<Option>> optionsList;
 
+    /**
+     * Create all test data for the first time
+     */
     public static void setUpTestData(){
-        Model.setUpMinisters();
-        Model.setUpPolicy();
-        Model.setUpIssues();
-        Model.setUpExistingCountries();
+        TestData.setUpMinisters();
+        TestData.setUpPolicy();
+        TestData.setUpIssues();
+        TestData.setUpExistingCountries();
 
-        MinisterRepo.createNewMinisters(Model.getMinisters());
-        PolicyRepo.createNewPolicies(Model.getPolicies());
-        IssueRepo.createNewIssues(Model.getIssues());
+        MinisterRepo.createNewMinisters(TestData.getMinisters());
+        PolicyRepo.createNewPolicies(TestData.getPolicies());
+        IssueRepo.createNewIssues(TestData.getIssues());
     }
 
+    /**
+     * Ensure that the Issues are initialised if the database has already been created.
+     */
+    public static void setUpTestDataWithExistingDatabase(){
+        setUpIssues();
+    }
+
+    /**
+     * Create a list of Minsters to populate the database with.
+     */
     public static void setUpMinisters() {
         ministers = new LinkedList<>();
         ministers.add(new Minister("Jane", "Carruthers", 5, 10));
@@ -54,25 +71,29 @@ public class Model {
         ministers.add(new Minister("Julia", "Urquhart", 10, 10));
         ministers.add(new Minister("Sophie", "de Arbanville", 6, 7));
         ministers.add(new Minister("Genevieve", "d'Arc", 7, 6));
-
-
     }
 
     public static LinkedList<Minister> getMinisters() {
         return ministers;
     }
 
-
+    /**
+     * Create a series of policies to populate the database with
+     */
     public static void setUpPolicy() {
 
+        //Create new linked list to store all policies
         policies = new LinkedList<>();
+
+        //Create a list of effects and populate it
         RealmList<Effect> effects = new RealmList<Effect>();
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.INCOME_TAX_RATE, -5)));
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.AVERAGE_INCOME, 1500)));
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, -5)));
-
+        //Create a new Policy with those effects
         policies.add(new Policy("Negative Gearing", "Allows citizens to deduct rental losses from taxes", effects, 10, 1500000000f, Constants.TREASURY));
 
+        //Rinse and repeat the same process to make another policy.
         effects= new RealmList<Effect>();
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.INCOME_TAX_RATE, 2)));
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.AVERAGE_INCOME, -500)));
@@ -81,8 +102,8 @@ public class Model {
 
         Policy p = new Policy("Foreign Aid", "Financial grants sent abroad", effects, 5, 5000000000f, Constants.FOREIGN_AFFAIRS);
         p.setTimeToComplete(5);
-        //country.getGovernment().getCabinet().getForeignAffairsMinister().addPolicy(p);
 
+        //And again.
         effects= new RealmList<Effect>();
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.INCOME_TAX_RATE, 5)));
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.AVERAGE_INCOME, -1000)));
@@ -91,8 +112,8 @@ public class Model {
 
         Policy p2 = new Policy("Defence Spending", "Money put towards the nation's defence forces", effects, 2, 2500000000f, Constants.DEFENCE);
         p2.setTimeToComplete(2);
-        //country.getGovernment().getCabinet().getDefenceMinister().addPolicy(p2);
 
+        //Add completed Policies to policy list.
         policies.add(p);
         policies.add(p2);
     }
@@ -152,8 +173,6 @@ public class Model {
 
         Issue issue = new Issue(title, description, options);
 
-        //Adds issue to the DB
-        //Issue issue = IssueRepo.createNewIssue(new Issue(title, description, options));
         return issue;
     }
 
@@ -162,33 +181,36 @@ public class Model {
     }
 
     public static void addRandomIssue(){
-        Realm.getDefaultInstance();
-        Random r = new Random();
-        int position = r.nextInt(issues.size());
-        Issue original = issues.get(position);
-        LinkedList<Option> options = optionsList.get(position);
-        Issue issue = createIssue(original.getName(), original.getDescription(), options.get(0).getDescription(),
-                options.get(1).getDescription(), options.get(2).getDescription());
+        if(new Random().nextBoolean()) {
+            Realm.getDefaultInstance();
+            Random r = new Random();
+            int position = r.nextInt(issues.size());
+            Issue original = issues.get(position);
+            LinkedList<Option> options = optionsList.get(position);
+            Issue issue = createIssue(original.getName(), original.getDescription(), options.get(0).getDescription(),
+                    options.get(1).getDescription(), options.get(2).getDescription());
 
-        //issues.add(original);//issue);
-        IssueRepo.createNewIssue(issue);//createNewIssue(issue);
+            IssueRepo.createNewIssue(issue);
+        }
     }
 
+    /**
+     * Create Existing Countries to populate the database with
+     * so the user can choose the country to start with
+     */
     private static void setUpExistingCountries(){
         existingCountries = new LinkedList<>();
 
+        //Create countries (adding entities to the database as it happens)
         Country australia = CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Malcolm", "Turnbull", "Prime Minister")), "Australia", 23000000, 1.4f, EconomyRepo.createNewEconomy(new Economy(40, 30, 5, 50000)), R.drawable.australia_flag));
         Country britain =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("David", "Cameron", "Prime Minister")), "Britain", 64100000, 1.7f, EconomyRepo.createNewEconomy(new Economy(20, 45, 5, 50000)), R.drawable.britain_flag));
         Country russia =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Vladimir", "Putin", "President")), "Russia", 163000000, 1.2f, EconomyRepo.createNewEconomy(new Economy(30, 50, 4, 50000)), R.drawable.russia_flag));
         Country unitedStates =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Barack", "Obama", "President")),"United States", 300000000, 1.4f, EconomyRepo.createNewEconomy(new Economy(20, 30, 5, 50000)), R.drawable.us_flag));
 
+        //Add to list
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(australia)));
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(britain)));
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(russia)));
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(unitedStates)));
-    }
-
-    public static LinkedList<ExistingCountry> getExistingCountries() {
-        return existingCountries;
     }
 }

@@ -12,12 +12,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import adapters.MinistersAdapter;
 import data.PlayerRepo;
 import model.Cabinet;
-import model.Model;
 import util.Constants;
 import util.SetupHelper;
 

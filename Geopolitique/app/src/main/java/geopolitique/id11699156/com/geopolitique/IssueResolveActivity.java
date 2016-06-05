@@ -15,7 +15,6 @@ import data.IssueRepo;
 import data.PlayerRepo;
 import data.RealmHelper;
 import model.Issue;
-import model.Model;
 import util.Constants;
 import util.SetupHelper;
 

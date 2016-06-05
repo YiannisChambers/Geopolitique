@@ -6,7 +6,11 @@ import java.util.LinkedList;
 import model.Economy;
 
 /**
- * Created by yiannischambers on 29/05/2016.
+ * Class to store the backups for use in the Polls screen
+ *
+ * WARNING: HORRIBLE CODE AHEAD.
+ * Static variables only facilitate easy data access;
+ * ideally, this would be stored in the database
  */
 public class Backups {
 
@@ -18,10 +22,10 @@ public class Backups {
         economyBackups.add(economy);
     }
 
-    public static LinkedList<Economy> getEconomyBackups(){
-        return economyBackups;
-    }
-
+    /**
+     * Add a poll backup for use in the PollScreenFragments LineChart
+     * @param popularity The popularity value to add
+     */
     public static void addPollBackup(double popularity){
         pollBackups.add(popularity);
     }

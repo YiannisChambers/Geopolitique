@@ -1,14 +1,17 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package data;
 
 import java.util.LinkedList;
-
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * A utility class to perform database and Realm related usefulness
  */
 public class RealmHelper {
 

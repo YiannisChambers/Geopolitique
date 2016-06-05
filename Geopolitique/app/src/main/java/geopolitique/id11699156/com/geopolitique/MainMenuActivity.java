@@ -4,27 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import data.PlayerRepo;
-import data.RealmHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import model.Economy;
-import model.ExistingCountry;
-import model.Government;
-import model.Issue;
-import model.Leader;
-import model.Minister;
-import model.Model;
-import model.Policy;
+import model.TestData;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -40,6 +27,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Realm.setDefaultConfiguration(config);
 
         //THIS IS FOR TESTING
+        /*
         Realm realm = Realm.getDefaultInstance();
         RealmHelper.beginTransaction();
         realm.deleteAll();
@@ -50,7 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
         realm.delete(Government.class);
         realm.delete(Economy.class);
         realm.delete(Leader.class);
-        RealmHelper.endTransaction();
+        RealmHelper.endTransaction();*/
 
         new StartUpAsyncTask(this).execute();
     }
@@ -88,6 +76,7 @@ public class MainMenuActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
 
             if (PlayerRepo.checkIfPlayerExists()) {
+                TestData.setUpTestDataWithExistingDatabase();
                 Intent intent = new Intent(mContext, HomeScreenActivity.class);
                 mContext.startActivity(intent);
             } else {
@@ -104,7 +93,7 @@ public class MainMenuActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Model.setUpTestData();
+            TestData.setUpTestData();
 
         }
     }

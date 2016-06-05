@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package adapters;
 
 import android.content.Context;
@@ -21,13 +26,14 @@ import model.Cabinet;
 import model.Issue;
 
 /**
- * Created by yiannischambers on 30/05/2016.
+ * Issue Adapter Class:
+ * Defines an issue adapter for use on the Issues Activity
+ * to list all existing and remaining issues to complete.
  */
 public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdapterViewHolder>{
+
     private ArrayList<Issue> mIssues;
     private Context mContext;
-    private Cabinet mCabinet;
-    private boolean isSettingMinister = false;
     private IssuesActivity mActivity;
 
     public IssuesAdapter(Context context, LinkedList<Issue> issues, IssuesActivity activity){
@@ -46,13 +52,15 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
     @Override
     public void onBindViewHolder(IssuesAdapterViewHolder holder, int position) {
 
+        //Get the current issue.
         final Issue issue  = mIssues.get(position);
 
+        //Get the current issue ID
         final long ID = issue.getID();
-
 
         holder.mName.setText(issue.getName());
 
+        //Give the button a listener that changes to the ResolveActivit
         holder.mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +83,9 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
         return mIssues.toArray().length;
     }
 
+    /**
+     * Viewholder Class to hold the View variables for an Issue Item.
+     */
     public class IssuesAdapterViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mName;

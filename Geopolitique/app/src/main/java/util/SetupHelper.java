@@ -1,22 +1,13 @@
 package util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
-import java.util.ArrayList;
-
-import geopolitique.id11699156.com.geopolitique.CabinetActivity;
-import geopolitique.id11699156.com.geopolitique.IssuesActivity;
-import geopolitique.id11699156.com.geopolitique.PoliciesScreen;
-import geopolitique.id11699156.com.geopolitique.PollsScreen;
 import geopolitique.id11699156.com.geopolitique.R;
-import geopolitique.id11699156.com.geopolitique.StatisticsActivity;
 
 /**
  * Created by yiannischambers on 16/05/2016.

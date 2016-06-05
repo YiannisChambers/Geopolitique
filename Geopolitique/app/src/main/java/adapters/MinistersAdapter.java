@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package adapters;
 
 import android.content.Context;
@@ -19,7 +24,9 @@ import model.Cabinet;
 import model.Minister;
 
 /**
- * Created by yiannischambers on 29/05/2016.
+ * Ministers Adapter Class:
+ * Defines an Minister adapter for use on the  CabinetScreen and the MinistersActivity
+ * to list all Ministers in the database for manipulation.
  */
 
 public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.MinistersAdapterViewHolder> {
@@ -104,6 +111,9 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         return mMinisters.toArray().length;
     }
 
+    /**
+     * Viewholder Class to hold the View variables for a Minister Item.
+     */
     public class MinistersAdapterViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mName;

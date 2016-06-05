@@ -2,7 +2,6 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,13 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import adapters.PoliciesAdapter;
 import data.PlayerRepo;
 import data.PolicyRepo;
-import model.Model;
-import util.Constants;
 import util.SetupHelper;
 
 public class PoliciesScreen extends AppCompatActivity {

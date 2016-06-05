@@ -17,7 +17,6 @@ import java.util.LinkedList;
 
 import data.PlayerRepo;
 import model.Economy;
-import model.Model;
 import util.NumberHelper;
 import util.SetupHelper;
 
@@ -35,9 +34,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setUpToolBar(){
-        /*
-        TOOL BAR
-         */
+        // Get the toolbar
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.statistics_screen_bottom_navigation);
 
         // Create items

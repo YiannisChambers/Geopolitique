@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="geopolitique.id11699156.com.geopolitique.IssuesActivity"
+    tools:context=".IssuesActivity"
     tools:showIn="@layout/activity_issues">
 
 

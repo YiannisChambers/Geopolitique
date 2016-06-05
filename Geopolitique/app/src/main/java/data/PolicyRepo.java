@@ -1,7 +1,11 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package data;
 
 import java.util.LinkedList;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 import model.Policy;
@@ -10,23 +14,18 @@ import model.Policy;
  * Created by yiannischambers on 1/06/2016.
  */
 public class PolicyRepo {
-
-    public static Policy  createNewPolicy(Policy policy){
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-        policy.setID(getNextKey());
-        Policy createdPolicy = realm.copyToRealm(policy);
-        realm.commitTransaction();
-
-        return createdPolicy;
-    }
-
+    /**
+     * Creates and adds a series of new Policy objects to the Database.
+     *
+     * @param policies The Policy objects to add to the database.
+     * @return
+     */
     public static void createNewPolicies(LinkedList<Policy> policies){
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
         for(int i= 0; i < policies.size(); i++){
+            //Set new object to have the next ID in the database.
             policies.get(i).setID(getNextKey());
             realm.copyToRealmOrUpdate(policies.get(i));
         }
@@ -34,11 +33,6 @@ public class PolicyRepo {
         realm.commitTransaction();
     }
 
-    public static LinkedList<Policy> getAllPolicies(){
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Policy> results = realm.where(Policy.class).findAll();
-        return RealmHelper.getLinkedListFromRealmResults(results);
-    }
 
     public static Policy getPolicyByID(long ID){
         Realm realm = Realm.getDefaultInstance();
@@ -46,11 +40,6 @@ public class PolicyRepo {
         return issue;
     }
 
-    public static void deleteAll(){
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Policy> results = realm.where(Policy.class).findAll();
-        results.deleteAllFromRealm();
-    }
 
     public static LinkedList<Policy> getUnadoptedPolicies(){
         Realm realm = Realm.getDefaultInstance();

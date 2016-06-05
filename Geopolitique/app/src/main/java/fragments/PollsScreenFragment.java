@@ -1,8 +1,6 @@
 package fragments;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,20 +25,21 @@ import data.PlayerRepo;
 import geopolitique.id11699156.com.geopolitique.Backups;
 import geopolitique.id11699156.com.geopolitique.R;
 
+/**
+ * Fragment to display the country's polling data
+ * in the Polls Tab on the PollsScreen
+ */
 public class PollsScreenFragment extends Fragment {
 
-
+    /**
+     * Required empty public constructor
+     */
     public PollsScreenFragment() {
-        // Required empty public constructor
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -53,38 +52,55 @@ public class PollsScreenFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Initialise the charts on the fragment using user data.
         setPollLineChart();
         setPollBarChart();
     }
 
-    private void setPollBarChart(){
+    /**
+     * Create the Poll Bar Chart
+     */
+    private void setPollBarChart() {
 
-        BarChart barChart = (BarChart)getActivity().findViewById(R.id.polls_screen_bar_chart);
+        //Get bar chart
+        BarChart barChart = (BarChart) getActivity().findViewById(R.id.polls_screen_bar_chart);
 
+        //Create the XValues for the Bar Chart
         ArrayList<String> XValues = new ArrayList<String>();
-        XValues.add("US");  XValues.add("THEM");
+        XValues.add(getActivity().getString(R.string.polls_fragment_us_text));
+        XValues.add(getActivity().getString(R.string.polls_fragment_them_text));
 
+        //Make the first entry with the Government popularity
         ArrayList<BarEntry> ourEntries = new ArrayList<BarEntry>();
         BarEntry ourEntry = new BarEntry((int) PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getPopularity(), 0);
         ourEntries.add(ourEntry);
 
+        //Make the second entry with the Opposition popularity (which is 100 minus the Government's popularity)
         ArrayList<BarEntry> theirEntries = new ArrayList<BarEntry>();
         BarEntry theirEntry = new BarEntry((int) (100 - PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getPopularity()), 1);
         theirEntries.add(theirEntry);
 
-        BarDataSet ourSet = new BarDataSet(ourEntries, "US");
-        ourSet.setColor(Color.BLUE);
+        //Create datasets for both those entries, and set them with a respective color
+        BarDataSet ourSet = new BarDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
+        ourSet.setColor(R.color.colorAccent);
 
-        BarDataSet theirSet = new BarDataSet(theirEntries, "THEM");
-        theirSet.setColor(Color.RED);
+        BarDataSet theirSet = new BarDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
+        theirSet.setColor(R.color.colorPrimary);
 
+        //Set Axis Dependencies for datasets
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        ArrayList<IBarDataSet> datasets = new ArrayList<IBarDataSet>();
-        datasets.add(ourSet); datasets.add(theirSet);
 
+        //Add datasets to list
+        ArrayList<IBarDataSet> datasets = new ArrayList<IBarDataSet>();
+        datasets.add(ourSet);
+        datasets.add(theirSet);
+
+        //Create data
         BarData data = new BarData(XValues, datasets);
 
+        //Format the axes of the chart
         YAxis axis = barChart.getAxisLeft();
         axis.setAxisMaxValue(100);
         axis.setAxisMinValue(0);
@@ -110,13 +126,14 @@ public class PollsScreenFragment extends Fragment {
 
         barChart.getLegend().setEnabled(false);   // Hide the legend
 
+        //Add data to bar chart - and refresh for viewing
         barChart.setData(data);
         barChart.notifyDataSetChanged();
         barChart.invalidate();
     }
 
-    void setPollLineChart(){
-        LineChart lineChart = (LineChart)getActivity().findViewById(R.id.polls_screen_line_chart);
+    void setPollLineChart() {
+        LineChart lineChart = (LineChart) getActivity().findViewById(R.id.polls_screen_line_chart);
 
         ArrayList<String> XValues = new ArrayList<String>();
 
@@ -125,26 +142,27 @@ public class PollsScreenFragment extends Fragment {
         ArrayList<Entry> ourEntries = new ArrayList<Entry>();
         ArrayList<Entry> theirEntries = new ArrayList<Entry>();
 
-        for(int i =0; i < polls.size(); i++){
-            Entry ourEntry = new Entry((float)((double)polls.get(i)), i);
+        for (int i = polls.size() - 10 > 0 ? polls.size() - 10 : 0; i < polls.size(); i++) {
+            Entry ourEntry = new Entry((float) ((double) polls.get(i)), i);
             ourEntries.add(ourEntry);
 
-            Entry theirEntry = new Entry(100 - (float)((double)polls.get(i)), i);
+            Entry theirEntry = new Entry(100 - (float) ((double) polls.get(i)), i);
             theirEntries.add(theirEntry);
 
-            XValues.add("Week "+ i + ".");
+            XValues.add("Week " + i + ".");
         }
 
-        LineDataSet ourSet = new LineDataSet(ourEntries, "US");
+        LineDataSet ourSet = new LineDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
         ourSet.setColor(Color.BLUE);
 
-        LineDataSet theirSet = new LineDataSet(theirEntries, "THEM");
+        LineDataSet theirSet = new LineDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
         theirSet.setColor(Color.RED);
 
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         ArrayList<ILineDataSet> datasets = new ArrayList<ILineDataSet>();
-        datasets.add(ourSet); datasets.add(theirSet);
+        datasets.add(ourSet);
+        datasets.add(theirSet);
 
         LineData data = new LineData(XValues, datasets);
 
@@ -160,5 +178,7 @@ public class PollsScreenFragment extends Fragment {
         axis.setAxisMinValue(0);
 
         lineChart.getLegend().setEnabled(false);
+        lineChart.setDrawGridBackground(false);
+
     }
 }

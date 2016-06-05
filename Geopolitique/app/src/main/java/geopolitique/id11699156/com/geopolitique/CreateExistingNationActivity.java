@@ -2,13 +2,10 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,14 +13,9 @@ import android.widget.TextView;
 import java.util.LinkedList;
 
 import data.ExistingCountryRepo;
-import data.IssueRepo;
-import data.MinisterRepo;
 import data.PlayerRepo;
-import data.PolicyRepo;
 import model.Country;
 import model.ExistingCountry;
-import model.Leader;
-import model.Model;
 import model.Player;
 import util.SetupHelper;
 
@@ -65,8 +57,6 @@ public class CreateExistingNationActivity extends AppCompatActivity implements A
         Country country = countries.get(spinner.getSelectedItemPosition()).getCountry();   //new Country("Australia", 23000000, 1.4f, R.drawable.australia_flag);
         Player player = new Player(country);
         PlayerRepo.createNewPlayer(player);
-
-        //Model.setUpTestData();
 
         Intent startIntent = new Intent(this, HomeScreenActivity.class);
         startActivity(startIntent);

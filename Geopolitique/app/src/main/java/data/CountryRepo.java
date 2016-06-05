@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package data;
 
 import io.realm.Realm;
@@ -8,35 +13,25 @@ import model.Country;
  */
 public class CountryRepo {
 
+    /**
+     * Creates and adds a new Country object to the Database.
+     *
+     * @param country The Country object to add to the database.
+     * @return
+     */
     public static  Country createNewCountry(Country country) {
 
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
+        //Set new object to have the next ID in the database.
         country.setID(getNextKey());
+        //Create the object
         Country createdCountry = realm.copyToRealm(country);
-        //createdCountry.setLeader(country.getLeader());
 
         realm.commitTransaction();
 
         return createdCountry;
-    }
-
-    public static void updateCountry(Country country){
-
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
-
-        realm.copyToRealmOrUpdate(country);
-
-        realm.commitTransaction();
-    }
-
-    public static Country getCountryByID(long ID){
-        Realm realm = Realm.getDefaultInstance();
-        Country issue = realm.where(Country.class).equalTo("mID", ID).findFirst();
-        return issue;
     }
 
     public static int getNextKey()
