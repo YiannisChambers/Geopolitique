@@ -53,7 +53,7 @@ public class Economy extends RealmObject{
     }
 
     public void calculateEconomy(Country country) {
-        RealmHelper.beginTransaction();
+        //RealmHelper.beginTransaction();
         double totalPersonalIncome = calculateTotalPersonalIncome(country.getPopulation());
         mExports = totalPersonalIncome * (country.getGovernment().getInternationalPopularity() / 100);
         double totalIncome = totalPersonalIncome + mExports;
@@ -69,7 +69,7 @@ public class Economy extends RealmObject{
         double governmentSpending = country.getGovernment().getGovernmentSpending();
         mDeficitSurplusFigure = taxes - governmentSpending;
         mDebt += mDeficitSurplusFigure;
-        RealmHelper.endTransaction();
+        //RealmHelper.endTransaction();
     }
 
     private double calculateTotalPersonalIncome(int countryPopulation) {

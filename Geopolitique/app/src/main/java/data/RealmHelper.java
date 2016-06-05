@@ -24,7 +24,8 @@ public class RealmHelper {
 
     public static void beginTransaction(){
         Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
+        if(!realm.isInTransaction())
+            realm.beginTransaction();
     }
 
     public static void endTransaction(){

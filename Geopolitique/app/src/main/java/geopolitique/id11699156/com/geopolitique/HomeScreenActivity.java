@@ -27,8 +27,10 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.Random;
 
+import data.IssueRepo;
 import data.PlayerRepo;
 import data.RealmHelper;
 import io.realm.Realm;
@@ -276,6 +278,18 @@ public class HomeScreenActivity extends AppCompatActivity {
         mNotificationManager.notify(1, mBuilder.build());
     }
 
+    public void addRandomIssue(){
+        if (new Random().nextBoolean()) {
+            LinkedList<Issue> issues = IssueRepo.getAllIssues();
+
+            RealmHelper.beginTransaction();
+            PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(issues.get(new Random().nextInt(issues.size())));
+            RealmHelper.endTransaction();
+            issueNotes += 1;
+            bottomNavigation.setNotification(issueNotes + "", 3);
+            sendIssueNotification();
+        }
+    }
     /*
     private class ResponseReceiver extends BroadcastReceiver {
         // Prevents instantiation
@@ -324,7 +338,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             while (mIsRunning) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -415,13 +429,9 @@ public class HomeScreenActivity extends AppCompatActivity {
                     player.setTime(mCalendar.getTimeInMillis());
                 }
             });
+            addRandomIssue();
 
-            if (new Random().nextBoolean()) {
-                Model.addRandomIssue();
-                issueNotes += 1;
-                bottomNavigation.setNotification(issueNotes + "", 3);
-                sendIssueNotification();
-            }
+
         }
 
         private void updateWeekly() {

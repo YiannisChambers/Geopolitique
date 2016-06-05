@@ -10,13 +10,17 @@ import model.Issue;
  * Created by yiannischambers on 1/06/2016.
  */
 public class IssueRepo {
-    public static void createNewIssue(Issue issue){
+    public static Issue createNewIssue(Issue issue){
         Realm realm = Realm.getDefaultInstance();
 
-        realm.beginTransaction();
+        if(!realm.isInTransaction())
+            realm.beginTransaction();
         issue.setID(getNextKey());
-        realm.copyToRealm(issue);
+        Issue createdIssue = realm.copyToRealm(issue);
+
         realm.commitTransaction();
+
+        return createdIssue;
     }
 
     public static void createNewIssues(LinkedList<Issue> issues){

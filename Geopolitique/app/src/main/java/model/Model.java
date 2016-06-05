@@ -152,7 +152,7 @@ public class Model {
         options.add(OptionRepo.createNewOption(new Option(neutralOption, neutralEffect)));
         options.add(OptionRepo.createNewOption(new Option(positiveOption, positiveEffect)));
 
-        Issue issue = new Issue(title, description, options);
+        Issue issue = IssueRepo.createNewIssue(new Issue(title, description, options));
         return issue;
     }
 
@@ -163,8 +163,9 @@ public class Model {
     public static void addRandomIssue(){
         Random r = new Random();
         int position = r.nextInt(issues.size());
-
-        IssueRepo.createNewIssue(issues.get(position));
+        Issue original = issues.get(position);
+        Issue issue = new Issue(original.getName(), original.getDescription(), original.getOptions());
+        IssueRepo.createNewIssue(issue);
     }
 
     private static void setUpExistingCountries(){

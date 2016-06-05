@@ -43,7 +43,9 @@ public class Country extends RealmObject {
         mPopulation = population;
         mGrowthRate = growthRate;
         mEconomy = economy;
+        RealmHelper.beginTransaction();
         mEconomy.calculateEconomy(this);
+        RealmHelper.endTransaction();
         mPictureID = pictureID;
     }
 
@@ -115,7 +117,7 @@ public class Country extends RealmObject {
             if (policies.get(i).getTimeRemaining() == 0) {
                 RealmList<Effect> effects = policies.get(i).getEffects();
                 for (int j = 0; j < effects.size(); j++) {
-                    enactEffect(effects.get(i), policies.get(i));
+                    enactEffect(effects.get(j), policies.get(i));
                 }
             } else {
                 policies.get(i).decrementTimeRemaining();

@@ -137,7 +137,9 @@ public class Government extends RealmObject {
     }
 
     public void addIssue(Issue issue){
+        //RealmHelper.beginTransaction();
         mIssues.add(issue);
+        //RealmHelper.endTransaction();
         //update();
     }
 
