@@ -1,0 +1,44 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fragments.PollsScreenFragment">
+
+    <!-- TODO: Update blank fragment layout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" /> -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POLLS" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/polls_screen_bar_chart"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="31dp"></com.github.mikephil.charting.charts.BarChart>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/polls_screen_bar_chart"
+            android:text="Newspoll" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/polls_screen_line_chart"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_below="@+id/polls_screen_bar_chart"
+            android:layout_centerHorizontal="true"></com.github.mikephil.charting.charts.LineChart>
+    </RelativeLayout>
+
+</FrameLayout>

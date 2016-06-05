@@ -28,29 +28,27 @@ public class Country extends RealmObject {
     int mPopulation;
     double mGrowthRate;
 
+    public Country(){}
 
-    public Country() {
-    }
-
-    public Country(Leader leader, String countryName, String countryType, int population, double growthRate) {
+    public Country(Leader leader, String countryName, String countryType, int population, double growthRate, Economy economy) {
         mLeader = leader;
         mGovernment = new Government(leader);
         mCountryName = countryName;
         mCountryType = countryType;
         mPopulation = population;
         mGrowthRate = growthRate;
-        mEconomy = new Economy();
+        mEconomy = economy;
         mEconomy.calculateEconomy(this);
     }
 
     public Country(String countryName, String countryType, int population, double growthRate) {
-        mCountryName = countryName;
-        mCountryType = countryType;
-        mPopulation = population;
-        mGrowthRate = growthRate;
-        mEconomy = new Economy();
-        mEconomy.calculateEconomy(this);
+        this(new Leader(), countryName, countryType, population, growthRate, new Economy());
     }
+
+    public Country(String countryName, String countryType, int population, double growthRate, Economy economy) {
+        this(new Leader(), countryName, countryType, population, growthRate, economy);
+    }
+
 
     public long getID() {
         return mID;
@@ -95,7 +93,7 @@ public class Country extends RealmObject {
                 if (!issues.get(i).isFinished()) {
                     RealmList<Effect> effects = issues.get(i).getSelectedOption().getEffects();
                     for (int j = 0; j < effects.size(); j++) {
-                        enactEffect(effects.get(i));
+                        enactEffect(effects.get(j));
                     }
                     issues.get(i).finishIssue();
                 }

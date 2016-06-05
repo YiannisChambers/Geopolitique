@@ -49,7 +49,7 @@ public class PolicyActivity extends AppCompatActivity {
 
         setViews();
         setBarChart();
-        setUpToolBar();
+        //setUpToolBar();
     }
 
     private void setUpToolBar(){
@@ -157,7 +157,8 @@ public class PolicyActivity extends AppCompatActivity {
 
         for(int i = 0; i < mPolicy.getEffects().size(); i++){
             float effect = 0;
-            if(mPolicy.getEffects().get(i).getProperty() == Constants.AVERAGE_INCOME){
+            String property = mPolicy.getEffects().get(i).getProperty();
+            if( property.equals(Constants.AVERAGE_INCOME)){
                 double avgIncome = (PlayerRepo.getCurrentPlayer().getCountry().getEconomy().getAverageIncome());
                 int effectNumber = mPolicy.getEffects().get(i).getEffect();
                 effect = (float)(((avgIncome - (effectNumber + avgIncome)) / avgIncome) * 100);

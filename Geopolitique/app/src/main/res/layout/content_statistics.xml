@@ -12,11 +12,11 @@
     tools:context="geopolitique.id11699156.com.geopolitique.StatisticsActivity"
     tools:showIn="@layout/activity_statistics">
 
-
+<!--
     <com.github.mikephil.charting.charts.PieChart
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:id="@+id/statistics_screen_piechart">
-    </com.github.mikephil.charting.charts.PieChart>
+    </com.github.mikephil.charting.charts.PieChart>-->
 
 </RelativeLayout>

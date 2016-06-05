@@ -14,6 +14,7 @@ public class IssueRepo {
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
+        issue.setID(getNextKey());
         realm.copyToRealm(issue);
         realm.commitTransaction();
     }
@@ -24,8 +25,8 @@ public class IssueRepo {
         realm.beginTransaction();
         for(int i = 0; i < issues.size(); i++){
             issues.get(i).setID(getNextKey());
+            realm.copyToRealm(issues.get(i));
         }
-        realm.copyToRealm(issues);
         realm.commitTransaction();
     }
 

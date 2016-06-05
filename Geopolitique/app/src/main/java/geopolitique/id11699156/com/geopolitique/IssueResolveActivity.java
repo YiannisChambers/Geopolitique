@@ -37,7 +37,7 @@ public class IssueResolveActivity extends AppCompatActivity {
 
         setViews();
 
-        setUpToolBar();
+        //setUpToolBar();
     }
 
     private void setUpToolBar(){
@@ -85,13 +85,6 @@ public class IssueResolveActivity extends AppCompatActivity {
                         break;
                     }
 
-                    case 5: {
-                        final Intent statisticsIntent = new Intent(context, StatisticsActivity.class);
-                        startActivity(statisticsIntent);
-                        finish();
-                        break;
-                    }
-
                     default: {
                         ;
                         break;
@@ -124,8 +117,10 @@ public class IssueResolveActivity extends AppCompatActivity {
                 mIssue.selectOption(0);
                 PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(mIssue);
                 RealmHelper.endTransaction();
+
                 Intent intent = new Intent(mContext, IssuesActivity.class);
                 mContext.startActivity(intent);
+                finish();
             }
         });
 
@@ -137,8 +132,10 @@ public class IssueResolveActivity extends AppCompatActivity {
                 mIssue.selectOption(1);
                 PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(mIssue);
                 RealmHelper.endTransaction();
+
                 Intent intent = new Intent(mContext, IssuesActivity.class);
                 mContext.startActivity(intent);
+                finish();
             }
         });
 
@@ -150,8 +147,10 @@ public class IssueResolveActivity extends AppCompatActivity {
                 mIssue.selectOption(2);
                 PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(mIssue);
                 RealmHelper.endTransaction();
+
                 Intent intent = new Intent(mContext, IssuesActivity.class);
                 mContext.startActivity(intent);
+                finish();
             }
         });
     }

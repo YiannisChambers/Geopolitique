@@ -1,9 +1,13 @@
 package model;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 import data.EffectRepo;
+import data.IssueRepo;
+import data.MinisterRepo;
 import data.OptionRepo;
+import data.PolicyRepo;
 import util.Constants;
 import io.realm.RealmList;
 
@@ -16,23 +20,19 @@ public class Model {
     public static LinkedList<Policy> policies;
     public static LinkedList<Minister> ministers;
     public static LinkedList<Issue> issues;
+    public static LinkedList<ExistingCountry> existingCountries;
 
-    public static void setUp(Leader leader){
-        country = new Country("Australia", "Monarchy", 23000000, 1.4f);
-        country.setLeader(leader);
 
-        policies = new LinkedList<>();
-        ministers = new LinkedList<>();
-        issues = new LinkedList<>();
-        setUpMinisters();
-        setUpPolicy();
-        setUpIssues();
+    public static void setUpTestData(){
+        Model.setUpIssues();
+        Model.setUpMinisters();
+        Model.setUpPolicy();
+        Model.setUpExistingCountries();
+
+        MinisterRepo.createNewMinisters(Model.getMinisters());
+        PolicyRepo.createNewPolicies(Model.getPolicies());
+
     }
-
-    public static Country getCountry() {
-        return country;
-    }
-
 
     public static void setUpMinisters() {
         ministers = new LinkedList<>();
@@ -49,11 +49,6 @@ public class Model {
         ministers.add(new Minister("Sophie", "de Arbanville", 6, 7));
         ministers.add(new Minister("Genevieve", "d'Arc", 7, 6));
 
-        //country.getGovernment().getCabinet().setDefenceMinister(minister);
-        //country.getGovernment().getCabinet().setHealthMinister(minister2);
-        //country.getGovernment().getCabinet().setEducationMinister(minister3);
-        //country.getGovernment().getCabinet().setForeignAffairsMinister(minister4);
-        //country.getGovernment().getCabinet().setTreasurer(minister5);
 
     }
 
@@ -79,6 +74,7 @@ public class Model {
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.INTERNATIONAL_POPULARITY, 10)));
 
         Policy p = new Policy("Foreign Aid", "Financial grants sent abroad", effects, 5, 5000000000f, Constants.FOREIGN_AFFAIRS);
+        p.setTimeToComplete(5);
         //country.getGovernment().getCabinet().getForeignAffairsMinister().addPolicy(p);
 
         effects= new RealmList<Effect>();
@@ -88,6 +84,7 @@ public class Model {
         effects.add(EffectRepo.createNewEffect(new Effect(Constants.INTERNATIONAL_POPULARITY, -1)));
 
         Policy p2 = new Policy("Defence Spending", "Money put towards the nation's defence forces", effects, 2, 2500000000f, Constants.DEFENCE);
+        p2.setTimeToComplete(2);
         //country.getGovernment().getCabinet().getDefenceMinister().addPolicy(p2);
 
         policies.add(p);
@@ -101,7 +98,7 @@ public class Model {
 
     public static void setUpIssues(){
         issues = new LinkedList<>();
-        RealmList<Option> options = new RealmList<>();
+        /*RealmList<Option> options = new RealmList<>();
 
         RealmList<Effect> negativeEffect = new RealmList<Effect>();
         negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, -5)));
@@ -115,15 +112,58 @@ public class Model {
         options.add(OptionRepo.createNewOption(new Option("Defend your minister completely as a victim of unfounded and biased media abuse.", negativeEffect)));
         options.add(OptionRepo.createNewOption(new Option("Distance yourself from the comments. Brush off the issue.", neutralEffect)));
         options.add(OptionRepo.createNewOption(new Option("Demand the resignation of your minister immediately.", positiveEffect)));
+        */
 
+        issues.add(createIssue("Scandal!", "An affair involving a junior minister and his secretary has been outed by the tabloids. The press seeks your comment.",
+                "Defend your minister completely as a victim of unfounded and biased media abuse",
+                "Distance yourself from the comments. Brush off the issue.",
+                "Demand the resignation of your minister immediately."));
 
-        Issue issue = new Issue("Scandal!", "An affair involving a junior minister and his secretary has been outed by the tabloids. The press seeks your comment.", options);
+        issues.add(createIssue("Terrorist Attack!", "Late last night, four radicals from the far-right Sons of Anarchy stormed a movie theatre in the nation's south east, and took the patrons hostage. A tense hostage situation has developed, as the police forces desperately attempt to defuse the situation. \n The terrorists demand to speak with you over the phone, or else they will begin executing hostages. What will you do?",
+                "Organise to speak with the terrorists. Attempt to negotiate the release of the hostages.",
+                "Refuse to speak with the terrorists. Address the nation to decry the actions.",
+                "Refuse to speak with the terrorists outright. Order the police to storm the theater."));
 
-        issues.add(issue);
+        issues.add(createIssue("Budget Day.", "The time has come for the government to release their latest update to the nation's economic direction. What policies will you make?",
+                "Cut corporate tax by 5%; incentivise job creation through tax breaks to big business.",
+                "Maintain current policy platform; cut around the edges of reform",
+                "Increase social spending by cutting the defence budget. Raise taxes for big business."));
+
+    }
+
+    private static Issue createIssue(String title, String description, String positiveOption, String neutralOption, String negativeOption){
+
+        RealmList<Effect> negativeEffect = new RealmList<Effect>();
+        negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, -5)));
+
+        RealmList<Effect> positiveEffect = new RealmList<Effect>();
+        positiveEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 5)));
+
+        RealmList<Effect> neutralEffect = new RealmList<Effect>();
+        negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 0)));
+        RealmList<Option> options = new RealmList<>();
+
+        options.add(OptionRepo.createNewOption(new Option(negativeOption, negativeEffect)));
+        options.add(OptionRepo.createNewOption(new Option(neutralOption, neutralEffect)));
+        options.add(OptionRepo.createNewOption(new Option(positiveOption, positiveEffect)));
+
+        Issue issue = new Issue(title, description, options);
+        return issue;
     }
 
     public static LinkedList<Issue> getIssues() {
         return issues;
+    }
+
+    public static void addRandomIssue(){
+        Random r = new Random();
+        int position = r.nextInt(issues.size());
+
+        IssueRepo.createNewIssue(issues.get(position));
+    }
+
+    private static void setUpExistingCountries(){
+        Country britain = new Country()
     }
 
 }

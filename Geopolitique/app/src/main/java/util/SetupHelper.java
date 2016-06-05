@@ -41,6 +41,7 @@ public class SetupHelper {
     }
 
     public static void setUpToolBar(AHBottomNavigation bottomNavigation, int currentItem){
+
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Cabinet", R.drawable.ic_group_white_24dp);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Policies", R.drawable.ic_description_white_24dp);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem("Home", R.drawable.ic_account_balance_white_24dp);
@@ -62,7 +63,6 @@ public class SetupHelper {
         bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#f63d2b"));
         bottomNavigation.setAccentColor(Color.parseColor("#90A4Ae"));
         bottomNavigation.setBackgroundColor(Color.BLACK);
-
 
         bottomNavigation.setForceTitlesDisplay(true);
 

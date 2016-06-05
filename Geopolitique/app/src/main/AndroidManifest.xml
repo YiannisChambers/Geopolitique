@@ -42,7 +42,9 @@
         <activity
             android:name=".MinistersActivity"
             android:label="@string/title_activity_ministers"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:excludeFromRecents="true"
+            android:noHistory="true"/>
         <activity
             android:name=".PollsScreen"
             android:label="@string/title_activity_polls_screen"
@@ -54,7 +56,9 @@
         <activity
             android:name=".PolicyActivity"
             android:label="@string/title_activity_policy"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:excludeFromRecents="true"
+            android:noHistory="true"/>
         <activity
             android:name=".IssuesActivity"
             android:label="@string/title_activity_issues"
@@ -62,7 +66,9 @@
         <activity
             android:name=".IssueResolveActivity"
             android:label="@string/title_activity_issue_resolve"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:excludeFromRecents="true"
+            android:noHistory="true"/>
         <activity
             android:name=".StatisticsActivity"
             android:label="@string/title_activity_statistics"

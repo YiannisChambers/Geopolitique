@@ -16,6 +16,7 @@ import adapters.PoliciesAdapter;
 import data.PlayerRepo;
 import data.PolicyRepo;
 import model.Model;
+import util.Constants;
 import util.SetupHelper;
 
 public class PoliciesScreen extends AppCompatActivity {
@@ -92,7 +93,7 @@ public class PoliciesScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new PoliciesAdapter(this, PolicyRepo.getUnadoptedPolicies());
+        mAdapter = new PoliciesAdapter(this, PolicyRepo.getUnadoptedPolicies(), this);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
@@ -103,7 +104,7 @@ public class PoliciesScreen extends AppCompatActivity {
         recyclerView2.setLayoutManager(layoutManager2);
 
         //Create and populate adapter
-        mAdapter2 = new PoliciesAdapter(this, PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTotalPolicies());
+        mAdapter2 = new PoliciesAdapter(this, PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTotalPolicies(), this);
         recyclerView2.setAdapter(mAdapter2);
         mAdapter2.notifyDataSetChanged();
     }

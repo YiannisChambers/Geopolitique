@@ -3,7 +3,13 @@ package geopolitique.id11699156.com.geopolitique;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -21,12 +27,19 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import data.PlayerRepo;
+import fragments.PollsScreenFragment;
+import fragments.StatisticsScreenFragment;
 import model.Model;
+import util.Constants;
 import util.SetupHelper;
 
-public class PollsScreen extends AppCompatActivity {
+public class PollsScreen extends AppCompatActivity{
+
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +48,20 @@ public class PollsScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setPollBarChart();
+//        setPollBarChart();
 
-        setPollLineChart();
+  //      setPollLineChart();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUpToolBar();
+        viewPager = (ViewPager) findViewById(R.id.polls_screen_viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.polls_screen_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
-    private void setUpToolBar(){
+    private void setUpToolBar() {
         /*
         TOOL BAR
          */
@@ -94,12 +114,13 @@ public class PollsScreen extends AppCompatActivity {
         });
     }
 
-    private void setPollBarChart(){
+    private void setPollBarChart() {
 
-        BarChart barChart = (BarChart)findViewById(R.id.polls_screen_bar_chart);
+        BarChart barChart = (BarChart) findViewById(R.id.polls_screen_bar_chart);
 
         ArrayList<String> XValues = new ArrayList<String>();
-        XValues.add("US");  XValues.add("THEM");
+        XValues.add("US");
+        XValues.add("THEM");
 
         ArrayList<BarEntry> ourEntries = new ArrayList<BarEntry>();
         BarEntry ourEntry = new BarEntry((int) PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getPopularity(), 0);
@@ -118,7 +139,8 @@ public class PollsScreen extends AppCompatActivity {
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         ArrayList<IBarDataSet> datasets = new ArrayList<IBarDataSet>();
-        datasets.add(ourSet); datasets.add(theirSet);
+        datasets.add(ourSet);
+        datasets.add(theirSet);
 
         BarData data = new BarData(XValues, datasets);
 
@@ -152,8 +174,8 @@ public class PollsScreen extends AppCompatActivity {
         barChart.invalidate();
     }
 
-    void setPollLineChart(){
-        LineChart lineChart = (LineChart)findViewById(R.id.polls_screen_line_chart);
+    void setPollLineChart() {
+        LineChart lineChart = (LineChart) findViewById(R.id.polls_screen_line_chart);
 
         ArrayList<String> XValues = new ArrayList<String>();
 
@@ -162,14 +184,14 @@ public class PollsScreen extends AppCompatActivity {
         ArrayList<Entry> ourEntries = new ArrayList<Entry>();
         ArrayList<Entry> theirEntries = new ArrayList<Entry>();
 
-        for(int i =0; i < polls.size(); i++){
-            Entry ourEntry = new Entry((float)((double)polls.get(i)), i);
+        for (int i = 0; i < polls.size(); i++) {
+            Entry ourEntry = new Entry((float) ((double) polls.get(i)), i);
             ourEntries.add(ourEntry);
 
-            Entry theirEntry = new Entry(100 - (float)((double)polls.get(i)), i);
+            Entry theirEntry = new Entry(100 - (float) ((double) polls.get(i)), i);
             theirEntries.add(theirEntry);
 
-            XValues.add(i + ".");
+            XValues.add("Week " + i + ".");
         }
 
         LineDataSet ourSet = new LineDataSet(ourEntries, "US");
@@ -181,7 +203,8 @@ public class PollsScreen extends AppCompatActivity {
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         ArrayList<ILineDataSet> datasets = new ArrayList<ILineDataSet>();
-        datasets.add(ourSet); datasets.add(theirSet);
+        datasets.add(ourSet);
+        datasets.add(theirSet);
 
         LineData data = new LineData(XValues, datasets);
 
@@ -199,4 +222,43 @@ public class PollsScreen extends AppCompatActivity {
         lineChart.getLegend().setEnabled(false);
     }
 
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PollsScreenFragment(), "POLLS");
+        adapter.addFragment(new StatisticsScreenFragment(), "STATISTICS");
+        viewPager.setAdapter(adapter);
+    }
+
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 }
+
+

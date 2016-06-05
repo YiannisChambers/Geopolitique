@@ -17,6 +17,7 @@ import adapters.IssuesAdapter;
 import adapters.PoliciesAdapter;
 import data.IssueRepo;
 import model.Model;
+import util.Constants;
 import util.SetupHelper;
 
 public class IssuesActivity extends AppCompatActivity {
@@ -100,7 +101,7 @@ public class IssuesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new IssuesAdapter(this, IssueRepo.getAllUnresolvedIssues());
+        mAdapter = new IssuesAdapter(this, IssueRepo.getAllUnresolvedIssues(), this);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

@@ -28,18 +28,22 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
     private Context mContext;
     private Cabinet mCabinet;
     private boolean isSettingMinister = false;
+    private MinistersActivity mActivity;
+    private CabinetActivity mCabinetActivity;
 
-    public MinistersAdapter(Context context, Cabinet cabinet, boolean isSetting) {
+    public MinistersAdapter(Context context, Cabinet cabinet, boolean isSetting, CabinetActivity activity) {
         mCabinet = cabinet;
         mMinisters = new ArrayList<Minister>(cabinet.getMinisters());
         mContext = context;
         isSettingMinister = isSetting;
+        mCabinetActivity = activity;
     }
 
-    public MinistersAdapter(Context context, LinkedList<Minister> ministers, boolean isSetting) {
+    public MinistersAdapter(Context context, LinkedList<Minister> ministers, boolean isSetting, MinistersActivity activity) {
         mMinisters = new ArrayList<Minister>(ministers);
         mContext = context;
         isSettingMinister = isSetting;
+        mActivity = activity;
     }
 
     @Override
@@ -76,7 +80,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MinistersActivity.OnSetClick(v, p);
+                    mActivity.OnSetClick(v, p);
                 }
             });
         }
@@ -86,7 +90,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CabinetActivity.OnChangeClick(v, q);
+                    mCabinetActivity.OnChangeClick(v, q);
                 }
             });
         }

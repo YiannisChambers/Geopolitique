@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import geopolitique.id11699156.com.geopolitique.IssuesActivity;
 import util.Constants;
 import geopolitique.id11699156.com.geopolitique.IssueResolveActivity;
 import geopolitique.id11699156.com.geopolitique.R;
@@ -27,10 +28,12 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
     private Context mContext;
     private Cabinet mCabinet;
     private boolean isSettingMinister = false;
+    private IssuesActivity mActivity;
 
-    public IssuesAdapter(Context context, LinkedList<Issue> issues){
+    public IssuesAdapter(Context context, LinkedList<Issue> issues, IssuesActivity activity){
         mIssues = new ArrayList<Issue>(issues);
         mContext = context;
+        mActivity = activity;
     }
 
     @Override
@@ -55,7 +58,12 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, IssueResolveActivity.class);
                 intent.putExtra(Constants.INTENT_ISSUE_ID, ID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 mContext.startActivity(intent);
+                mActivity.finish();
+
+
             }
         });
 

@@ -66,8 +66,7 @@ public class MinistersActivity extends AppCompatActivity {
                     }
 
                     case 2:{
-                        final Intent homeIntent = new Intent(context, HomeScreenActivity.class);
-                        startActivity(homeIntent);
+                        finish();
                         break;
                     }
 
@@ -83,11 +82,6 @@ public class MinistersActivity extends AppCompatActivity {
                         break;
                     }
 
-                    case 5:{
-                        final Intent statisticsIntent = new Intent(context, StatisticsActivity.class);
-                        startActivity(statisticsIntent);
-                        break;
-                    }
 
                     default: {; break;}
                 }
@@ -102,22 +96,26 @@ public class MinistersActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new MinistersAdapter(this, MinisterRepo.getAllMinistersNotInCabinet(), true);
+        mAdapter = new MinistersAdapter(this, MinisterRepo.getAllMinistersNotInCabinet(), true, this);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-    public static void OnSetClick(View v, long ID){
+    public void OnSetClick(View v, long ID){
         Minister minister = MinisterRepo.getMinisterByID(ID);
 
         RealmHelper.beginTransaction();
         PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().setMinister(ministerPosition, minister);
         RealmHelper.endTransaction();
 
-        Minister treasurer = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTreasurer();
+        //Minister treasurer = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTreasurer();
 
         Intent intent = new Intent(mContext, CabinetActivity.class);
         mContext.startActivity(intent);
+
+        finish();
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
     }
 
 }

@@ -23,4 +23,5 @@ public class Constants {
     public static final String INTENT_POLICY_ID = "IPF";
 
     public static final String UPDATE_STATS = "US";
+    public static final int NEW_SCREEN = 1;
 }

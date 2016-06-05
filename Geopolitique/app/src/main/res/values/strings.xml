@@ -68,4 +68,7 @@
     <string name="title_activity_issues">IssuesActivity</string>
     <string name="title_activity_issue_resolve">IssueResolveActivity</string>
     <string name="title_activity_statistics">StatisticsActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

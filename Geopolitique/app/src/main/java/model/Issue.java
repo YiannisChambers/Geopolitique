@@ -18,6 +18,9 @@ public class Issue extends RealmObject{
     String mDescription;
     RealmList<Option> mOptions;
 
+    //TODO:
+    //Add results - RealmList<String> results - that appears as a Dialog when an option is selected.
+
     Option mSelectedOption;
 
     boolean mIsResolved;

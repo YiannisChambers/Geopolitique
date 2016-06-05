@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import geopolitique.id11699156.com.geopolitique.PoliciesScreen;
 import util.Constants;
 import util.NumberHelper;
 import geopolitique.id11699156.com.geopolitique.PolicyActivity;
@@ -28,11 +29,12 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
     private ArrayList<Policy> mPolicies;
     private Context mContext;
     private Cabinet mCabinet;
-    private boolean isSettingMinister = false;
+    private PoliciesScreen mActivity;
 
-    public PoliciesAdapter(Context context, LinkedList<Policy> policies) {
+    public PoliciesAdapter(Context context, LinkedList<Policy> policies, PoliciesScreen screen) {
         mPolicies = new ArrayList<Policy>(policies);
         mContext = context;
+        mActivity = screen;
     }
 
     @Override
@@ -62,6 +64,8 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
                     Intent intent = new Intent(mContext, PolicyActivity.class);
                     intent.putExtra(Constants.INTENT_POLICY_ID, pos);
                     mContext.startActivity(intent);
+                    mActivity.finish();
+
                 }
             });
 

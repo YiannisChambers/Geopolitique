@@ -36,6 +36,13 @@ public class Economy extends RealmObject{
         mAverageIncome = 50000;
     }
 
+    public Economy(int incomeTaxRate, int companyTaxRate, int unemploymentRate, int averageIncome){
+        mIncomeTaxRate = incomeTaxRate;
+        mCompanyTaxRate = companyTaxRate;
+        mUnemploymentRate = unemploymentRate;
+        mAverageIncome = averageIncome;
+    }
+
     public long getID() {
         return mID;
     }

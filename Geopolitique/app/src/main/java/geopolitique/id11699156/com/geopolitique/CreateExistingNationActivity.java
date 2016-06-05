@@ -34,18 +34,10 @@ public class CreateExistingNationActivity extends AppCompatActivity {
      * @param view
      */
     public void onCreateNationClick(View view) {
-        Leader leader = new Leader();
-        Country country = new Country(leader, "Australia", "Monarchy", 23000000, 1.4f);
+        Country country = new Country("Australia", "Monarchy", 23000000, 1.4f);
         Player player = new Player(country);
         PlayerRepo.createNewPlayer(player);
-        Country c = PlayerRepo.getCurrentPlayer().getCountry();
-        Model.setUpIssues();
-        Model.setUpMinisters();
-        Model.setUpPolicy();
-
-        IssueRepo.createNewIssues(Model.getIssues());
-        MinisterRepo.createNewMinisters(Model.getMinisters());
-        PolicyRepo.createNewPolicies(Model.getPolicies());
+        Model.setUpTestData();
 
         Intent startIntent = new Intent(this, HomeScreenActivity.class);
         startActivity(startIntent);

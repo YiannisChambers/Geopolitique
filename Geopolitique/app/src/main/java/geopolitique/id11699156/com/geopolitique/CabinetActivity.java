@@ -75,6 +75,7 @@ public class CabinetActivity extends AppCompatActivity{
                     }
                     case 1:{
                         final Intent policiesIntent = new Intent(context, PoliciesScreen.class);
+                        policiesIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(policiesIntent);
                         finish();
                         break;
@@ -87,6 +88,7 @@ public class CabinetActivity extends AppCompatActivity{
 
                     case 3:{
                         final Intent issuesIntent = new Intent(context, IssuesActivity.class);
+                        issuesIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(issuesIntent);
                         finish();
                         break;
@@ -94,6 +96,7 @@ public class CabinetActivity extends AppCompatActivity{
 
                     case 4:{
                         final Intent pollsIntent = new Intent(context, PollsScreen.class);
+                        pollsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(pollsIntent);
                         finish();
                         break;
@@ -101,6 +104,7 @@ public class CabinetActivity extends AppCompatActivity{
 
                     case 5:{
                         final Intent statisticsIntent = new Intent(context, StatisticsActivity.class);
+                        statisticsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(statisticsIntent);
                         finish();
                         break;
@@ -118,15 +122,16 @@ public class CabinetActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new MinistersAdapter(this, mCabinet, false);
+        mAdapter = new MinistersAdapter(this, mCabinet, false, this);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-    public static void OnChangeClick(View v, int pos) {
+    public void OnChangeClick(View v, int pos) {
         Intent intent = new Intent(mContext, MinistersActivity.class);
         intent.putExtra(Constants.INTENT_MINISTER_NUMBER, pos);
         mContext.startActivity(intent);
+        finish();
     }
 
 
