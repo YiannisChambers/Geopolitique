@@ -2,7 +2,11 @@ package model;
 
 import java.util.LinkedList;
 
+import data.CabinetRepo;
 import data.CountryRepo;
+import data.EconomyRepo;
+import data.GovernmentRepo;
+import data.LeaderRepo;
 import data.RealmHelper;
 import geopolitique.id11699156.com.geopolitique.Backups;
 import util.Constants;
@@ -21,32 +25,34 @@ public class Country extends RealmObject {
     Leader mLeader;
     Government mGovernment;
     String mCountryName;
-    String mCountryType;
 
     Economy mEconomy;
 
     int mPopulation;
+
     double mGrowthRate;
+
+    int mPictureID;
 
     public Country(){}
 
-    public Country(Leader leader, String countryName, String countryType, int population, double growthRate, Economy economy) {
+    public Country(Leader leader, String countryName,  int population, double growthRate, Economy economy, int pictureID) {
         mLeader = leader;
-        mGovernment = new Government(leader);
+        mGovernment = GovernmentRepo.createNewGovernment(new Government(leader, CabinetRepo.createNewCabinet(new Cabinet())));
         mCountryName = countryName;
-        mCountryType = countryType;
         mPopulation = population;
         mGrowthRate = growthRate;
         mEconomy = economy;
         mEconomy.calculateEconomy(this);
+        mPictureID = pictureID;
     }
 
-    public Country(String countryName, String countryType, int population, double growthRate) {
-        this(new Leader(), countryName, countryType, population, growthRate, new Economy());
+    public Country(String countryName, int population, double growthRate, int pictureID) {
+        this(new Leader(), countryName, population, growthRate, new Economy(), pictureID);
     }
 
-    public Country(String countryName, String countryType, int population, double growthRate, Economy economy) {
-        this(new Leader(), countryName, countryType, population, growthRate, economy);
+    public Country(String countryName, int population, double growthRate, Economy economy, int pictureID) {
+        this(new Leader(), countryName,  population, growthRate, economy, pictureID);
     }
 
 
@@ -56,10 +62,6 @@ public class Country extends RealmObject {
 
     public String getCountryName() {
         return mCountryName;
-    }
-
-    public String getCountryType() {
-        return mCountryType;
     }
 
     public int getPopulation() {
@@ -195,10 +197,14 @@ public class Country extends RealmObject {
 
     public void setLeader(Leader leader){
         mLeader = leader;
-        mGovernment = new Government(leader);
+        mGovernment = new Government(leader, new Cabinet());
     }
 
     public void setID(long mID) {
         this.mID = mID;
+    }
+
+    public int getPictureID() {
+        return mPictureID;
     }
 }

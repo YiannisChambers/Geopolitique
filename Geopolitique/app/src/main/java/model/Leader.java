@@ -68,4 +68,8 @@ public class Leader extends RealmObject {
     public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
+
+    public void setID(long mID) {
+        this.mID = mID;
+    }
 }

@@ -10,12 +10,15 @@ import model.Economy;
  * Created by yiannischambers on 1/06/2016.
  */
 public class EconomyRepo {
-    public static void createNewEconomy(Economy economy){
+    public static Economy createNewEconomy(Economy economy){
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
-        realm.copyToRealm(economy);
+        economy.setID(getNextKey());
+        Economy createdEconomy = realm.copyToRealm(economy);
         realm.commitTransaction();
+
+        return createdEconomy;
     }
 
     public static LinkedList<Economy> getAllEconomies(){
@@ -36,5 +39,10 @@ public class EconomyRepo {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Economy> results = realm.where(Economy.class).findAll();
         results.deleteAllFromRealm();
+    }
+
+    public static int getNextKey()
+    {   Realm realm = Realm.getDefaultInstance();
+        return realm.where(Economy.class).findAll().size() + 1;
     }
 }

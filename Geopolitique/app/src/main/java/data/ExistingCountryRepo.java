@@ -22,10 +22,11 @@ public class ExistingCountryRepo {
     }
 
     public static ExistingCountry createExistingCountry(ExistingCountry existingCountry){
+
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         existingCountry.setID(getNextKey());
-        ExistingCountry createdExistingCountry = realm.createObject(ExistingCountry.class);
+        ExistingCountry createdExistingCountry = realm.copyToRealm(existingCountry);
 
         realm.commitTransaction();
 

@@ -17,8 +17,13 @@ import data.PlayerRepo;
 import data.RealmHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import model.Economy;
+import model.ExistingCountry;
+import model.Government;
 import model.Issue;
+import model.Leader;
 import model.Minister;
+import model.Model;
 import model.Policy;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -41,6 +46,10 @@ public class MainMenuActivity extends AppCompatActivity {
         realm.delete(Issue.class);
         realm.delete(Policy.class);
         realm.delete(Minister.class);
+        realm.delete(ExistingCountry.class);
+        realm.delete(Government.class);
+        realm.delete(Economy.class);
+        realm.delete(Leader.class);
         RealmHelper.endTransaction();
 
         new StartUpAsyncTask(this).execute();
@@ -95,6 +104,7 @@ public class MainMenuActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            Model.setUpTestData();
 
         }
     }

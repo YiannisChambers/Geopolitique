@@ -12,6 +12,13 @@ public class ExistingCountry extends RealmObject {
 
     Country mCountry;
 
+    public ExistingCountry(){
+    }
+
+    public ExistingCountry(Country country){
+        mCountry = country;
+    }
+
     public long getID() {
         return mID;
     }

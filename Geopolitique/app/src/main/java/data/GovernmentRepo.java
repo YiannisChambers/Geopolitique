@@ -5,17 +5,20 @@ import java.util.LinkedList;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import model.Government;
+import model.Leader;
 
 /**
  * Created by yiannischambers on 1/06/2016.
  */
 public class GovernmentRepo {
-    public static void createNewGovernment(Government government){
+    public static Government createNewGovernment(Government government){
         Realm realm = Realm.getDefaultInstance();
-
         realm.beginTransaction();
-        realm.copyToRealm(government);
+        government.setID(getNextKey());
+        Government createdGovernemnt = realm.copyToRealm(government);
         realm.commitTransaction();
+
+        return createdGovernemnt;
     }
 
     public static LinkedList<Government> getAllGovernments(){
@@ -37,4 +40,10 @@ public class GovernmentRepo {
         RealmResults<Government> results = realm.where(Government.class).findAll();
         results.deleteAllFromRealm();
     }
+
+    public static int getNextKey()
+    {   Realm realm = Realm.getDefaultInstance();
+        return realm.where(Government.class).findAll().size() + 1;
+    }
+
 }

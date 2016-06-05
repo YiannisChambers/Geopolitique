@@ -3,11 +3,16 @@ package model;
 import java.util.LinkedList;
 import java.util.Random;
 
+import data.CountryRepo;
+import data.EconomyRepo;
 import data.EffectRepo;
+import data.ExistingCountryRepo;
 import data.IssueRepo;
+import data.LeaderRepo;
 import data.MinisterRepo;
 import data.OptionRepo;
 import data.PolicyRepo;
+import geopolitique.id11699156.com.geopolitique.R;
 import util.Constants;
 import io.realm.RealmList;
 
@@ -163,7 +168,20 @@ public class Model {
     }
 
     private static void setUpExistingCountries(){
-        Country britain = new Country()
+        existingCountries = new LinkedList<>();
+
+        Country australia = CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Malcolm", "Turnbull", "Prime Minister")), "Australia", 23000000, 1.4f, EconomyRepo.createNewEconomy(new Economy(40, 30, 5, 50000)), R.drawable.australia_flag));
+        Country britain =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("David", "Cameron", "Prime Minister")), "Britain", 64100000, 1.7f, EconomyRepo.createNewEconomy(new Economy(20, 45, 5, 50000)), R.drawable.britain_flag));
+        Country russia =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Vladimir", "Putin", "President")), "Russia", 163000000, 1.2f, EconomyRepo.createNewEconomy(new Economy(30, 50, 4, 50000)), R.drawable.russia_flag));
+        Country unitedStates =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Barack", "Obama", "President")),"United States", 300000000, 1.4f, EconomyRepo.createNewEconomy(new Economy(20, 30, 5, 50000)), R.drawable.us_flag));
+
+        existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(australia)));
+        existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(britain)));
+        existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(russia)));
+        existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(unitedStates)));
     }
 
+    public static LinkedList<ExistingCountry> getExistingCountries() {
+        return existingCountries;
+    }
 }

@@ -1,6 +1,9 @@
 package model;
 
+import data.CabinetRepo;
 import data.GovernmentRepo;
+import data.LeaderRepo;
+import data.RealmHelper;
 import util.Constants;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -23,15 +26,14 @@ public class Government extends RealmObject {
     RealmList<Issue> mIssues;
 
     public Government(){
-        this(new Leader());
     }
 
-    public Government(Leader leader) {
-        mLeader = leader;
-        mCabinet = new Cabinet();
+    public Government(Leader leader, Cabinet cabinet) {
+        mCabinet = cabinet;
         mPopularity = 51.00f;
         mInternationalPopularity = 51.00f;
         mIssues = new RealmList<Issue>();
+        mLeader = leader;
     }
 
     public long getID() {
@@ -44,6 +46,12 @@ public class Government extends RealmObject {
 
     public Leader getLeader() {
         return mLeader;
+    }
+
+    public void setLeader(Leader mLeader) {
+        //RealmHelper.beginTransaction();
+        //this.mLeader = mLeader;
+        //RealmHelper.endTransaction();
     }
 
     public double getGovernmentSpending(){
@@ -145,7 +153,7 @@ public class Government extends RealmObject {
         mIssues.get(position).selectOption(optionPosition);
     }
 
-    public void update(){
-        //GovernmentRepo.updateGovernment(this);
+    public void setID(long mID) {
+        this.mID = mID;
     }
 }

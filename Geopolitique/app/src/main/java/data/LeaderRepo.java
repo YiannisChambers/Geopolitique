@@ -8,17 +8,24 @@ import model.Leader;
  */
 public class LeaderRepo {
 
-    public static void createNewLeader(Leader leader){
+    public static  Leader createNewLeader(Leader leader) {
+
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
-
-        realm.copyToRealm(leader);
+        leader.setID(getNextKey());
+        Leader createdLeader = realm.copyToRealm(leader);
 
         realm.commitTransaction();
 
+        return createdLeader;
     }
 
+
+    public static int getNextKey()
+    {   Realm realm = Realm.getDefaultInstance();
+        return realm.where(Leader.class).findAll().size() + 1;
+    }
 
 
 }
