@@ -12,6 +12,7 @@ import io.realm.RealmResults;
  */
 public class RealmHelper {
 
+    private static Realm realmInstance;
     public static <T extends RealmModel> LinkedList<T> getLinkedListFromRealmResults(RealmResults<T> results){
         LinkedList<T> list = new LinkedList<T>();
 
@@ -31,5 +32,12 @@ public class RealmHelper {
     public static void endTransaction(){
         Realm realm = Realm.getDefaultInstance();
         realm.commitTransaction();
+    }
+
+    public static Realm realm(){
+        if(realmInstance == null){
+            realmInstance= Realm.getDefaultInstance();
+        }
+        return realmInstance;
     }
 }

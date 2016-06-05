@@ -174,7 +174,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
     void updateStats() {
-        /*
+
         TextView updateText = (TextView) findViewById(R.id.TEMP_OUTPUT);
         Country country = PlayerRepo.getCurrentPlayer().getCountry();   //Model.getCountry();
         Economy economy = country.getEconomy();
@@ -184,7 +184,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         String popularity = "TOTAL SPENDING: " + NumberHelper.getWordedVersion(country.getGovernment().getGovernmentSpending()) + "\n POPULARITY: " + NumberHelper.getWordedVersion(country.getGovernment().getPopularity()) + "%, INT. POP: " + NumberHelper.getWordedVersion(country.getGovernment().getInternationalPopularity()) + "%" + "\n";
         String days = "DAYS: " + mDays + ", WEEKS: " + mWeeks + ", MONTHS: " + mMonths;
         updateText.setText(nationStats + economyStats + popularity + days);
-        */
+
     }
 
     public void onFixMeSomeDay(View view) {
@@ -234,7 +234,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(PollsScreen.class);
+        stackBuilder.addParentStack(HomeScreenActivity.class);
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
@@ -263,7 +263,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 // your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(IssuesActivity.class);
+        stackBuilder.addParentStack(HomeScreenActivity.class);
 // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
@@ -278,34 +278,6 @@ public class HomeScreenActivity extends AppCompatActivity {
         mNotificationManager.notify(1, mBuilder.build());
     }
 
-    public void addRandomIssue(){
-        if (new Random().nextBoolean()) {
-            LinkedList<Issue> issues = IssueRepo.getAllIssues();
-
-            RealmHelper.beginTransaction();
-            PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addIssue(issues.get(new Random().nextInt(issues.size())));
-            RealmHelper.endTransaction();
-            issueNotes += 1;
-            bottomNavigation.setNotification(issueNotes + "", 3);
-            sendIssueNotification();
-        }
-    }
-    /*
-    private class ResponseReceiver extends BroadcastReceiver {
-        // Prevents instantiation
-        private ResponseReceiver() {
-        }
-        // Called when the BroadcastReceiver gets an Intent it's registered to receive
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            updateStats();
-        /*
-         * Handle Intents here.
-
-        }
-    }
-    */
 
 
     private class UpdateTimerAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -330,7 +302,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             weeks = mCalendar.get(Calendar.WEEK_OF_MONTH);
             months = mCalendar.get(Calendar.MONTH);
             years = mCalendar.get(Calendar.YEAR);
-
 
         }
 
@@ -429,7 +400,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                     player.setTime(mCalendar.getTimeInMillis());
                 }
             });
-            addRandomIssue();
+           addRandomIssue();
 
 
         }
@@ -456,6 +427,13 @@ public class HomeScreenActivity extends AppCompatActivity {
                     player.getCountry().updateMonthly();
                 }
             });
+        }
+
+        private void addRandomIssue(){
+            Model.addRandomIssue();
+            issueNotes += 1;
+            bottomNavigation.setNotification(issueNotes + "", 3);
+            sendIssueNotification();
         }
 
 

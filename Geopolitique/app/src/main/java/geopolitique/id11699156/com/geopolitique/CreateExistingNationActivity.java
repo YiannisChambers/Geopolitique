@@ -66,7 +66,6 @@ public class CreateExistingNationActivity extends AppCompatActivity implements A
         Player player = new Player(country);
         PlayerRepo.createNewPlayer(player);
 
-
         //Model.setUpTestData();
 
         Intent startIntent = new Intent(this, HomeScreenActivity.class);

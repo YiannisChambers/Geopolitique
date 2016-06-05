@@ -13,6 +13,7 @@ import data.MinisterRepo;
 import data.OptionRepo;
 import data.PolicyRepo;
 import geopolitique.id11699156.com.geopolitique.R;
+import io.realm.Realm;
 import util.Constants;
 import io.realm.RealmList;
 
@@ -26,17 +27,17 @@ public class Model {
     public static LinkedList<Minister> ministers;
     public static LinkedList<Issue> issues;
     public static LinkedList<ExistingCountry> existingCountries;
-
+    public static LinkedList<LinkedList<Option>> optionsList;
 
     public static void setUpTestData(){
-        Model.setUpIssues();
         Model.setUpMinisters();
         Model.setUpPolicy();
+        Model.setUpIssues();
         Model.setUpExistingCountries();
 
         MinisterRepo.createNewMinisters(Model.getMinisters());
         PolicyRepo.createNewPolicies(Model.getPolicies());
-
+        IssueRepo.createNewIssues(Model.getIssues());
     }
 
     public static void setUpMinisters() {
@@ -103,21 +104,7 @@ public class Model {
 
     public static void setUpIssues(){
         issues = new LinkedList<>();
-        /*RealmList<Option> options = new RealmList<>();
-
-        RealmList<Effect> negativeEffect = new RealmList<Effect>();
-        negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, -5)));
-
-        RealmList<Effect> positiveEffect = new RealmList<Effect>();
-        positiveEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 5)));
-
-        RealmList<Effect> neutralEffect = new RealmList<Effect>();
-        negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 0)));
-
-        options.add(OptionRepo.createNewOption(new Option("Defend your minister completely as a victim of unfounded and biased media abuse.", negativeEffect)));
-        options.add(OptionRepo.createNewOption(new Option("Distance yourself from the comments. Brush off the issue.", neutralEffect)));
-        options.add(OptionRepo.createNewOption(new Option("Demand the resignation of your minister immediately.", positiveEffect)));
-        */
+        optionsList = new LinkedList<>();
 
         issues.add(createIssue("Scandal!", "An affair involving a junior minister and his secretary has been outed by the tabloids. The press seeks your comment.",
                 "Defend your minister completely as a victim of unfounded and biased media abuse",
@@ -148,11 +135,25 @@ public class Model {
         negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 0)));
         RealmList<Option> options = new RealmList<>();
 
-        options.add(OptionRepo.createNewOption(new Option(negativeOption, negativeEffect)));
-        options.add(OptionRepo.createNewOption(new Option(neutralOption, neutralEffect)));
-        options.add(OptionRepo.createNewOption(new Option(positiveOption, positiveEffect)));
 
-        Issue issue = IssueRepo.createNewIssue(new Issue(title, description, options));
+        Option option1 = new Option(positiveOption, positiveEffect);
+        Option option2 = new Option(neutralOption, neutralEffect);
+        Option option3 = new Option(negativeOption, negativeEffect);
+
+        LinkedList<Option> tempOptions = new LinkedList<>();
+        tempOptions.add(option1);
+        tempOptions.add(option2);
+        tempOptions.add(option3);
+        optionsList.add(tempOptions);
+
+        options.add(OptionRepo.createNewOption(new Option(positiveOption, positiveEffect)));
+        options.add(OptionRepo.createNewOption(new Option(neutralOption, neutralEffect)));
+        options.add(OptionRepo.createNewOption(new Option(negativeOption, negativeEffect)));
+
+        Issue issue = new Issue(title, description, options);
+
+        //Adds issue to the DB
+        //Issue issue = IssueRepo.createNewIssue(new Issue(title, description, options));
         return issue;
     }
 
@@ -161,11 +162,16 @@ public class Model {
     }
 
     public static void addRandomIssue(){
+        Realm.getDefaultInstance();
         Random r = new Random();
         int position = r.nextInt(issues.size());
         Issue original = issues.get(position);
-        Issue issue = new Issue(original.getName(), original.getDescription(), original.getOptions());
-        IssueRepo.createNewIssue(issue);
+        LinkedList<Option> options = optionsList.get(position);
+        Issue issue = createIssue(original.getName(), original.getDescription(), options.get(0).getDescription(),
+                options.get(1).getDescription(), options.get(2).getDescription());
+
+        //issues.add(original);//issue);
+        IssueRepo.createNewIssue(issue);//createNewIssue(issue);
     }
 
     private static void setUpExistingCountries(){

@@ -10,17 +10,47 @@ import model.Issue;
  * Created by yiannischambers on 1/06/2016.
  */
 public class IssueRepo {
+
+    static int number = 0;
+
     public static Issue createNewIssue(Issue issue){
         Realm realm = Realm.getDefaultInstance();
 
-        if(!realm.isInTransaction())
-            realm.beginTransaction();
-        issue.setID(getNextKey());
+        //if(!realm.isInTransaction())
+        realm.beginTransaction();
+
+        issue.setID(number);//getNextKey());
         Issue createdIssue = realm.copyToRealm(issue);
 
         realm.commitTransaction();
+        number+=1;
 
         return createdIssue;
+    }
+
+    public static void duplicateIssue(Issue issue){
+        Realm realm = Realm.getDefaultInstance();
+
+        createNewIssue(issue);
+
+        /*
+        ////if(!realm.isInTransaction())
+        realm.beginTransaction();
+        Issue createdIssue = getIssueByID(issue.getID());
+
+        if(createdIssue != null) {
+            createdIssue.setID(number);//getNextKey());
+            Issue duplicateIssue = realm.copyToRealm(createdIssue);
+        }
+        else
+        {
+            //issue.setID(number);
+            //Issue duplicateIssue = realm.copyToRealm(issue);
+        }
+        */
+
+
+        //realm.commitTransaction();
     }
 
     public static void createNewIssues(LinkedList<Issue> issues){
@@ -28,8 +58,9 @@ public class IssueRepo {
 
         realm.beginTransaction();
         for(int i = 0; i < issues.size(); i++){
-            issues.get(i).setID(getNextKey());
+            issues.get(i).setID(number);//getNextKey());
             realm.copyToRealm(issues.get(i));
+            number+=1;
         }
         realm.commitTransaction();
     }
