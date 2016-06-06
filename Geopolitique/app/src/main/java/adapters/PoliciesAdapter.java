@@ -68,11 +68,11 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
         holder.mTimeToComplete.setText("" + policy.getTimeToComplete());
 
         //If it's a current policy
-        if(mIsCurrentPolicy) {
+        /*if(mIsCurrentPolicy) {
             //Remove the button.
             holder.mButton.setVisibility(View.INVISIBLE);
         }
-        else {
+        else {*/
             //Set up a listener for the button to go to the detailed Policy screen
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,7 +85,7 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
 
                 }
             });
-        }
+        //}
 
         holder.itemView.setTag(position);
     }

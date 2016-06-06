@@ -6,6 +6,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import data.MinisterRepo;
+import data.PlayerRepo;
+import data.RealmHelper;
 import geopolitique.id11699156.com.geopolitique.CabinetActivity;
 import geopolitique.id11699156.com.geopolitique.MinistersActivity;
 import geopolitique.id11699156.com.geopolitique.R;
 import model.Cabinet;
 import model.Minister;
+import util.Constants;
 
 /**
  * Ministers Adapter Class:
@@ -37,6 +42,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
     private boolean isSettingMinister = false;
     private MinistersActivity mActivity;
     private CabinetActivity mCabinetActivity;
+    private int mMinisterPosition;
 
     public MinistersAdapter(Context context, Cabinet cabinet, boolean isSetting, CabinetActivity activity) {
         mCabinet = cabinet;
@@ -46,11 +52,12 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         mCabinetActivity = activity;
     }
 
-    public MinistersAdapter(Context context, LinkedList<Minister> ministers, boolean isSetting, MinistersActivity activity) {
+    public MinistersAdapter(Context context, LinkedList<Minister> ministers, boolean isSetting, MinistersActivity activity, int ministerPosition) {
         mMinisters = new ArrayList<Minister>(ministers);
         mContext = context;
         isSettingMinister = isSetting;
         mActivity = activity;
+        mMinisterPosition = ministerPosition;
     }
 
     @Override
@@ -63,19 +70,23 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
     @Override
     public void onBindViewHolder(MinistersAdapterViewHolder holder, int position) {
 
+        //Get the specified minister
         final Minister minister = mMinisters.get(position);
 
         long pos = 0;
 
+        //If the minister has not been selected...
         if(minister == null){
+            //...remove the Views that show states, and display name as 'not selected'...
             holder.mStats.setVisibility(View.INVISIBLE);
-            holder.mName.setText("Not Selected");
+            holder.mName.setText(R.string.ministers_adapter_not_selected_text);
             holder.mKnowledge.setVisibility(View.INVISIBLE);
             holder.mExperience.setVisibility(View.INVISIBLE);
             holder.mWorkload.setVisibility(View.INVISIBLE);
         }
         else
         {
+            //...else set the View to show all the minister's characterstics
             pos = minister.getID();
             holder.mName.setText(minister.getLastName() + ", " + minister.getFirstName().charAt(0));
             holder.mKnowledge.setText("" + minister.getKnowledge());
@@ -84,14 +95,29 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         }
 
 
+        //If the Minister Adapter is being used to select a new Minister...
         if(isSettingMinister) {
+            //Do not set the Title field.
             holder.mTitle.setVisibility(View.INVISIBLE);
             final long p = pos;
-            holder.mButton.setText("SET");
+
+            //Set the button to set a Minister
+            holder.mButton.setText(R.string.minsters_adapter_set_text);
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mActivity.OnSetClick(v, p);
+                    Minister minister = MinisterRepo.getMinisterByID(p);
+
+                    RealmHelper.beginTransaction();
+                    //int ministerPosition = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getMinisters().indexOf(minister);
+                    PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().setMinister(mMinisterPosition, minister);
+                    RealmHelper.endTransaction();
+
+                    Intent intent = new Intent(mContext, CabinetActivity.class);
+                    mContext.startActivity(intent);
+
+                    mActivity.finish();
+                    //mActivity.OnSetClick(v, p);
                 }
             });
         }
@@ -102,7 +128,12 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCabinetActivity.OnChangeClick(v, q);
+
+                    Intent intent = new Intent(mContext, MinistersActivity.class);
+                    intent.putExtra(Constants.INTENT_MINISTER_NUMBER, q);
+                    mContext.startActivity(intent);
+                    mCabinetActivity.finish();
+                    //mCabinetActivity.OnChangeClick(v, q);
                 }
             });
         }
@@ -129,6 +160,10 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         private Button mButton;
         private LinearLayout mStats;
 
+        /**
+         * Constructor
+         * @param itemView
+         */
         public MinistersAdapterViewHolder(View itemView) {
             super(itemView);
 

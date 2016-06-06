@@ -7,6 +7,7 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,10 +36,6 @@ import util.NumberHelper;
 import util.SetupHelper;
 
 public class PolicyActivity extends AppCompatActivity {
-
-    /**
-     * TODO: Add a check to see if policy is in Governement, and if so, make a remove button
-     */
 
     long mPolicyID;
     Policy mPolicy;
@@ -135,18 +132,37 @@ public class PolicyActivity extends AppCompatActivity {
             button.setEnabled(false);
             button.setText("Minister Not Selected");
         }
+        else {
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RealmHelper.beginTransaction();
-                PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addPolicy(mPolicy);
-                RealmHelper.endTransaction();
+            if(player.getCountry().getGovernment().getCabinet().getTotalPolicies().contains(mPolicy)) {
+                button.setText("REMOVE");
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RealmHelper.beginTransaction();
+                        PlayerRepo.getCurrentPlayer().getCountry().getGovernment().removePolicy(mPolicy);
+                        RealmHelper.endTransaction();
 
-                Intent intent = new Intent(mContext, PoliciesScreen.class);
-                mContext.startActivity(intent);
+                        Intent intent = new Intent(mContext, PoliciesScreen.class);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
-        });
+            else {
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RealmHelper.beginTransaction();
+                        PlayerRepo.getCurrentPlayer().getCountry().getGovernment().addPolicy(mPolicy);
+                        RealmHelper.endTransaction();
+
+                        Intent intent = new Intent(mContext, PoliciesScreen.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+            }
+        }
     }
 
     private void setBarChart(){
@@ -160,7 +176,6 @@ public class PolicyActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
         ArrayList<IBarDataSet> sets = new ArrayList<IBarDataSet>();
-        //ArrayList<IBarDataSet> datasets = new ArrayList<IBarDataSet>();
 
         for(int i = 0; i < mPolicy.getEffects().size(); i++){
             float effect = 0;
@@ -182,10 +197,11 @@ public class PolicyActivity extends AppCompatActivity {
             LinkedList<BarEntry> entry = new LinkedList<BarEntry>();
             entry.add(entries.get(i));
             BarDataSet set = new BarDataSet(entry, (mPolicy.getEffects().get(i).getProperty()));
+            set.setColor(getColor(R.color.colorTextColor));
+            set.setValueTextColor(getColor(R.color.colorTextColor));
+            set.setValueTextSize(10);
             sets.add(set);
         }
-
-        //datasets.add(set);
 
         BarData data = new BarData(XValues, sets);
 
@@ -212,6 +228,9 @@ public class PolicyActivity extends AppCompatActivity {
         barChart.setData(data);
         barChart.notifyDataSetChanged();
         barChart.invalidate();
+
+        barChart.getAxisLeft().setTextColor(Color.WHITE);
+        barChart.getXAxis().setTextColor(Color.WHITE);
     }
 
 }

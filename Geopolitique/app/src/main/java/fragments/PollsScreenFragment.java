@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package fragments;
 
 import android.graphics.Color;
@@ -83,14 +88,19 @@ public class PollsScreenFragment extends Fragment {
 
         //Create datasets for both those entries, and set them with a respective color
         BarDataSet ourSet = new BarDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
-        ourSet.setColor(getActivity().getColor(R.color.colorAccent));
+        ourSet.setColor(getActivity().getColor(R.color.colorTextColor));
 
         BarDataSet theirSet = new BarDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
-        theirSet.setColor(getActivity().getColor(R.color.colorTextColor));
+        theirSet.setColor(getActivity().getColor(R.color.colorAccent));
 
         //Set Axis Dependencies for datasets
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ourSet.setValueTextColor(getActivity().getColor(R.color.colorTextColor));
+        ourSet.setValueTextSize(10);
+        theirSet.setValueTextColor(getActivity().getColor(R.color.colorTextColor));
+        theirSet.setValueTextSize(10);
 
         //Add datasets to list
         ArrayList<IBarDataSet> datasets = new ArrayList<IBarDataSet>();
@@ -133,6 +143,7 @@ public class PollsScreenFragment extends Fragment {
         barChart.getAxisLeft().setTextColor(Color.WHITE);
         barChart.getXAxis().setTextColor(Color.WHITE);
 
+
     }
 
     void setPollLineChart() {
@@ -156,10 +167,10 @@ public class PollsScreenFragment extends Fragment {
         }
 
         LineDataSet ourSet = new LineDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
-        ourSet.setColor(Color.BLUE);
+        ourSet.setColor(getActivity().getColor(R.color.colorTextColor));
 
         LineDataSet theirSet = new LineDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
-        theirSet.setColor(Color.RED);
+        theirSet.setColor(getActivity().getColor(R.color.colorAccent));
 
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -185,6 +196,9 @@ public class PollsScreenFragment extends Fragment {
         lineChart.setDrawGridBackground(false);
 
         lineChart.getAxisLeft().setTextColor(Color.WHITE);
+        lineChart.getAxisRight().setTextColor(Color.WHITE);
+        lineChart.getXAxis().setTextColor(Color.WHITE);
+        lineChart.getLineData().setValueTextColor(Color.WHITE);
 
     }
 }

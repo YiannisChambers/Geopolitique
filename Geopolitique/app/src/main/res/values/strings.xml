@@ -73,4 +73,6 @@
     <string name="polls_fragment_us_text">US</string>
     <string name="polls_fragment_them_text">THEM</string>
     <string name="ministers_screen_choose_minister_screen">CHOOSE MINISTER</string>
+    <string name="minsters_adapter_set_text">SET</string>
+    <string name="ministers_adapter_not_selected_text">Not Selected</string>
 </resources>

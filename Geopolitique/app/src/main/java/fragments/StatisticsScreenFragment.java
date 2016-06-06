@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package fragments;
 
 import android.graphics.Color;

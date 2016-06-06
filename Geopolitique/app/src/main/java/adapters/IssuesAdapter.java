@@ -36,6 +36,13 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.IssuesAdap
     private Context mContext;
     private IssuesActivity mActivity;
 
+    /**
+     * Constructor which takes a context, a list of issues to present
+     * and the Issues Activity to finish() when an item is selected
+     * @param context
+     * @param issues
+     * @param activity
+     */
     public IssuesAdapter(Context context, LinkedList<Issue> issues, IssuesActivity activity){
         mIssues = new ArrayList<Issue>(issues);
         mContext = context;

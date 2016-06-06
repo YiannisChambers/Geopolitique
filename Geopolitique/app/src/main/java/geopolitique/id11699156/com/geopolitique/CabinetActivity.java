@@ -130,12 +130,5 @@ public class CabinetActivity extends AppCompatActivity{
         mAdapter.notifyDataSetChanged();
     }
 
-    public void OnChangeClick(View v, int pos) {
-        Intent intent = new Intent(mContext, MinistersActivity.class);
-        intent.putExtra(Constants.INTENT_MINISTER_NUMBER, pos);
-        mContext.startActivity(intent);
-        finish();
-    }
-
 
 }

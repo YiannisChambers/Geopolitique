@@ -40,6 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //THIS IS FOR TESTING
 
+        /*
         Realm realm = Realm.getDefaultInstance();
         RealmHelper.beginTransaction();
         realm.deleteAll();
@@ -51,6 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
         realm.delete(Economy.class);
         realm.delete(Leader.class);
         RealmHelper.endTransaction();
+        */
 
         new StartUpAsyncTask(this).execute();
     }
@@ -105,6 +107,7 @@ public class MainMenuActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             TestData.setUpTestData();
 
         }

@@ -182,6 +182,28 @@ public class Government extends RealmObject {
     }
 
     /**
+     * Remove an existing policy from a Government
+     *
+     * @param policy
+     */
+    public void removePolicy(Policy policy) {
+        //Get the corrent minister for the policy (based on the Ministry of the Policy)
+        String department = policy.getMinistry();
+        if (department.equals(Constants.FOREIGN_AFFAIRS)) {
+            mCabinet.getForeignAffairsMinister().removePolicy(policy);
+        } else if (department.equals(Constants.TREASURY)) {
+            mCabinet.getTreasurer().removePolicy(policy);
+        } else if (department.equals(Constants.DEFENCE)) {
+            mCabinet.getDefenceMinister().removePolicy(policy);
+        } else if (department.equals(Constants.EDUCATION)) {
+            mCabinet.getEducationMinister().removePolicy(policy);
+        } else if (department.equals(Constants.HEALTH)) {
+            mCabinet.getHealthMinister().removePolicy(policy);
+        }
+    }
+
+
+    /**
      * Add an issue to the Government
      * @param issue
      */

@@ -17,8 +17,8 @@
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/polls_screen_line_chart"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_below="@+id/polls_screen_bar_chart"
             android:layout_centerHorizontal="true"></com.github.mikephil.charting.charts.LineChart>
     </RelativeLayout>

@@ -4,16 +4,11 @@
     android:layout_height="match_parent"
     tools:context="fragments.StatisticsScreenFragment">
 
-    <!-- TODO: Update blank fragment layout
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />  -->
-
     <com.github.mikephil.charting.charts.PieChart
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:id="@+id/statistics_screen_piechart">
+        android:id="@+id/statistics_screen_piechart"
+        android:layout_gravity="center_horizontal">
     </com.github.mikephil.charting.charts.PieChart>
 
 </FrameLayout>

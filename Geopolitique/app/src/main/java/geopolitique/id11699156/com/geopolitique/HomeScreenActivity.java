@@ -47,6 +47,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         mTimerText = (TextView) findViewById(R.id.home_screen_time_text);
@@ -241,7 +242,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     }
 
 
-
     private class UpdateTimerAsyncTask extends AsyncTask<Void, Void, Void> {
 
         private boolean mIsRunning = true;
@@ -257,7 +257,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
             mCalendar = Calendar.getInstance();
             mCalendar.setTimeInMillis(PlayerRepo.getCurrentPlayer().getTime());
-            mCalendar.set(mCalendar.get(Calendar.YEAR),  mCalendar.get(mCalendar.MONTH), mCalendar.DAY_OF_MONTH, mCalendar.HOUR_OF_DAY, 0, 0);
+            mCalendar.set(mCalendar.get(Calendar.YEAR), mCalendar.get(mCalendar.MONTH), mCalendar.DAY_OF_MONTH, mCalendar.HOUR_OF_DAY, 0, 0);
 
             hours = mCalendar.get(Calendar.HOUR);
             days = mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -348,7 +348,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                     player.setTime(mCalendar.getTimeInMillis());
                 }
             });
-           addRandomIssue();
+            addRandomIssue();
 
 
         }
@@ -377,7 +377,7 @@ public class HomeScreenActivity extends AppCompatActivity {
             });
         }
 
-        private void addRandomIssue(){
+        private void addRandomIssue() {
             TestData.addRandomIssue();
             issueNotes += 1;
             bottomNavigation.setNotification(issueNotes + "", 3);
