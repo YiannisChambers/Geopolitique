@@ -49,7 +49,7 @@ public class TestData {
 
         MinisterRepo.createNewMinisters(TestData.getMinisters());
         PolicyRepo.createNewPolicies(TestData.getPolicies());
-        IssueRepo.createNewIssues(TestData.getIssues());
+        //IssueRepo.createNewIssues(TestData.getIssues());
     }
 
     /**
@@ -78,6 +78,10 @@ public class TestData {
         ministers.add(new Minister("Genevieve", "d'Arc", 7, 6));
     }
 
+    /**
+     * Get Ministers from test data
+     * @return
+     */
     public static LinkedList<Minister> getMinisters() {
         return ministers;
     }
@@ -123,11 +127,17 @@ public class TestData {
         policies.add(p2);
     }
 
+    /**
+     * Get policies from Test Data
+     * @return
+     */
     public static LinkedList<Policy> getPolicies() {
         return policies;
     }
 
-
+    /**
+     * Set up Issues test data
+     */
     public static void setUpIssues(){
         issues = new LinkedList<>();
         optionsList = new LinkedList<>();
@@ -153,18 +163,10 @@ public class TestData {
                 "Agreed to revisit the subject of Education within the next six months of government.",
                 "Provide further government subsidies for higher education."));
 
-
-        issues.add(createIssue("Science Funding.", "The time has come for the government to release their latest update to the nation's economic direction. What policies will you make?",
-                "Cut corporate tax by 5%; incentivise job creation through tax breaks to big business.",
-                "Maintain current policy platform; cut around the edges of reform",
-                "Increase social spending by cutting the defence budget. Raise taxes for big business."));
-
-
-        issues.add(createIssue("Budget Day.", "The time has come for the government to release their latest update to the nation's economic direction. What policies will you make?",
-                "Cut corporate tax by 5%; incentivise job creation through tax breaks to big business.",
-                "Maintain current policy platform; cut around the edges of reform",
-                "Increase social spending by cutting the defence budget. Raise taxes for big business."));
-
+        issues.add(createIssue("Science Funding.", "The nation's federal scientific organisation has come to you demanding an urgent funding increase. What is your response?",
+                "Abolish the national scientific organisation, and announce a series of funding cuts across the board for the sciences.",
+                "Promise to increase funding over the next term of government.",
+                "Annonce an immediate increase in government funding for the nation's scientists."));
     }
 
     private static Issue createIssue(String title, String description, String negativeOption, String neutralOption, String positiveOption){
@@ -203,18 +205,28 @@ public class TestData {
         return issues;
     }
 
+    /**
+     * Add a new random issue to the IssueRepo
+     * @return
+     */
     public static boolean addRandomIssue(){
 
+        //Calculate the 50% chance to add a new Issue
         boolean createIssue = new Random().nextBoolean();
+        //If making another issue
         if(createIssue) {
             Realm.getDefaultInstance();
+            //Get a random issue
             Random r = new Random();
             int position = r.nextInt(issues.size());
+
+            //Deep copy the issue
             Issue original = issues.get(position);
             LinkedList<Option> options = optionsList.get(position);
             Issue issue = createIssue(original.getName(), original.getDescription(), options.get(0).getDescription(),
                     options.get(1).getDescription(), options.get(2).getDescription());
 
+            //Add the issue to the Repo.
             IssueRepo.createNewIssue(issue);
         }
 
@@ -233,11 +245,13 @@ public class TestData {
         Country britain =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("David", "Cameron", "Prime Minister")), "Britain", 64100000, 1.7f, EconomyRepo.createNewEconomy(new Economy(20, 45, 5, 50000)), R.drawable.britain_flag));
         Country russia =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Vladimir", "Putin", "President")), "Russia", 163000000, 1.2f, EconomyRepo.createNewEconomy(new Economy(30, 50, 4, 50000)), R.drawable.russia_flag));
         Country unitedStates =  CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Barack", "Obama", "President")),"United States", 300000000, 1.4f, EconomyRepo.createNewEconomy(new Economy(20, 30, 5, 50000)), R.drawable.us_flag));
+        Country germany = CountryRepo.createNewCountry(new Country(LeaderRepo.createNewLeader(new Leader("Angela", "Merkel", "Chancellor")), "Germany", 80000000, 1.5f, EconomyRepo.createNewEconomy(new Economy(20, 30, 5, 50000)), R.drawable.germany_flag));
 
         //Add to list
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(australia)));
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(britain)));
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(russia)));
         existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(unitedStates)));
+        existingCountries.add(ExistingCountryRepo.createExistingCountry(new ExistingCountry(germany)));
     }
 }

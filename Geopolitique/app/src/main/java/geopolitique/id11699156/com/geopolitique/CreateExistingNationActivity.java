@@ -91,7 +91,7 @@ public class CreateExistingNationActivity extends AppCompatActivity implements A
         TextView textView =  (TextView)findViewById(R.id.create_existing_nation_activity_choose_existing_text);
 
         //Change the country name and the flag.
-        textView.setText(countries.get(position).getCountry().getCountryName());
+        textView.setText(countries.get(position).getCountry().getLeader().getFullNameWithTitle());
         imageView.setImageResource(countries.get(position).getCountry().getPictureID());
     }
 

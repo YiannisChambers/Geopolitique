@@ -31,14 +31,14 @@ public class ToolbarHelper {
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(context.getString(R.string.toolbar_policies), R.drawable.policies_icon);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(context.getString(R.string.toolbar_home), R.drawable.home_icon);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(context.getString(R.string.toolbar_issues), R.drawable.issues_icon);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem(context.getString(R.string.toolbar_polls), R.drawable.poll_icon);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(context.getString(R.string.toolbar_statistics), R.drawable.statistics_icon);
 
         // Add items
         mToolbar.addItem(item1); //Cabinet
         mToolbar.addItem(item2); //Policies
         mToolbar.addItem(item3); //Issues
         mToolbar.addItem(item4); //Home
-        mToolbar.addItem(item5); //Polls
+        mToolbar.addItem(item5); //Statistics
 
         mToolbar.setCurrentItem(position);
 

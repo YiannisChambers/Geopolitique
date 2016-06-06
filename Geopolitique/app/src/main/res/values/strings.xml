@@ -2,18 +2,7 @@
     <string name="app_name">Geopolitique</string>
     <string name="action_settings">Settings</string>
 
-    <string name="main_menu_activity_start_new">START NEW GAME</string>
-    <string name="main_menu_activity_continue">CONTINUE</string>
-    <string name="title_activity_create_nation">CreateNationActivity</string>
-
-    <string name="create_nation_activity_name">Create A Nation</string>
-    <string name="create_nation_activity_choose_existing_text_prompt">Choose Existing Nation</string>
-
-    <string name="title_activity_create_new_nation">CreateNewNationActivity</string>
-    <string name="title_activity_create_existing_nation">CreateExistingNationActivity</string>
-
-    <string name="create_new_nation_button_label">CREATE NEW NATION</string>
-    <string name="create_existing_nation_button_label">CREATE EXISTING NATION</string>
+    <string name="title_activity_create_existing_nation">Create A Nation</string>
 
     <string-array name="nation_types">
         <item>Monarchy</item>
@@ -96,4 +85,12 @@
     <string name="toolbar_polls">Polls</string>
     <string name="polls_screen_tab_polls">POLLS</string>
     <string name="polls_screen_tab_statistics">STATISTICS</string>
+    <string name="create_existing_nation_activity_choose_text">Select a Nation:</string>
+    <string name="home_screen_welcome_text">Welcome,</string>
+    <string name="placeholder_text">PLACEHOLDER</string>
+    <string name="home_screen_verdict_unpopular">Your government is deeply unpopular.</string>
+    <string name="home_screen_verdict_small_unpopular">Your government is behind in the polls.</string>
+    <string name="home_screen_verdict_small_popular">Your government leads in the polls.</string>
+    <string name="home_screen_verdict_popular">Your government leads in the polls.</string>
+    <string name="toolbar_statistics">Statistics</string>
 </resources>

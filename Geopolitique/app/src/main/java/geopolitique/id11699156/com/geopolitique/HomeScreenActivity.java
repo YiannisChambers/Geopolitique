@@ -7,14 +7,15 @@ package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -35,6 +36,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     //WARNING: HORRIBLE CODE BELOW
     private static TextView mTimerText;
     private static TextView mDateText;
+    private static TextView mVerdictText;
     private static UpdateTimerAsyncTask mUpdateTask;
 
     private AHBottomNavigation bottomNavigation;
@@ -72,10 +74,19 @@ public class HomeScreenActivity extends AppCompatActivity {
     private void setUpViews(){
         mTimerText = (TextView) findViewById(R.id.home_screen_time_text);
         mDateText = (TextView) findViewById(R.id.home_screen_date_text);
+        mVerdictText = (TextView) findViewById(R.id.home_screen_verdict_text);
 
         //Set welcome text.
         TextView welcomeText = (TextView) findViewById(R.id.home_screen_leader_text);
-        welcomeText.setText(PlayerRepo.getCurrentPlayer().getCountry().getLeader().getShortNameWithTitle());
+        welcomeText.setText(PlayerRepo.getCurrentPlayer().getCountry().getLeader().getFullNameWithTitle());
+
+        //Set country name and flag
+        ImageView imageView = (ImageView)findViewById(R.id.home_screen_choose_existing_image);
+        TextView textView =  (TextView)findViewById(R.id.home_screen_choose_existing_text);
+
+        //Change the country name and the flag.
+        textView.setText(PlayerRepo.getCurrentPlayer().getCountry().getCountryName());
+        imageView.setImageResource(PlayerRepo.getCurrentPlayer().getCountry().getPictureID());
     }
 
     @Override
@@ -104,7 +115,11 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         private int minutes, hours, days, weeks, months, years;
 
-        private boolean checkedWeek = false;
+        private boolean mCheckedWeek = false;
+        private boolean mFirstRun = true;
+
+        private String mVerdictTextString;
+        private int mPopularity;
 
         @Override
         protected void onPreExecute() {
@@ -119,7 +134,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             weeks = mCalendar.get(Calendar.WEEK_OF_MONTH);
             months = mCalendar.get(Calendar.MONTH);
             years = mCalendar.get(Calendar.YEAR);
-
         }
 
         @Override
@@ -142,23 +156,34 @@ public class HomeScreenActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
 
+            //If run for the first time, update Weekly
+            if(mFirstRun){
+                updateWeekly();
+                mFirstRun = false;
+            }
+
+            //If it's been a day...
             if (hours >= 24) {
+                //...increment variables and run updating code
                 days += 1;
                 hours = 0;
                 minutes = 0;
                 updateDaily();
 
             }
+            //If it's been a week...
             if (days == 7 || (days != 0 && days % 7 == 0)) {
-                if (!checkedWeek) {
-                    checkedWeek = true;
+                if (!mCheckedWeek) {
+                    mCheckedWeek = true;
                     minutes = 0;
                     weeks += 1;
                     updateWeekly();
                 }
             } else {
-                checkedWeek = false;
+                mCheckedWeek = false;
             }
+
+            //...else...
             if (days >= mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
                 months += 1;
                 days = 0;
@@ -167,18 +192,20 @@ public class HomeScreenActivity extends AppCompatActivity {
                 NotificationsHelper.sendStatisticsNotification(mContext);
             }
 
-            DateFormat format = DateFormat.getTimeInstance();
-            mTimerText.setText(format.format(mCalendar.getTime()));
-
-            mDateText.setText(DateFormat.getDateInstance().format(mCalendar.getTime()));
-
-            mIsRunning = true;
+            updateViews();
 
             RealmHelper.beginTransaction();
             PlayerRepo.getCurrentPlayer().setTime(mCalendar.getTimeInMillis());
             RealmHelper.endTransaction();
 
             super.onProgressUpdate(values);
+        }
+
+        private void updateViews(){
+            DateFormat format = DateFormat.getTimeInstance();
+            mTimerText.setText(format.format(mCalendar.getTime()));
+            mDateText.setText(DateFormat.getDateInstance().format(mCalendar.getTime()));
+            setVerdictText();//mVerdictText.setText(mVerdictTextString);
         }
 
         /**
@@ -197,8 +224,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             });
             //Potentially add a random issue
             addRandomIssue();
-
-
         }
 
         /**
@@ -215,8 +240,36 @@ public class HomeScreenActivity extends AppCompatActivity {
                 }
             });
 
+            //Save popularity to use for verdict text
+            mPopularity = (int)PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getPopularity();
+            setVerdictText();
+
+            //Send a statistics notification
             ToolbarHelper.incrementStatisticsNumber();
             NotificationsHelper.sendPollsNotification(mContext);
+        }
+
+        /**
+         * Sets the verdict text on-screen in correct color
+         */
+        private void setVerdictText(){
+            if(mPopularity < 20){
+                mVerdictTextString = getString(R.string.home_screen_verdict_unpopular);
+                mVerdictText.setTextColor(Color.RED);
+            }
+            else if (mPopularity < 50){
+                mVerdictTextString = getString(R.string.home_screen_verdict_small_unpopular);
+                mVerdictText.setTextColor(Color.YELLOW);
+            }
+            else if (mPopularity < 70){
+                mVerdictTextString = getString(R.string.home_screen_verdict_small_popular);
+                mVerdictText.setTextColor(Color.GREEN);
+            }
+            else {
+                mVerdictTextString= getString(R.string.home_screen_verdict_popular);
+                mVerdictText.setTextColor(Color.WHITE);
+            }
+            mVerdictText.setText(mVerdictTextString);
         }
 
         /**
