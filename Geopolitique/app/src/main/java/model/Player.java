@@ -1,21 +1,25 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package model;
 
 import java.util.Calendar;
-
-import data.CountryRepo;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Player class that stores a player's Country and
+ * the time of the Country.
  */
 public class Player extends RealmObject {
     @PrimaryKey
-    long mID;
+    private long mID;
 
-    long mTime;
+    private long mTime;
 
-    Country mCountry;
+    private Country mCountry;
 
     public Player(){}
 

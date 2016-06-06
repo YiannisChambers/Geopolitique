@@ -1,9 +1,11 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package model;
 
-import java.util.LinkedList;
 import java.util.Random;
-
-import data.MinisterRepo;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -13,16 +15,16 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Minister extends RealmObject{
     @PrimaryKey
-    long mID;
+    private long mID;
 
-    String mFirstName;
-    String mLastName;
-    int mKnowledge;
-    int mExperience;
-    int mWorkload;
-    int mCurrentWorkload;
+    private String mFirstName;
+    private String mLastName;
+    private int mKnowledge;
+    private int mExperience;
+    private int mWorkload;
+    private int mCurrentWorkload;
 
-    RealmList<Policy> mPolicies;
+    private RealmList<Policy> mPolicies;
 
     public Minister() {
         mFirstName = "John";
@@ -89,13 +91,11 @@ public class Minister extends RealmObject{
         }
         mPolicies.add(policy);
         recalculateCurrentWorkload();
-        update();
     }
 
     public void removePolicy(Policy policy) {
         mPolicies.remove(policy);
         recalculateCurrentWorkload();
-        update();
     }
 
     private void recalculateCurrentWorkload() {
@@ -114,21 +114,10 @@ public class Minister extends RealmObject{
         return cost;
     }
 
-    public void update(){
-        //MinisterRepo.updateMinister(this);
-    }
+
 
     public void setID(long mID) {
         this.mID = mID;
     }
 
-    /*
-    public boolean createdScandal(){
-        int i = new Random().nextInt(100);
-        if(i > mExperience){
-            return true;
-        }
-        return false;
-    }
-    */
 }

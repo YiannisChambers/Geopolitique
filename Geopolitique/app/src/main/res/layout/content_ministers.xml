@@ -15,12 +15,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "CHOOSE MINISTER"/>
+        android:id="@+id/ministers_screen_text"
+        android:text = "@string/ministers_screen_choose_minister_screen"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ministers_screen_recycler_view">
+        android:id="@+id/ministers_screen_recycler_view"
+        android:layout_below="@id/ministers_screen_text">
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

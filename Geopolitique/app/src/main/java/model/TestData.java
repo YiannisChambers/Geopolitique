@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package model;
 
 import java.util.LinkedList;
@@ -27,11 +32,11 @@ import io.realm.RealmList;
  */
 public class TestData {
 
-    public static LinkedList<Policy> policies;
-    public static LinkedList<Minister> ministers;
-    public static LinkedList<Issue> issues;
-    public static LinkedList<ExistingCountry> existingCountries;
-    public static LinkedList<LinkedList<Option>> optionsList;
+    private static LinkedList<Policy> policies;
+    private static LinkedList<Minister> ministers;
+    private static LinkedList<Issue> issues;
+    private static LinkedList<ExistingCountry> existingCountries;
+    private static LinkedList<LinkedList<Option>> optionsList;
 
     /**
      * Create all test data for the first time

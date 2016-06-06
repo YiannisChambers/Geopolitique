@@ -59,17 +59,18 @@
     </string-array>
 
 
-    <string name="title_activity_home_screen">HomeScreenActivity</string>
-    <string name="title_activity_cabinet">CabinetActivity</string>
-    <string name="title_activity_ministers">MinistersActivity</string>
-    <string name="title_activity_polls_screen">PollsScreen</string>
-    <string name="title_activity_policies_screen">PoliciesScreen</string>
-    <string name="title_activity_policy">PolicyActivity</string>
-    <string name="title_activity_issues">IssuesActivity</string>
-    <string name="title_activity_issue_resolve">IssueResolveActivity</string>
-    <string name="title_activity_statistics">StatisticsActivity</string>
+    <string name="title_activity_home_screen">Home</string>
+    <string name="title_activity_cabinet">Cabinet</string>
+    <string name="title_activity_ministers">Select Minister</string>
+    <string name="title_activity_polls_screen">Statistics</string>
+    <string name="title_activity_policies_screen">Policies</string>
+    <string name="title_activity_policy">Policy Detail</string>
+    <string name="title_activity_issues">Issues</string>
+    <string name="title_activity_issue_resolve">Resolve Issue</string>
+    <string name="title_activity_statistics">Statistics</string>
 
     <!--Polls Fragment Strings-->
     <string name="polls_fragment_us_text">US</string>
     <string name="polls_fragment_them_text">THEM</string>
+    <string name="ministers_screen_choose_minister_screen">CHOOSE MINISTER</string>
 </resources>

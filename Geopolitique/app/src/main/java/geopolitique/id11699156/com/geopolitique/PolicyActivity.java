@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
@@ -31,6 +36,10 @@ import util.SetupHelper;
 
 public class PolicyActivity extends AppCompatActivity {
 
+    /**
+     * TODO: Add a check to see if policy is in Governement, and if so, make a remove button
+     */
+
     long mPolicyID;
     Policy mPolicy;
 
@@ -48,7 +57,6 @@ public class PolicyActivity extends AppCompatActivity {
 
         setViews();
         setBarChart();
-        //setUpToolBar();
     }
 
     private void setUpToolBar(){

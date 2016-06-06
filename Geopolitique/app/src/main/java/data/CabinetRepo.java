@@ -5,10 +5,7 @@
 
 package data;
 
-import java.util.LinkedList;
-
 import io.realm.Realm;
-import io.realm.RealmResults;
 import model.Cabinet;
 
 /**

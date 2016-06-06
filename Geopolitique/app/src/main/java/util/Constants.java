@@ -1,7 +1,12 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package util;
 
 /**
- * Created by yiannischambers on 19/05/2016.
+ * Constants class that stores constants for the entire application.
  */
 public class Constants {
 

@@ -1,16 +1,20 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package util;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.ArrayAdapter;
-
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-
 import geopolitique.id11699156.com.geopolitique.R;
 
 /**
- * Created by yiannischambers on 16/05/2016.
+ * Helper class to enable the easy set up of Spinners and
+ * the Toolbar used through all Activities
  */
 public class SetupHelper {
 

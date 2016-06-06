@@ -1,6 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
 package model;
-
-import java.util.LinkedList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -11,23 +13,23 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Policy extends RealmObject{
     @PrimaryKey
-    long mID;
+    private long mID;
 
-    String mName;
+    private String mName;
 
-    String mDescription;
+    private String mDescription;
 
-    RealmList<Effect> mEffects;
+    private RealmList<Effect> mEffects;
 
-    int mSize;
+    private int mSize;
 
-    double mCost;
+    private double mCost;
 
-    int mTimeToComplete;
+    private int mTimeToComplete;
 
-    int mTimeRemaining;
+    private int mTimeRemaining;
 
-    String mMinistry;
+    private String mMinistry;
 
     public Policy(){}
 

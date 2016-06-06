@@ -60,7 +60,7 @@ public class StatisticsScreenFragment extends Fragment {
         entries.add(consumptionEntry);
         entries.add(taxEntry);
         PieDataSet set = new PieDataSet(entries, "GDP");
-        set.setColors(new int[] {Color.rgb(128, 255, 0), Color.rgb(0, 255, 0), Color.rgb(0, 255, 128)});
+        set.setColors(new int[]{Color.rgb(128, 255, 0), Color.rgb(0, 255, 0), Color.rgb(0, 255, 128)});
 
         LinkedList<String> xValues = new LinkedList<>();
         xValues.add("Total Income"); xValues.add("Consumption"); xValues.add("Tax Income");
@@ -70,5 +70,6 @@ public class StatisticsScreenFragment extends Fragment {
         chart.setData(data);
         chart.setCenterText("$" + NumberHelper.getWordedVersion(economy.getGDP()));
         chart.setDescription("");
+        chart.getLegend().setTextColor(Color.WHITE);
     }
 }

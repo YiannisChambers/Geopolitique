@@ -1,7 +1,12 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
 package util;
 
 /**
- * Created by yiannischambers on 23/05/2016.
+ * Number helper class to give the worded version of big
+ * numbers like GDP, population and income taxes.
  */
 public class NumberHelper {
     public static String getWordedVersion(double number){

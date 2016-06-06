@@ -36,11 +36,13 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
     private ArrayList<Policy> mPolicies;
     private Context mContext;
     private PoliciesScreen mActivity;
+    private boolean mIsCurrentPolicy;
 
-    public PoliciesAdapter(Context context, LinkedList<Policy> policies, PoliciesScreen screen) {
+    public PoliciesAdapter(Context context, LinkedList<Policy> policies, PoliciesScreen screen, boolean isCurrentPolicy) {
         mPolicies = new ArrayList<Policy>(policies);
         mContext = context;
         mActivity = screen;
+        mIsCurrentPolicy = isCurrentPolicy;
     }
 
     @Override
@@ -65,18 +67,25 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
         holder.mCost.setText("" + NumberHelper.getWordedVersion(policy.getCost()));
         holder.mTimeToComplete.setText("" + policy.getTimeToComplete());
 
-        //Set up a listener for the button to go to the detailed Policy screen
-        holder.mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PolicyActivity.class);
-                //Place the policy ID in the Intent for retrieval
-                intent.putExtra(Constants.INTENT_POLICY_ID, pos);
-                mContext.startActivity(intent);
-                mActivity.finish();
+        //If it's a current policy
+        if(mIsCurrentPolicy) {
+            //Remove the button.
+            holder.mButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            //Set up a listener for the button to go to the detailed Policy screen
+            holder.mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PolicyActivity.class);
+                    //Place the policy ID in the Intent for retrieval
+                    intent.putExtra(Constants.INTENT_POLICY_ID, pos);
+                    mContext.startActivity(intent);
+                    mActivity.finish();
 
-            }
-        });
+                }
+            });
+        }
 
         holder.itemView.setTag(position);
     }
@@ -85,7 +94,6 @@ public class PoliciesAdapter extends RecyclerView.Adapter<PoliciesAdapter.Polici
     public int getItemCount() {
         return mPolicies.toArray().length;
     }
-
 
     /**
      * Viewholder Class to hold the View variables for a Policy Item.

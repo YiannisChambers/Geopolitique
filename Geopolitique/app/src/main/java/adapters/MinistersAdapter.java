@@ -70,6 +70,9 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         if(minister == null){
             holder.mStats.setVisibility(View.INVISIBLE);
             holder.mName.setText("Not Selected");
+            holder.mKnowledge.setVisibility(View.INVISIBLE);
+            holder.mExperience.setVisibility(View.INVISIBLE);
+            holder.mWorkload.setVisibility(View.INVISIBLE);
         }
         else
         {
@@ -80,8 +83,9 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
             holder.mWorkload.setText("" + minister.getWorkload());
         }
 
-        holder.mTitle.setText(Cabinet.getTitle(position));
+
         if(isSettingMinister) {
+            holder.mTitle.setVisibility(View.INVISIBLE);
             final long p = pos;
             holder.mButton.setText("SET");
             holder.mButton.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +97,7 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         }
         else
         {
+            holder.mTitle.setText(Cabinet.getTitle(position));
             final int q = position;
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override

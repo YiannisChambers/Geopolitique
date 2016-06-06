@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
 package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
@@ -9,8 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import data.PlayerRepo;
+import data.RealmHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import model.Economy;
+import model.ExistingCountry;
+import model.Government;
+import model.Issue;
+import model.Leader;
+import model.Minister;
+import model.Policy;
 import model.TestData;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -27,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Realm.setDefaultConfiguration(config);
 
         //THIS IS FOR TESTING
-        /*
+
         Realm realm = Realm.getDefaultInstance();
         RealmHelper.beginTransaction();
         realm.deleteAll();
@@ -38,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
         realm.delete(Government.class);
         realm.delete(Economy.class);
         realm.delete(Leader.class);
-        RealmHelper.endTransaction();*/
+        RealmHelper.endTransaction();
 
         new StartUpAsyncTask(this).execute();
     }

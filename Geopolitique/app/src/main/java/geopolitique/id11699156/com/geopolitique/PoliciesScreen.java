@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
@@ -89,7 +94,7 @@ public class PoliciesScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         //Create and populate adapter
-        mAdapter = new PoliciesAdapter(this, PolicyRepo.getUnadoptedPolicies(), this);
+        mAdapter = new PoliciesAdapter(this, PolicyRepo.getUnadoptedPolicies(), this, false);
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
@@ -100,7 +105,7 @@ public class PoliciesScreen extends AppCompatActivity {
         recyclerView2.setLayoutManager(layoutManager2);
 
         //Create and populate adapter
-        mAdapter2 = new PoliciesAdapter(this, PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTotalPolicies(), this);
+        mAdapter2 = new PoliciesAdapter(this, PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getTotalPolicies(), this, true);
         recyclerView2.setAdapter(mAdapter2);
         mAdapter2.notifyDataSetChanged();
     }

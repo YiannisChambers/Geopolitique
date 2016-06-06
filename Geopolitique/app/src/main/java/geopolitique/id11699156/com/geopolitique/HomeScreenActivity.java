@@ -1,3 +1,8 @@
+/*
+ * Copyright (C) 2016 Yiannis Chambers
+ * Geopolitique
+ */
+
 package geopolitique.id11699156.com.geopolitique;
 
 import android.app.NotificationManager;

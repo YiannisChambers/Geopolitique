@@ -83,10 +83,10 @@ public class PollsScreenFragment extends Fragment {
 
         //Create datasets for both those entries, and set them with a respective color
         BarDataSet ourSet = new BarDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
-        ourSet.setColor(R.color.colorAccent);
+        ourSet.setColor(getActivity().getColor(R.color.colorAccent));
 
         BarDataSet theirSet = new BarDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
-        theirSet.setColor(R.color.colorPrimary);
+        theirSet.setColor(getActivity().getColor(R.color.colorTextColor));
 
         //Set Axis Dependencies for datasets
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -109,7 +109,6 @@ public class PollsScreenFragment extends Fragment {
         axis.setDrawGridLines(false); // no grid lines
         axis.setDrawZeroLine(true); // draw a zero line
 
-
         axis = barChart.getAxisRight();
         axis.setAxisMaxValue(100);
         axis.setAxisMinValue(0);
@@ -130,6 +129,10 @@ public class PollsScreenFragment extends Fragment {
         barChart.setData(data);
         barChart.notifyDataSetChanged();
         barChart.invalidate();
+
+        barChart.getAxisLeft().setTextColor(Color.WHITE);
+        barChart.getXAxis().setTextColor(Color.WHITE);
+
     }
 
     void setPollLineChart() {
@@ -174,11 +177,14 @@ public class PollsScreenFragment extends Fragment {
         axis.setAxisMinValue(0);
 
         axis = lineChart.getAxisRight();
+        axis.setEnabled(false);
         axis.setAxisMaxValue(100);
         axis.setAxisMinValue(0);
 
         lineChart.getLegend().setEnabled(false);
         lineChart.setDrawGridBackground(false);
+
+        lineChart.getAxisLeft().setTextColor(Color.WHITE);
 
     }
 }
