@@ -26,17 +26,30 @@ public class RealmHelper {
         return list;
     }
 
+    /**
+     * Commence a transaction in Realm
+     */
     public static void beginTransaction(){
         Realm realm = Realm.getDefaultInstance();
+
+        //If there's not already a transaction happening, begin a new one
         if(!realm.isInTransaction())
             realm.beginTransaction();
     }
 
+    /**
+     * End a transaction in Realm
+     */
     public static void endTransaction(){
         Realm realm = Realm.getDefaultInstance();
         realm.commitTransaction();
     }
 
+
+    /**
+     * Return a Realm instance.
+     * @return
+     */
     public static Realm realm(){
         if(realmInstance == null){
             realmInstance= Realm.getDefaultInstance();

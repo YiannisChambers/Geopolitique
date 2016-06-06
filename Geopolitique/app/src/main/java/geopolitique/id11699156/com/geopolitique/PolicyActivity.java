@@ -36,10 +36,13 @@ import util.Constants;
 import util.NumberHelper;
 import util.SetupHelper;
 
+/**
+ * Policy Activity to show a specific policy that the Government may adopt
+ */
 public class PolicyActivity extends AppCompatActivity {
 
-    long mPolicyID;
-    Policy mPolicy;
+    private long mPolicyID;
+    private Policy mPolicy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class PolicyActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Retrieve policy
         Intent intent = getIntent();
         mPolicyID = intent.getLongExtra(Constants.INTENT_POLICY_ID, (long) 0.0);
 

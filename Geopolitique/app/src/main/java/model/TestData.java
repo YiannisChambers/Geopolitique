@@ -182,9 +182,9 @@ public class TestData {
         RealmList<Option> options = new RealmList<>();
 
 
-        Option option1 = new Option(positiveOption, positiveEffect);
+        Option option1 = new Option(negativeOption, negativeEffect);
         Option option2 = new Option(neutralOption, neutralEffect);
-        Option option3 = new Option(negativeOption, negativeEffect);
+        Option option3 = new Option(positiveOption, positiveEffect);
 
         LinkedList<Option> tempOptions = new LinkedList<>();
         tempOptions.add(option1);
@@ -192,9 +192,9 @@ public class TestData {
         tempOptions.add(option3);
         optionsList.add(tempOptions);
 
-        options.add(OptionRepo.createNewOption(new Option(positiveOption, positiveEffect)));
-        options.add(OptionRepo.createNewOption(new Option(neutralOption, neutralEffect)));
         options.add(OptionRepo.createNewOption(new Option(negativeOption, negativeEffect)));
+        options.add(OptionRepo.createNewOption(new Option(neutralOption, neutralEffect)));
+        options.add(OptionRepo.createNewOption(new Option(positiveOption, positiveEffect)));
 
         Issue issue = new Issue(title, description, options);
 

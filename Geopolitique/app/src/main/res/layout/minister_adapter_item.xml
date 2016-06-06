@@ -38,8 +38,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/minister_adapter_name"
                     android:text="Title"
-                    android:textSize="12dp"
-                    android:textStyle="italic" />
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
                 <LinearLayout
                     android:id="@+id/minister_adapter_stats"
                     android:layout_width="wrap_content"
@@ -56,9 +56,9 @@
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
 
-                            android:text="KNOWL: "
+                            android:text="@string/minister_adapter_knowledge"
                             android:textSize="12dp"
-                            android:textStyle="italic" />
+                            android:textStyle="bold"/>
 
                         <TextView
                             android:id="@+id/minister_adapter_knowledge"
@@ -80,9 +80,9 @@
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
 
-                            android:text="EXP: "
+                            android:text="@string/minister_adapter_experience"
                             android:textSize="12dp"
-                            android:textStyle="italic" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/minister_adapter_experience"
@@ -103,9 +103,9 @@
                             android:layout_width="20dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="WORK: "
+                            android:text="@string/minister_adapter_work"
                             android:textSize="12dp"
-                            android:textStyle="italic" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/minister_adapter_workload"
@@ -129,7 +129,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
-                android:text="CHANGE"></Button>
+                android:text="@string/minister_adapter_button_text"></Button>
 
         </RelativeLayout>
 

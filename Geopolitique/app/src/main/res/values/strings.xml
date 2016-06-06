@@ -83,14 +83,33 @@
     <string name="toolbar_home">Home</string>
     <string name="toolbar_issues">Issues</string>
     <string name="toolbar_polls">Polls</string>
+    <string name="toolbar_statistics">Statistics</string>
+
+    <!--Polls Screen-->
     <string name="polls_screen_tab_polls">POLLS</string>
     <string name="polls_screen_tab_statistics">STATISTICS</string>
     <string name="create_existing_nation_activity_choose_text">Select a Nation:</string>
     <string name="home_screen_welcome_text">Welcome,</string>
     <string name="placeholder_text">PLACEHOLDER</string>
+
+    <!--Verdict Strings-->
     <string name="home_screen_verdict_unpopular">Your government is deeply unpopular.</string>
     <string name="home_screen_verdict_small_unpopular">Your government is behind in the polls.</string>
     <string name="home_screen_verdict_small_popular">Your government leads in the polls.</string>
-    <string name="home_screen_verdict_popular">Your government leads in the polls.</string>
-    <string name="toolbar_statistics">Statistics</string>
+    <string name="home_screen_verdict_popular">Your government is widely loved by the people..</string>
+
+
+    <!--Cabinet Screen-->
+    <string name="cabinet_screen_total_workload">Total Workload</string>
+    <string name="cabinet_screen_current_workload">Current Workload</string>
+
+    <!--Minister Adapter-->
+    <string name="minister_adapter_work">WORK:</string>
+    <string name="minister_adapter_experience">EXP:</string>
+    <string name="minister_adapter_knowledge">KNOWL:</string>
+    <string name="minister_adapter_button_text">CHANGE</string>
+
+    <!--Create Existing Country-->
+    <string name="create_existing_nation_leader_text">Leader:</string>
+    <string name="create_existing_nation_button_text">CREATE NATION</string>
 </resources>

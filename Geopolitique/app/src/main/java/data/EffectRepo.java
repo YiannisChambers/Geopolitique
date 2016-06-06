@@ -9,7 +9,7 @@ import io.realm.Realm;
 import model.Effect;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Effect Realm Object
  */
 public class EffectRepo {
     /**

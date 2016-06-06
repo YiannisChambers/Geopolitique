@@ -8,6 +8,9 @@ package data;
 import io.realm.Realm;
 import model.Economy;
 
+/**
+ * Repository Class for Economy Realm Object
+ */
 public class EconomyRepo {
     /**
      * Creates and adds a new Economy object to the Database.

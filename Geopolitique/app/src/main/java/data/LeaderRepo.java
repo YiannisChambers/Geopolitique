@@ -9,7 +9,7 @@ import io.realm.Realm;
 import model.Leader;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Leader Realm Object
  */
 public class LeaderRepo {
     /**

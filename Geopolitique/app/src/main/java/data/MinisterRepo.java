@@ -12,7 +12,7 @@ import io.realm.RealmResults;
 import model.Minister;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Minister Realm Object
  */
 public class MinisterRepo {
     /**
@@ -33,6 +33,10 @@ public class MinisterRepo {
         return createdMinister;
     }
 
+    /**
+     * Create multiple Ministers from a Linked List
+     * @param ministers
+     */
     public static void createNewMinisters(LinkedList<Minister> ministers){
         Realm realm = Realm.getDefaultInstance();
 
@@ -44,7 +48,10 @@ public class MinisterRepo {
         realm.commitTransaction();
     }
 
-
+    /**
+     * Return the ministers in the database who are not a member of the Player's Cabinet
+     * @return
+     */
     public static LinkedList<Minister> getAllMinistersNotInCabinet(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Minister> results = realm.where(Minister.class).findAll();
@@ -52,6 +59,7 @@ public class MinisterRepo {
         LinkedList<Minister> playerMinisters = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getMinisters();
         LinkedList<Minister> nonCabinetMinisters = new LinkedList<>();
 
+        //If the minister is not contained in the player's Cabinet, add to the list to return
         for(int i = 0; i < ministers.size(); i++){
             if(!playerMinisters.contains(ministers.get(i))){
                 nonCabinetMinisters.add(ministers.get(i));
@@ -61,6 +69,11 @@ public class MinisterRepo {
         return nonCabinetMinisters;
     }
 
+    /**
+     * Get specific minister by ID
+     * @param ID
+     * @return
+     */
     public static Minister getMinisterByID(long ID){
         Realm realm = Realm.getDefaultInstance();
         Minister minister = realm.where(Minister.class).equalTo("mID", ID).findFirst();

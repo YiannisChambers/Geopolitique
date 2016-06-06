@@ -12,13 +12,13 @@ import io.realm.RealmResults;
 import model.Issue;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Issue Realm Object
  */
 public class IssueRepo {
     /**
      * Creates and adds a new Issue object to the Database.
      *
-     * @param issue The Economy object to add to the database.
+     * @param issue The Issue object to add to the database.
      * @return
      */
     public static Issue createNewIssue(Issue issue){
@@ -35,24 +35,39 @@ public class IssueRepo {
         return createdIssue;
     }
 
-
+    /**
+     * Create mulitple issues from a LinkedList
+     * @param issues
+     */
     public static void createNewIssues(LinkedList<Issue> issues){
         Realm realm = Realm.getDefaultInstance();
 
         realm.beginTransaction();
+        //For each...
         for(int i = 0; i < issues.size(); i++){
+            //...set the next key...
             issues.get(i).setID(getNextKey());
+            //...copy to the database.
             realm.copyToRealm(issues.get(i));
         }
         realm.commitTransaction();
     }
 
+    /**
+     * Return all issues that have not been resolved by the Government
+     * @return
+     */
     public static LinkedList<Issue> getAllUnresolvedIssues(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Issue> results = realm.where(Issue.class).equalTo("mIsResolved", false).findAll();
         return RealmHelper.getLinkedListFromRealmResults(results);
     }
 
+    /**
+     * Return a specific Issue by ID
+     * @param ID
+     * @return
+     */
     public static Issue getIssueByID(long ID){
         Realm realm = Realm.getDefaultInstance();
         Issue issue = realm.where(Issue.class).equalTo("mID", ID).findFirst();

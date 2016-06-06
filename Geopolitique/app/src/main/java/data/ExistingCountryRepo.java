@@ -12,7 +12,7 @@ import io.realm.RealmResults;
 import model.ExistingCountry;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Existing Country Realm Object
  */
 public class ExistingCountryRepo {
 
@@ -35,6 +35,10 @@ public class ExistingCountryRepo {
         return createdExistingCountry;
     }
 
+    /**
+     * Return all Existing Countries in database
+     * @return
+     */
     public static LinkedList<ExistingCountry> getAllExistingCountries() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<ExistingCountry> existingCountries = realm.where(ExistingCountry.class).findAll();

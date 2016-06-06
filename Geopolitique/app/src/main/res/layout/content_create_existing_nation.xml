@@ -51,7 +51,7 @@
             android:id="@+id/create_existing_nation_activity_leader_text"
             android:textStyle="bold"
             android:textSize="15dp"
-            android:text="Leader:"
+            android:text="@string/create_existing_nation_leader_text"
             android:layout_gravity="center_horizontal"/>
 
         <TextView
@@ -69,5 +69,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="onCreateNationClick"
-        android:text="CREATE NATION" />
+        android:text="@string/create_existing_nation_button_text" />
 </RelativeLayout>

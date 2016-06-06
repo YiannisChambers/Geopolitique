@@ -11,7 +11,7 @@ import io.realm.RealmResults;
 import model.Government;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Government Realm Object
  */
 public class GovernmentRepo {
     /**

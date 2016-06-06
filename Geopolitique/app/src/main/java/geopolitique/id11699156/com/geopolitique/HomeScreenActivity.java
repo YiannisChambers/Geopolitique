@@ -192,8 +192,10 @@ public class HomeScreenActivity extends AppCompatActivity {
                 NotificationsHelper.sendStatisticsNotification(mContext);
             }
 
+            //Update values of all views
             updateViews();
 
+            //Save time to Database
             RealmHelper.beginTransaction();
             PlayerRepo.getCurrentPlayer().setTime(mCalendar.getTimeInMillis());
             RealmHelper.endTransaction();
@@ -201,11 +203,14 @@ public class HomeScreenActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
         }
 
+        /**
+         * Update all Views on Screen
+         */
         private void updateViews(){
             DateFormat format = DateFormat.getTimeInstance();
             mTimerText.setText(format.format(mCalendar.getTime()));
             mDateText.setText(DateFormat.getDateInstance().format(mCalendar.getTime()));
-            setVerdictText();//mVerdictText.setText(mVerdictTextString);
+            setVerdictText();
         }
 
         /**

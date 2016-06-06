@@ -42,13 +42,17 @@ public class MainMenuActivity extends AppCompatActivity {
                 .build();
         Realm.setDefaultConfiguration(config);
 
-        //THIS IS FOR TESTING
+        //For testing: delete all records in Database
         deleteAll();
 
 
         new StartUpAsyncTask(this).execute();
     }
 
+    /**
+     * TESTING ONLY.
+     * Delete all records in the Database.
+     */
     private void deleteAll() {
         Realm realm = Realm.getDefaultInstance();
         RealmHelper.beginTransaction();

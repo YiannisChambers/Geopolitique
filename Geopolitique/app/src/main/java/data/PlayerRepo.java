@@ -10,7 +10,7 @@ import io.realm.RealmResults;
 import model.Player;
 
 /**
- * Created by yiannischambers on 1/06/2016.
+ * Repository Class for Player Realm Object
  */
 public class PlayerRepo {
     /**
@@ -30,6 +30,10 @@ public class PlayerRepo {
 
     }
 
+    /**
+     * Check if there already is a player in the database
+     * @return
+     */
     public static boolean checkIfPlayerExists(){
         Realm realm = Realm.getDefaultInstance();
 
@@ -39,6 +43,10 @@ public class PlayerRepo {
 
     }
 
+    /**
+     * Return the current player in the database
+     * @return
+     */
     public static Player getCurrentPlayer(){
         Realm realm = Realm.getDefaultInstance();
 

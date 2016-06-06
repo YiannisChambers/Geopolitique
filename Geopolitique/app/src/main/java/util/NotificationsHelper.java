@@ -29,7 +29,10 @@ public class NotificationsHelper {
                         .setSmallIcon(R.drawable.icon)
                         .setContentTitle(context.getString(R.string.notifications_title))
                         .setContentText(description);
-        
+
+        //Ensure that all notifications are automatically cancelled once pressed
+        mBuilder.setAutoCancel(true);
+
         Intent resultIntent = intent;
         // The stack builder object will contain an artificial back stack for the
         // started Activity.
