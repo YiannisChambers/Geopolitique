@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -21,12 +20,16 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import adapters.MinistersAdapter;
 import data.PlayerRepo;
 import model.Cabinet;
-import util.Constants;
 import util.SetupHelper;
+import util.ToolbarHelper;
 
-public class CabinetActivity extends AppCompatActivity{
+/**
+ * Activity to display the current members of the Player's Government,
+ * and to allow the player to select them.
+ */
+public class CabinetActivity extends AppCompatActivity {
 
-   private static Context mContext;
+    private static Context mContext;
     private MinistersAdapter mAdapter;
     private Cabinet mCabinet;
 
@@ -39,87 +42,42 @@ public class CabinetActivity extends AppCompatActivity{
 
         mContext = this;
 
+        //Get the player's current Cabinet
         mCabinet = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet();
+
+        //Set up the list of Ministers in the Player's Cabinet
         setUpList();
 
-        TextView totalWorkload = (TextView)findViewById(R.id.cabinet_screen_total_workload_text);
+        //Set TextViews on screen to show the current Workload of the Cabinet
+        setUpWorkloadTextViews();
+
+        //Set up the bottom Toolbar
+        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.cabinet_screen_bottom_navigation);
+        ToolbarHelper.setUpToolbar(bottomNavigation, this, 0);
+    }
+
+    private void setUpWorkloadTextViews(){
+        //Set the Workload TextView to the total potential workload of the Cabinet
+        TextView totalWorkload = (TextView) findViewById(R.id.cabinet_screen_total_workload_text);
         totalWorkload.setText(mCabinet.getTotalWorkload() + "");
 
-        TextView currentWorkload = (TextView)findViewById(R.id.cabinet_screen_current_workload_text);
-        if(mCabinet.getTotalCurrentWorkload() > mCabinet.getTotalWorkload()){
+        //Set the Current Workload TextView to the total potential workload of the Cabinet
+        TextView currentWorkload = (TextView) findViewById(R.id.cabinet_screen_current_workload_text);
+
+        //If the total Workload cannot handle the currently assigned Workload...
+        if (mCabinet.getTotalCurrentWorkload() > mCabinet.getTotalWorkload()) {
+            //... make the text Red as a warning.
             currentWorkload.setTextColor(Color.RED);
-        }
-        else
-        {
+        } else {
             currentWorkload.setTextColor(Color.GREEN);
         }
         currentWorkload.setText(mCabinet.getTotalCurrentWorkload() + "");
-
-        setUpToolBar();
     }
 
-    private void setUpToolBar(){
-        /*
-        TOOL BAR
-         */
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.cabinet_screen_bottom_navigation);
-
-        // Create items
-        SetupHelper.setUpToolBar(bottomNavigation, 0);
-
-        final Context context = this;
-        // Set listener
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position, boolean wasSelected) {
-                switch(position){
-                    case 0:{
-                        break;
-                    }
-                    case 1:{
-                        final Intent policiesIntent = new Intent(context, PoliciesScreen.class);
-                        policiesIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(policiesIntent);
-                        finish();
-                        break;
-                    }
-
-                    case 2:{
-                        finish();
-                        break;
-                    }
-
-                    case 3:{
-                        final Intent issuesIntent = new Intent(context, IssuesActivity.class);
-                        issuesIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(issuesIntent);
-                        finish();
-                        break;
-                    }
-
-                    case 4:{
-                        final Intent pollsIntent = new Intent(context, PollsScreen.class);
-                        pollsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(pollsIntent);
-                        finish();
-                        break;
-                    }
-
-                    case 5:{
-                        final Intent statisticsIntent = new Intent(context, StatisticsActivity.class);
-                        statisticsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(statisticsIntent);
-                        finish();
-                        break;
-                    }
-
-                    default: {; break;}
-                }
-            }
-        });
-    }
-
-    private void setUpList(){
+    /**
+     * Set up the list of Ministers in the Cabinet
+     */
+    private void setUpList() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.cabinet_screen_recycler_view);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

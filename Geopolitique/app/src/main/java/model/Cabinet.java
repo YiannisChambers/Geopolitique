@@ -128,7 +128,7 @@ public class Cabinet extends RealmObject{
         if(mTreasurer != null) {
             if (mTreasurer.getPolicies().size() > 0) {
                 for (int i = 0; i < mTreasurer.getPolicies().size(); i++) {
-                    mTreasurer.addPolicy(mTreasurer.getPolicies().get(i));
+                    treasurer.addPolicy(mTreasurer.getPolicies().get(i));
                 }
             }
         }

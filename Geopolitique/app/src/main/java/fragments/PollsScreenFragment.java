@@ -175,9 +175,12 @@ public class PollsScreenFragment extends Fragment {
 
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        ourSet.setLineWidth(5);
+        theirSet.setLineWidth(5);
         ArrayList<ILineDataSet> datasets = new ArrayList<ILineDataSet>();
         datasets.add(ourSet);
         datasets.add(theirSet);
+
 
         LineData data = new LineData(XValues, datasets);
 
@@ -200,6 +203,5 @@ public class PollsScreenFragment extends Fragment {
         lineChart.getAxisRight().setTextColor(Color.WHITE);
         lineChart.getXAxis().setTextColor(Color.WHITE);
         lineChart.getLineData().setValueTextColor(Color.WHITE);
-
     }
 }

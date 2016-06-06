@@ -17,6 +17,7 @@ import model.Economy;
  * Static variables only facilitate easy data access;
  * ideally, this would be stored in the database
  */
+
 public class Backups {
 
     private static LinkedList<Economy> economyBackups = new LinkedList<>();

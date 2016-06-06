@@ -6,7 +6,8 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/polls_screen_bar_chart"

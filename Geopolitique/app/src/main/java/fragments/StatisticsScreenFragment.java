@@ -26,9 +26,10 @@ import util.NumberHelper;
 
 public class StatisticsScreenFragment extends Fragment {
 
-    public StatisticsScreenFragment() {
-        // Required empty public constructor
-    }
+    /**
+     * Required empty public constructor
+     */
+    public StatisticsScreenFragment() {}
 
 
     @Override
@@ -51,7 +52,9 @@ public class StatisticsScreenFragment extends Fragment {
     }
 
 
-
+    /**
+     * Set up the Pie Chart of the GDP that appears on the Statistics fragment
+     */
     void setUpPieChart(){
         Economy economy = PlayerRepo.getCurrentPlayer().getCountry().getEconomy();
         PieChart chart = (PieChart)getActivity().findViewById(R.id.statistics_screen_piechart);
@@ -64,11 +67,13 @@ public class StatisticsScreenFragment extends Fragment {
         entries.add(incomeEntry);
         entries.add(consumptionEntry);
         entries.add(taxEntry);
-        PieDataSet set = new PieDataSet(entries, "GDP");
+        PieDataSet set = new PieDataSet(entries, getActivity().getString(R.string.statistics_screen_gdp_text));
         set.setColors(new int[]{Color.rgb(128, 255, 0), Color.rgb(0, 255, 0), Color.rgb(0, 255, 128)});
 
         LinkedList<String> xValues = new LinkedList<>();
-        xValues.add("Total Income"); xValues.add("Consumption"); xValues.add("Tax Income");
+        xValues.add(getActivity().getString(R.string.statistics_screen_total_income_text));
+        xValues.add(getActivity().getString(R.string.statistics_screen_consumption_text));
+        xValues.add(getActivity().getString(R.string.statistics_screen_tax_income_text));
 
         PieData data = new PieData(xValues, set);
 

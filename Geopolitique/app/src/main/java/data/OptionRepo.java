@@ -33,6 +33,10 @@ public class OptionRepo {
     }
 
 
+    /**
+     * Gets the next valid Primary Key value
+     * @return
+     */
     public static int getNextKey()
     {   Realm realm = Realm.getDefaultInstance();
         return realm.where(Option.class).findAll().size() + 1;

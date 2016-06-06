@@ -18,6 +18,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import adapters.IssuesAdapter;
 import data.IssueRepo;
 import util.SetupHelper;
+import util.ToolbarHelper;
 
 public class IssuesActivity extends AppCompatActivity {
 
@@ -30,68 +31,8 @@ public class IssuesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setUpList();
-
-        setUpToolBar();
-    }
-
-    private void setUpToolBar(){
-        /*
-        TOOL BAR
-         */
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.issues_screen_bottom_navigation);
-
-        // Create items
-        SetupHelper.setUpToolBar(bottomNavigation, 3);
-
-        final Context context = this;
-        // Set listener
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position, boolean wasSelected) {
-                switch (position) {
-                    case 0: {
-                        final Intent cabinetIntent = new Intent(context, CabinetActivity.class);
-                        startActivity(cabinetIntent);
-                        finish();
-                        break;
-                    }
-                    case 1: {
-                        final Intent policiesIntent = new Intent(context, PoliciesScreen.class);
-                        startActivity(policiesIntent);
-                        finish();
-                        break;
-                    }
-
-                    case 2: {
-                        finish();
-                        break;
-                    }
-
-                    case 3: {
-                        break;
-                    }
-
-                    case 4: {
-                        final Intent pollsIntent = new Intent(context, PollsScreen.class);
-                        startActivity(pollsIntent);
-                        finish();
-                        break;
-                    }
-
-                    case 5: {
-                        final Intent statisticsIntent = new Intent(context, StatisticsActivity.class);
-                        startActivity(statisticsIntent);
-                        finish();
-                        break;
-                    }
-
-                    default: {
-                        ;
-                        break;
-                    }
-                }
-            }
-        });
+        ToolbarHelper.setUpToolbar(bottomNavigation, this, 3);
     }
 
     private void setUpList() {

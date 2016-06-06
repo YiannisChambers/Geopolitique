@@ -19,6 +19,7 @@ import adapters.PoliciesAdapter;
 import data.PlayerRepo;
 import data.PolicyRepo;
 import util.SetupHelper;
+import util.ToolbarHelper;
 
 public class PoliciesScreen extends AppCompatActivity {
 
@@ -35,57 +36,8 @@ public class PoliciesScreen extends AppCompatActivity {
 
         setUpList();
 
-        setUpToolBar();
-    }
-
-    private void setUpToolBar(){
-        /*
-        TOOL BAR
-         */
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.policies_screen_bottom_navigation);
-
-        // Create items
-        SetupHelper.setUpToolBar(bottomNavigation, 1);
-
-        final Context context = this;
-        // Set listener
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position, boolean wasSelected) {
-                switch(position){
-                    case 0:{
-                        final Intent cabinetIntent = new Intent(context, CabinetActivity.class);
-                        startActivity(cabinetIntent);
-                        finish();
-                        break;
-                    }
-                    case 1:{
-                        break;
-                    }
-
-                    case 2:{
-                        finish();
-                        break;
-                    }
-
-                    case 3:{
-                        final Intent issuesIntent = new Intent(context, IssuesActivity.class);
-                        startActivity(issuesIntent);
-                        finish();
-                        break;
-                    }
-
-                    case 4:{
-                        final Intent pollsIntent = new Intent(context, PollsScreen.class);
-                        startActivity(pollsIntent);
-                        finish();
-                        break;
-                    }
-
-                    default: {; break;}
-                }
-            }
-        });
+        ToolbarHelper.setUpToolbar(bottomNavigation, this, 1);
     }
 
     private void setUpList() {

@@ -31,7 +31,10 @@ public class GovernmentRepo {
         return createdGovernemnt;
     }
 
-
+    /**
+     * Gets the next valid Primary Key value
+     * @return
+     */
     public static int getNextKey()
     {   Realm realm = Realm.getDefaultInstance();
         return realm.where(Government.class).findAll().size() + 1;

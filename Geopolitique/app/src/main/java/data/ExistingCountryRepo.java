@@ -42,6 +42,10 @@ public class ExistingCountryRepo {
         return RealmHelper.getLinkedListFromRealmResults(existingCountries);
     }
 
+    /**
+     * Gets the next valid Primary Key value
+     * @return
+     */
     public static int getNextKey() {
         Realm realm = Realm.getDefaultInstance();
         return realm.where(ExistingCountry.class).findAll().size() + 1;

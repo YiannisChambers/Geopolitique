@@ -44,6 +44,13 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
     private CabinetActivity mCabinetActivity;
     private int mMinisterPosition;
 
+    /**
+     * Constructor that takes a CabinetActivit to display the Cabinet Screen
+     * @param context
+     * @param cabinet
+     * @param isSetting
+     * @param activity
+     */
     public MinistersAdapter(Context context, Cabinet cabinet, boolean isSetting, CabinetActivity activity) {
         mCabinet = cabinet;
         mMinisters = new ArrayList<Minister>(cabinet.getMinisters());
@@ -52,6 +59,14 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         mCabinetActivity = activity;
     }
 
+    /**
+     * Constructor that takes a Minister Activity to display the Ministers select screen
+     * @param context
+     * @param ministers
+     * @param isSetting
+     * @param activity
+     * @param ministerPosition
+     */
     public MinistersAdapter(Context context, LinkedList<Minister> ministers, boolean isSetting, MinistersActivity activity, int ministerPosition) {
         mMinisters = new ArrayList<Minister>(ministers);
         mContext = context;
@@ -99,41 +114,54 @@ public class MinistersAdapter extends RecyclerView.Adapter<MinistersAdapter.Mini
         if(isSettingMinister) {
             //Do not set the Title field.
             holder.mTitle.setVisibility(View.INVISIBLE);
+
+            //Set the minister position variable as final to put in the listener
             final long p = pos;
 
-            //Set the button to set a Minister
+            //Set the button text to SET
             holder.mButton.setText(R.string.minsters_adapter_set_text);
+
+            //Set the button listener to set the selected Minister
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Get the Minister from the Database
                     Minister minister = MinisterRepo.getMinisterByID(p);
 
+                    //Set the minister in the player's Government.
                     RealmHelper.beginTransaction();
-                    //int ministerPosition = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().getMinisters().indexOf(minister);
                     PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet().setMinister(mMinisterPosition, minister);
                     RealmHelper.endTransaction();
 
+                    //Create an intent to the Cabinet activity and start it
                     Intent intent = new Intent(mContext, CabinetActivity.class);
                     mContext.startActivity(intent);
 
+                    //Finish the Minister select activity
                     mActivity.finish();
-                    //mActivity.OnSetClick(v, p);
                 }
             });
         }
         else
         {
+            //...otherwise...
             holder.mTitle.setText(Cabinet.getTitle(position));
+
+            //Set the Minister's position as a final variable to put in the Listener
             final int q = position;
+
+            //Set the button to take the user to the Ministers select screen
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     Intent intent = new Intent(mContext, MinistersActivity.class);
+                    //Put in the minister position that we're setting
                     intent.putExtra(Constants.INTENT_MINISTER_NUMBER, q);
                     mContext.startActivity(intent);
+
+                    //Finish the Cabinet Activity
                     mCabinetActivity.finish();
-                    //mCabinetActivity.OnChangeClick(v, q);
                 }
             });
         }
