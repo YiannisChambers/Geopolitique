@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -197,8 +198,8 @@ public class PolicyActivity extends AppCompatActivity {
             LinkedList<BarEntry> entry = new LinkedList<BarEntry>();
             entry.add(entries.get(i));
             BarDataSet set = new BarDataSet(entry, (mPolicy.getEffects().get(i).getProperty()));
-            set.setColor(getColor(R.color.colorTextColor));
-            set.setValueTextColor(getColor(R.color.colorTextColor));
+            set.setColor(ContextCompat.getColor(this, R.color.colorTextColor));
+            set.setValueTextColor(ContextCompat.getColor(this, R.color.colorTextColor));
             set.setValueTextSize(10);
             sets.add(set);
         }

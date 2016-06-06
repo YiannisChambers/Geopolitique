@@ -8,6 +8,7 @@ package fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,18 +89,18 @@ public class PollsScreenFragment extends Fragment {
 
         //Create datasets for both those entries, and set them with a respective color
         BarDataSet ourSet = new BarDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
-        ourSet.setColor(getActivity().getColor(R.color.colorTextColor));
+        ourSet.setColor(ContextCompat.getColor(getActivity(), R.color.colorTextColor));
 
         BarDataSet theirSet = new BarDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
-        theirSet.setColor(getActivity().getColor(R.color.colorAccent));
+        theirSet.setColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
 
         //Set Axis Dependencies for datasets
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-        ourSet.setValueTextColor(getActivity().getColor(R.color.colorTextColor));
+        ourSet.setValueTextColor(ContextCompat.getColor(getActivity(), R.color.colorTextColor));
         ourSet.setValueTextSize(10);
-        theirSet.setValueTextColor(getActivity().getColor(R.color.colorTextColor));
+        theirSet.setValueTextColor(ContextCompat.getColor(getActivity(), R.color.colorTextColor));
         theirSet.setValueTextSize(10);
 
         //Add datasets to list
@@ -167,10 +168,10 @@ public class PollsScreenFragment extends Fragment {
         }
 
         LineDataSet ourSet = new LineDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
-        ourSet.setColor(getActivity().getColor(R.color.colorTextColor));
+        ourSet.setColor(ContextCompat.getColor(getActivity(), R.color.colorTextColor));
 
         LineDataSet theirSet = new LineDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
-        theirSet.setColor(getActivity().getColor(R.color.colorAccent));
+        theirSet.setColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
 
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
