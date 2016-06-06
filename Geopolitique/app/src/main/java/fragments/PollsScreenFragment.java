@@ -68,7 +68,6 @@ public class PollsScreenFragment extends Fragment {
      * Create the Poll Bar Chart
      */
     private void setPollBarChart() {
-
         //Get bar chart
         BarChart barChart = (BarChart) getActivity().findViewById(R.id.polls_screen_bar_chart);
 
@@ -112,28 +111,15 @@ public class PollsScreenFragment extends Fragment {
         BarData data = new BarData(XValues, datasets);
 
         //Format the axes of the chart
-        YAxis axis = barChart.getAxisLeft();
-        axis.setAxisMaxValue(100);
-        axis.setAxisMinValue(0);
-        axis.setDrawLabels(false); // no axis labels
-        axis.setDrawAxisLine(false); // no axis line
-        axis.setDrawGridLines(false); // no grid lines
-        axis.setDrawZeroLine(true); // draw a zero line
+        formatAxisTo100(barChart.getAxisLeft());
+        formatAxisTo100(barChart.getAxisRight());
 
-        axis = barChart.getAxisRight();
-        axis.setAxisMaxValue(100);
-        axis.setAxisMinValue(0);
-        axis.setDrawLabels(false); // no axis labels
-        axis.setDrawAxisLine(false); // no axis line
-        axis.setDrawGridLines(false); // no grid lines
-        axis.setDrawZeroLine(true); // draw a zero line
-
+        //Format the bar chart
         barChart.getAxisRight().setEnabled(false);
         barChart.getAxisLeft().setEnabled(false);
         barChart.setDescription("");              // Hide the description
         barChart.setDrawGridBackground(false);
         barChart.setDrawValueAboveBar(true);
-
         barChart.getLegend().setEnabled(false);   // Hide the legend
 
         //Add data to bar chart - and refresh for viewing
@@ -141,64 +127,88 @@ public class PollsScreenFragment extends Fragment {
         barChart.notifyDataSetChanged();
         barChart.invalidate();
 
+        //Set text color
         barChart.getAxisLeft().setTextColor(Color.WHITE);
         barChart.getXAxis().setTextColor(Color.WHITE);
-
-
     }
 
-    void setPollLineChart() {
+    /**
+     * Format the axis of a bar chart
+     *
+     * @param axis
+     */
+    private void formatAxisTo100(YAxis axis) {
+        //Set min and max values
+        axis.setAxisMaxValue(100);
+        axis.setAxisMinValue(0);
+
+        //axis.setDrawLabels(false); // no axis labels
+        //axis.setDrawAxisLine(false); // no axis line
+        //axis.setDrawGridLines(false); // no grid lines
+        //axis.setDrawZeroLine(true); // draw a zero line
+    }
+
+    /**
+     * Set up the Line Chart for the fragment.
+     */
+    private void setPollLineChart() {
         LineChart lineChart = (LineChart) getActivity().findViewById(R.id.polls_screen_line_chart);
 
         ArrayList<String> XValues = new ArrayList<String>();
 
+        //Get backups of polls
         ArrayList polls = Backups.getPollBackups();
 
         ArrayList<Entry> ourEntries = new ArrayList<Entry>();
         ArrayList<Entry> theirEntries = new ArrayList<Entry>();
 
+        //For each backup in the polls backup...
         for (int i = polls.size() - 10 > 0 ? polls.size() - 10 : 0; i < polls.size(); i++) {
+            //...add an entry for the Government's current popularity and add the entry
             Entry ourEntry = new Entry((float) ((double) polls.get(i)), i);
             ourEntries.add(ourEntry);
 
+            //..add the reverse entry for the Opposition's popularity and add the entry
             Entry theirEntry = new Entry(100 - (float) ((double) polls.get(i)), i);
             theirEntries.add(theirEntry);
 
+            //...then add a corresponding X Value for the past week
             XValues.add("Week " + i + ".");
         }
 
+        //Create line sets using the entries, and set their color
         LineDataSet ourSet = new LineDataSet(ourEntries, getActivity().getString(R.string.polls_fragment_us_text));
         ourSet.setColor(ContextCompat.getColor(getActivity(), R.color.colorTextColor));
 
         LineDataSet theirSet = new LineDataSet(theirEntries, getActivity().getString(R.string.polls_fragment_them_text));
         theirSet.setColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
 
+        //Add dependencies
         ourSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         theirSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        ourSet.setLineWidth(5);
-        theirSet.setLineWidth(5);
+
+        //Set line width
+        ourSet.setLineWidth(2);
+        theirSet.setLineWidth(2);
+
+        //Create data sets and data
         ArrayList<ILineDataSet> datasets = new ArrayList<ILineDataSet>();
         datasets.add(ourSet);
         datasets.add(theirSet);
 
-
         LineData data = new LineData(XValues, datasets);
 
+        //Set the data on the chart
         lineChart.setData(data);
         lineChart.invalidate();
 
-        YAxis axis = lineChart.getAxisLeft();
-        axis.setAxisMaxValue(100);
-        axis.setAxisMinValue(0);
+        //Format the axes
+        formatAxisTo100(lineChart.getAxisLeft());
+        formatAxisTo100(lineChart.getAxisRight());
 
-        axis = lineChart.getAxisRight();
-        axis.setEnabled(false);
-        axis.setAxisMaxValue(100);
-        axis.setAxisMinValue(0);
-
+        //Format the chart
         lineChart.getLegend().setEnabled(false);
         lineChart.setDrawGridBackground(false);
-
         lineChart.getAxisLeft().setTextColor(Color.WHITE);
         lineChart.getAxisRight().setTextColor(Color.WHITE);
         lineChart.getXAxis().setTextColor(Color.WHITE);

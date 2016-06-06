@@ -6,7 +6,6 @@ import android.graphics.Color;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.github.mikephil.charting.charts.Chart;
 
 import geopolitique.id11699156.com.geopolitique.CabinetActivity;
 import geopolitique.id11699156.com.geopolitique.HomeScreenActivity;
@@ -28,11 +27,11 @@ public class ToolbarHelper {
     public static void setUpToolbar(AHBottomNavigation navigation, Context context, int position) {
         mToolbar = navigation;
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("Cabinet", R.drawable.ic_group_white_24dp);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Policies", R.drawable.ic_description_white_24dp);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("Home", R.drawable.ic_account_balance_white_24dp);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("Issues", R.drawable.ic_sms_failed_white_24dp);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem("Polls", R.drawable.ic_poll_white_24dp);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(context.getString(R.string.toolbar_cabinet), R.drawable.cabinet_icon);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(context.getString(R.string.toolbar_policies), R.drawable.policies_icon);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(context.getString(R.string.toolbar_home), R.drawable.home_icon);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(context.getString(R.string.toolbar_issues), R.drawable.issues_icon);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(context.getString(R.string.toolbar_polls), R.drawable.poll_icon);
 
         // Add items
         mToolbar.addItem(item1); //Cabinet

@@ -83,23 +83,6 @@ public class Policy extends RealmObject{
         mTimeRemaining -= 1;
     }
 
-    /*public void changeCost(double value){
-        int ratio = (int)mCost / mTimeToComplete;
-
-        if(mCost - value < 0){
-            mCost = 0;
-        }
-        else{
-            mCost += value;
-        }
-        int newRatio = (int)mCost / mTimeToComplete;
-
-        int expandBy = ratio - newRatio;
-        mTimeToComplete *= expandBy;
-        setTimeToComplete(mTimeToComplete);
-    }
-    */
-
     public String getMinistry() {
         return mMinistry;
     }

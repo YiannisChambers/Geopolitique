@@ -72,11 +72,28 @@
     <!--Polls Fragment Strings-->
     <string name="polls_fragment_us_text">US</string>
     <string name="polls_fragment_them_text">THEM</string>
+
+    <!--Ministers Screen Strings-->
     <string name="ministers_screen_choose_minister_screen">CHOOSE MINISTER</string>
     <string name="minsters_adapter_set_text">SET</string>
     <string name="ministers_adapter_not_selected_text">Not Selected</string>
+
+    <!--Statistics Fragment Strings-->
     <string name="statistics_screen_gdp_text">GDP</string>
     <string name="statistics_screen_total_income_text">Total Income</string>
     <string name="statistics_screen_consumption_text">Consumption</string>
     <string name="statistics_screen_tax_income_text">Tax Income</string>
+
+    <!--Notifications Strings-->
+    <string name="notifications_title">Geopolitique</string>
+    <string name="notifications_polls">The latest opinion polls for your Government have been released.</string>
+    <string name="notifications_statistics">The latest national economic figures have been released.</string>
+    <string name="notifications_issue">An issue has developed that requires your attention.</string>
+    <string name="toolbar_cabinet">Cabinet</string>
+    <string name="toolbar_policies">Policies</string>
+    <string name="toolbar_home">Home</string>
+    <string name="toolbar_issues">Issues</string>
+    <string name="toolbar_polls">Polls</string>
+    <string name="polls_screen_tab_polls">POLLS</string>
+    <string name="polls_screen_tab_statistics">STATISTICS</string>
 </resources>

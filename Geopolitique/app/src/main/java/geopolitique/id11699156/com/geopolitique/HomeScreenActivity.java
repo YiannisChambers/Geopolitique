@@ -5,23 +5,16 @@
 
 package geopolitique.id11699156.com.geopolitique;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.github.mikephil.charting.data.realm.base.RealmUtils;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -31,9 +24,7 @@ import data.RealmHelper;
 import io.realm.Realm;
 import model.TestData;
 import model.Player;
-
-import util.Constants;
-import util.SetupHelper;
+import util.NotificationsHelper;
 import util.ToolbarHelper;
 
 /**
@@ -41,12 +32,13 @@ import util.ToolbarHelper;
  */
 public class HomeScreenActivity extends AppCompatActivity {
 
-    //public int mDays, mWeeks, mMonths;
-    private AHBottomNavigation bottomNavigation;
+    //WARNING: HORRIBLE CODE BELOW
     private static TextView mTimerText;
     private static TextView mDateText;
-    private int issueNotes, statisticNotes;
     private static UpdateTimerAsyncTask mUpdateTask;
+
+    private AHBottomNavigation bottomNavigation;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +62,8 @@ public class HomeScreenActivity extends AppCompatActivity {
             mUpdateTask = new UpdateTimerAsyncTask();
             mUpdateTask.execute();
         }
+
+        mContext = this;
     }
 
     /**
@@ -87,117 +81,24 @@ public class HomeScreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (bottomNavigation != null)
-            bottomNavigation.setCurrentItem(2);
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //mUpdateTask.setIsRunning(false);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        bottomNavigation.setCurrentItem(2);
     }
 
-    void sendPollsNotification() {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_poll_white_24dp)
-                        .setContentTitle("Polls released!")
-                        .setContentText("The latest opinion polls for your Government have been released.");
-
-        Intent resultIntent = new Intent(this, PollsScreen.class);
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(HomeScreenActivity.class);
-
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());
-    }
-
-    void sendStatisticsNotification() {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_trending_up_white_24dp)
-                        .setContentTitle("Statistics released!")
-                        .setContentText("The latest national economic figures have been released.");
-        Intent resultIntent = new Intent(this, PollsScreen.class);
-
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-// Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(HomeScreenActivity.class);
-// Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-// mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());
-    }
-
-    void sendIssueNotification() {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_account_balance_white_24dp)
-                        .setContentTitle("Issue encountered!")
-                        .setContentText("An issue has developed that requires your attention.");
-        Intent resultIntent = new Intent(this, IssuesActivity.class);
-
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-// Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(HomeScreenActivity.class);
-// Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-// mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());
-    }
-
-
+    /**
+     * AsyncTask to run the game - incrementing time and creating issues as you go
+     */
     private class UpdateTimerAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private AHBottomNavigationItem mToolbar;
         private boolean mIsRunning = true;
         private Calendar mCalendar;
 
@@ -241,8 +142,6 @@ public class HomeScreenActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
 
-            AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.home_screen_bottom_navigation);
-
             if (hours >= 24) {
                 days += 1;
                 hours = 0;
@@ -256,10 +155,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                     minutes = 0;
                     weeks += 1;
                     updateWeekly();
-                    ToolbarHelper.incrementStatisticsNumber();
-                    //statisticNotes += 1;
-                    //bottomNavigation.setNotification(statisticNotes + "", 4);
-                    sendPollsNotification();
                 }
             } else {
                 checkedWeek = false;
@@ -269,13 +164,8 @@ public class HomeScreenActivity extends AppCompatActivity {
                 days = 0;
                 weeks = 0;
                 updateMonthly();
-                sendStatisticsNotification();
+                NotificationsHelper.sendStatisticsNotification(mContext);
             }
-
-
-            //mDays = days;
-            //mWeeks = weeks;
-            //mMonths = months;
 
             DateFormat format = DateFormat.getTimeInstance();
             mTimerText.setText(format.format(mCalendar.getTime()));
@@ -289,16 +179,13 @@ public class HomeScreenActivity extends AppCompatActivity {
             RealmHelper.endTransaction();
 
             super.onProgressUpdate(values);
-
         }
 
-        String GetMonthText(int i) {
-            return getResources().getStringArray(R.array.months)[i];
-        }
-
-
+        /**
+         * Update the country for a day
+         */
         private void updateDaily() {
-            //RealmHelper.beginTransaction();
+            //Asynchronously run the update method
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
@@ -308,12 +195,17 @@ public class HomeScreenActivity extends AppCompatActivity {
                     player.setTime(mCalendar.getTimeInMillis());
                 }
             });
+            //Potentially add a random issue
             addRandomIssue();
 
 
         }
 
+        /**
+         * Update the country for a week
+         */
         private void updateWeekly() {
+            //Asynchronously run the update method
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
@@ -322,9 +214,16 @@ public class HomeScreenActivity extends AppCompatActivity {
                     player.getCountry().updateWeekly();
                 }
             });
+
+            ToolbarHelper.incrementStatisticsNumber();
+            NotificationsHelper.sendPollsNotification(mContext);
         }
 
+        /**
+         * Update the country for a month
+         */
         private void updateMonthly() {
+            //Asynchronously run the update method
             Realm realm = Realm.getDefaultInstance();
             realm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
@@ -335,14 +234,22 @@ public class HomeScreenActivity extends AppCompatActivity {
             });
         }
 
+        /**
+         * Add a random issue to the government
+         */
         private void addRandomIssue() {
-            TestData.addRandomIssue();
-            //issueNotes += 1;
-            //bottomNavigation.setNotification(issueNotes + "", 3);
-            ToolbarHelper.incrementIssueNumber();
-            sendIssueNotification();
+            //If a random issue is generated...
+            if(TestData.addRandomIssue()) {
+                //...create an Issues notification
+                ToolbarHelper.incrementIssueNumber();
+                NotificationsHelper.sendIssueNotification(mContext);
+            }
         }
 
+        /**
+         * Set the AsynTask to running or not
+         * @param value
+         */
         public void setIsRunning(boolean value){
             mIsRunning = value;
         }

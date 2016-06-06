@@ -25,6 +25,9 @@ import model.Minister;
 import model.Policy;
 import model.TestData;
 
+/**
+ * MainMenu splash-style screen to prepare the application
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override
@@ -32,6 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        //Create default config for Realm
         RealmConfiguration config = new RealmConfiguration
                 .Builder(this)
                 .deleteRealmIfMigrationNeeded()
@@ -39,13 +43,13 @@ public class MainMenuActivity extends AppCompatActivity {
         Realm.setDefaultConfiguration(config);
 
         //THIS IS FOR TESTING
-        //deleteAll();
+        deleteAll();
 
 
         new StartUpAsyncTask(this).execute();
     }
 
-    private void deleteAll(){
+    private void deleteAll() {
         Realm realm = Realm.getDefaultInstance();
         RealmHelper.beginTransaction();
         realm.deleteAll();
@@ -82,6 +86,9 @@ public class MainMenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * AsyncTask to set up data before launching application
+     */
     public class StartUpAsyncTask extends AsyncTask<Void, Void, Void> {
         Context mContext;
 
@@ -91,18 +98,26 @@ public class MainMenuActivity extends AppCompatActivity {
 
         protected Void doInBackground(Void... params) {
 
+            //If player exists...
             if (PlayerRepo.checkIfPlayerExists()) {
+                //Perform preliminary setup
                 TestData.setUpTestDataWithExistingDatabase();
+                //Go to Home Screen
                 Intent intent = new Intent(mContext, HomeScreenActivity.class);
                 mContext.startActivity(intent);
             } else {
+                //Create test data
                 setUpData();
+                //Go to Create Existing Nation screen to select player country
                 Intent intent = new Intent(mContext, CreateExistingNationActivity.class);
                 mContext.startActivity(intent);
             }
             return null;
         }
 
+        /**
+         * Create splashscreen effect and sets up data
+         */
         private void setUpData() {
             try {
                 Thread.sleep(3000);

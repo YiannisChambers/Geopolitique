@@ -108,7 +108,7 @@ public class Government extends RealmObject {
      */
     public void changePopularity(double value) {
         //If the value makes the popularity go below 0, clamp it at 0...
-        if (mPopularity - value < 0) {
+        if (mPopularity + value < 0) {
             mPopularity = 0;
         } else if (mPopularity + value > 100) {
             //..and if the value makes the popularity go above 100, clamp it at 100...
@@ -126,7 +126,7 @@ public class Government extends RealmObject {
      */
     public void changeInternationalPopularity(double value) {
         //If the value makes the popularity go below 0, clamp it at 0...
-        if (mInternationalPopularity - value < 0) {
+        if (mInternationalPopularity + value < 0) {
             mInternationalPopularity = 0;
         } else if (mInternationalPopularity + value > 100) {
             //..and if the value makes the popularity go above 100, clamp it at 100...

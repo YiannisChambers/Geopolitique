@@ -24,6 +24,9 @@ import geopolitique.id11699156.com.geopolitique.R;
 import model.Economy;
 import util.NumberHelper;
 
+/**
+ * Statistics fragment class to show the GDP of the Country
+ */
 public class StatisticsScreenFragment extends Fragment {
 
     /**
@@ -51,7 +54,6 @@ public class StatisticsScreenFragment extends Fragment {
         setUpPieChart();
     }
 
-
     /**
      * Set up the Pie Chart of the GDP that appears on the Statistics fragment
      */
@@ -59,17 +61,22 @@ public class StatisticsScreenFragment extends Fragment {
         Economy economy = PlayerRepo.getCurrentPlayer().getCountry().getEconomy();
         PieChart chart = (PieChart)getActivity().findViewById(R.id.statistics_screen_piechart);
 
+        //Calculate the entries to put into the piechart
         Entry incomeEntry = new Entry((float)economy.getIncome(), 0);
         Entry consumptionEntry = new Entry((float)economy.getConsumption(), 1);
         Entry taxEntry = new Entry((float)economy.getTaxIncome(), 1);
 
+        //Put entries into PieDataSet
         LinkedList<Entry> entries = new LinkedList<>();
         entries.add(incomeEntry);
         entries.add(consumptionEntry);
         entries.add(taxEntry);
         PieDataSet set = new PieDataSet(entries, getActivity().getString(R.string.statistics_screen_gdp_text));
+        //Set corresponding colors
         set.setColors(new int[]{Color.rgb(128, 255, 0), Color.rgb(0, 255, 0), Color.rgb(0, 255, 128)});
 
+
+        //Set the legend values
         LinkedList<String> xValues = new LinkedList<>();
         xValues.add(getActivity().getString(R.string.statistics_screen_total_income_text));
         xValues.add(getActivity().getString(R.string.statistics_screen_consumption_text));
@@ -77,7 +84,10 @@ public class StatisticsScreenFragment extends Fragment {
 
         PieData data = new PieData(xValues, set);
 
+        //Set data to chart
         chart.setData(data);
+
+        //Format the pie chart
         chart.setCenterText("$" + NumberHelper.getWordedVersion(economy.getGDP()));
         chart.setDescription("");
         chart.getLegend().setTextColor(Color.WHITE);

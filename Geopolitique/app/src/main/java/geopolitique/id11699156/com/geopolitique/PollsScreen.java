@@ -5,8 +5,6 @@
 
 package geopolitique.id11699156.com.geopolitique;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,7 +21,6 @@ import java.util.List;
 
 import fragments.PollsScreenFragment;
 import fragments.StatisticsScreenFragment;
-import util.SetupHelper;
 import util.ToolbarHelper;
 
 public class PollsScreen extends AppCompatActivity{
@@ -40,30 +37,43 @@ public class PollsScreen extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Set up tool bar
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.polls_screen_bottom_navigation);
         ToolbarHelper.setUpToolbar(bottomNavigation, this, 4);
 
+        //Set up view pager for tabs
         viewPager = (ViewPager) findViewById(R.id.polls_screen_viewpager);
         setupViewPager(viewPager);
 
+        //Set up tabs with the newly created view pager
         tabLayout = (TabLayout) findViewById(R.id.polls_screen_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
     }
-    
 
+    /**
+     * Sets up the View Pager for the Tabs on the screen
+     * @param viewPager
+     */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PollsScreenFragment(), "POLLS");
-        adapter.addFragment(new StatisticsScreenFragment(), "STATISTICS");
+        adapter.addFragment(new PollsScreenFragment(), getString(R.string.polls_screen_tab_polls));
+        adapter.addFragment(new StatisticsScreenFragment(), getString(R.string.polls_screen_tab_statistics));
         viewPager.setAdapter(adapter);
     }
 
 
+    /**
+     * Custom View Page adapter to switch between Polls and Statistics fragments
+     */
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
+        /**
+         * Constructor
+         * @param manager
+         */
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
@@ -78,6 +88,11 @@ public class PollsScreen extends AppCompatActivity{
             return mFragmentList.size();
         }
 
+        /**
+         * Add Fragment method
+         * @param fragment
+         * @param title
+         */
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);

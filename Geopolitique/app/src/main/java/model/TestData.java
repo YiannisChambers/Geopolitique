@@ -147,9 +147,27 @@ public class TestData {
                 "Maintain current policy platform; cut around the edges of reform",
                 "Increase social spending by cutting the defence budget. Raise taxes for big business."));
 
+
+        issues.add(createIssue("Education Reform.", "Representatives from the teacher's unions have gathered in your office demanding large scale reform of the education sector. They look to you for a new policy direction.",
+                "Announce plans to deregulate the education sector.",
+                "Agreed to revisit the subject of Education within the next six months of government.",
+                "Provide further government subsidies for higher education."));
+
+
+        issues.add(createIssue("Science Funding.", "The time has come for the government to release their latest update to the nation's economic direction. What policies will you make?",
+                "Cut corporate tax by 5%; incentivise job creation through tax breaks to big business.",
+                "Maintain current policy platform; cut around the edges of reform",
+                "Increase social spending by cutting the defence budget. Raise taxes for big business."));
+
+
+        issues.add(createIssue("Budget Day.", "The time has come for the government to release their latest update to the nation's economic direction. What policies will you make?",
+                "Cut corporate tax by 5%; incentivise job creation through tax breaks to big business.",
+                "Maintain current policy platform; cut around the edges of reform",
+                "Increase social spending by cutting the defence budget. Raise taxes for big business."));
+
     }
 
-    private static Issue createIssue(String title, String description, String positiveOption, String neutralOption, String negativeOption){
+    private static Issue createIssue(String title, String description, String negativeOption, String neutralOption, String positiveOption){
 
         RealmList<Effect> negativeEffect = new RealmList<Effect>();
         negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, -5)));
@@ -158,7 +176,7 @@ public class TestData {
         positiveEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 5)));
 
         RealmList<Effect> neutralEffect = new RealmList<Effect>();
-        negativeEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 0)));
+        neutralEffect.add(EffectRepo.createNewEffect(new Effect(Constants.POPULARITY, 0)));
         RealmList<Option> options = new RealmList<>();
 
 
@@ -185,8 +203,10 @@ public class TestData {
         return issues;
     }
 
-    public static void addRandomIssue(){
-        if(new Random().nextBoolean()) {
+    public static boolean addRandomIssue(){
+
+        boolean createIssue = new Random().nextBoolean();
+        if(createIssue) {
             Realm.getDefaultInstance();
             Random r = new Random();
             int position = r.nextInt(issues.size());
@@ -197,6 +217,8 @@ public class TestData {
 
             IssueRepo.createNewIssue(issue);
         }
+
+        return createIssue;
     }
 
     /**

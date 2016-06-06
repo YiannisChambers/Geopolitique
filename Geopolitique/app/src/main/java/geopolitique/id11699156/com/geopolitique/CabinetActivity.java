@@ -6,7 +6,6 @@
 package geopolitique.id11699156.com.geopolitique;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import adapters.MinistersAdapter;
 import data.PlayerRepo;
 import model.Cabinet;
-import util.SetupHelper;
 import util.ToolbarHelper;
 
 /**
@@ -29,7 +27,6 @@ import util.ToolbarHelper;
  */
 public class CabinetActivity extends AppCompatActivity {
 
-    private static Context mContext;
     private MinistersAdapter mAdapter;
     private Cabinet mCabinet;
 
@@ -39,8 +36,6 @@ public class CabinetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cabinet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mContext = this;
 
         //Get the player's current Cabinet
         mCabinet = PlayerRepo.getCurrentPlayer().getCountry().getGovernment().getCabinet();
